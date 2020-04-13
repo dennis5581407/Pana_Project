@@ -7,9 +7,11 @@ body{
 .header {
     width: cal(100% - 0px);
     height: 50px;
-    border: 2px solid black;
+    min-width: 960px;
+    box-shadow: 0px 3px 3px #1f1d1d;
     position: relative;
-    margin-bottom: 2px;
+    margin: auto;
+    margin-bottom: 7px;
     background-color: white;
 }
 
@@ -17,6 +19,12 @@ body{
     position: absolute;
     top: 3px;
     left: 50px;
+}
+
+i.icon{
+    color: #8F89CE;
+    font-size: 22px;
+    background-color: ;
 }
 
 .header span{

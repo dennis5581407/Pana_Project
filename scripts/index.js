@@ -34,14 +34,14 @@ $(document).ready(function(){
             .call(d3.axisLeft(yAxisScale_1).tickSize(0).ticks(10,".0f" ))
             .attr('transform', `translate(50, 0)`)
             .attr('class', 'axis')
-            .select('axis path')
+            .select('path')
             .style('opacity', '0.3');
         
         svg_1.append('g') //x axis
             .call(d3.axisBottom(xAxisScale).tickSize(0))
             .attr('transform', `translate(0, ${svg_height_1})`)
             .attr('class', 'axis')
-            .select('axis path')
+            .select('path')
             .style('opacity', '0.3');
 
         svg_1.append('g') //網狀格
@@ -796,6 +796,18 @@ $(document).ready(function(){
         });
     }
     
+    function show_time(){
+        let today = new Date();
+        let year = today.getFullYear();
+        let month = today.getMonth();
+        let date = today.getDate();
+        let hour = today.getHours();
+        let min = today.getMinutes();
+        
+        let date_string = `${year}/${month}/${date}&emsp;${hour}:${min}&emsp;`;
+
+        $('#time').html(date_string + '<i class="icon fas fa-home"></i>'); //html的method也會把子元素一併取代掉
+    }
     async function userAction(){
         var url = 'http://140.118.121.111:8000/test';
         var data = [
@@ -882,5 +894,6 @@ $(document).ready(function(){
     click_event();
     chart_3(); //draw chart_3
     taiwan_svg(); //draw taiwan
+    setInterval(show_time, 1000);//show time per min
 
 });
