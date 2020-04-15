@@ -794,19 +794,86 @@ $(document).ready(function(){
                 chart_2(data);
             }
         });
+
+        $(".lang").on('click','.lang-option-active',function(){
+            $(".lang .lang-option:nth(0)").toggleClass('lang-option-offset-0');
+            $(".lang .lang-option:nth(1)").toggleClass('lang-option-offset-1');
+        });
+
+        $('.lang').on('click','.lang-option-offset-0',function(){ 
+
+            $(".lang .lang-option:nth(0)").toggleClass('lang-option-offset-0');
+            $(".lang .lang-option:nth(1)").toggleClass('lang-option-offset-1');
+            $(".lang-option-active").addClass("lang-option");
+            $(".lang > div").removeClass("lang-option-active");
+            $(this).removeClass("lang-option");
+            $(this).addClass("lang-option-active");
+
+            if($(this).hasClass('lang-japanese'))
+            {
+
+            }
+
+            else if($(this).hasClass('lang-chinese'))
+            {
+
+            }
+
+            else if($(this).hasClass('lang-english'))
+            {
+ 
+            }
+
+            else
+            {
+                console("change language error")
+            }
+        });
+
+        $('.lang').on('click','.lang-option-offset-1',function(){
+
+            $(".lang .lang-option:nth(0)").toggleClass('lang-option-offset-0');
+            $(".lang .lang-option:nth(1)").toggleClass('lang-option-offset-1');
+            $(".lang-option-active").addClass("lang-option");
+            $(".lang > div").removeClass("lang-option-active");
+            $(this).removeClass("lang-option");
+            $(this).addClass("lang-option-active");
+            
+            if($(this).hasClass('lang-japanese'))
+            {
+
+            }
+
+            else if($(this).hasClass('lang-chinese'))
+            {
+
+            }
+
+            else if($(this).hasClass('lang-english'))
+            {
+
+            }
+        });
+        
     }
     
     function show_time(){
         let today = new Date();
         let year = today.getFullYear();
-        let month = today.getMonth();
+        let month = today.getMonth() + 1;
         let date = today.getDate();
         let hour = today.getHours();
         let min = today.getMinutes();
         
+        min = min.toString();
+        if(min.length == 1)
+        {
+            min = 0 + min;
+        }
+
         let date_string = `${year}/${month}/${date}&emsp;${hour}:${min}&emsp;`;
 
-        $('#time').html(date_string + '<i class="icon fas fa-home"></i>'); //html的method也會把子元素一併取代掉
+        $('.clock').html(date_string); //html的method也會把子元素一併取代掉
     }
     async function userAction(){
         var url = 'http://140.118.121.111:8000/test';
@@ -826,7 +893,7 @@ $(document).ready(function(){
         console.log(result);
     }
 
-    //generate random data function
+    //generate random data function for test
     function getRandom(){ 
         return Math.floor(Math.random()*99)+1;
     };
@@ -894,6 +961,6 @@ $(document).ready(function(){
     click_event();
     chart_3(); //draw chart_3
     taiwan_svg(); //draw taiwan
-    setInterval(show_time, 1000);//show time per min
+    setInterval(show_time, 1000);//show time per sec
 
 });

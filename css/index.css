@@ -4,7 +4,7 @@ body{
     background-color:#F2F2F2;
 }
 
-.header {
+.header{
     width: cal(100% - 0px);
     height: 50px;
     min-width: 960px;
@@ -13,29 +13,88 @@ body{
     margin: auto;
     margin-bottom: 7px;
     background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-#logo {
+.nav-0{
+    width: 10%;
+    padding-left: 1%;
+    box-sizing: border-box;
+}
+
+.nav-1{
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.home{
+    margin-right: 7px;
+
+}
+.lang{
+    padding: 1px;
+    margin-right: 8px;
+    height: 26px;
+    width: 28.75px;
+    box-sizing: border-box;
+    text-align: center;
+    -webkit-user-select: none; 
+    -moz-user-select: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.lang .lang-option{
+    font-size: 22px;
+    border: 1px solid #8F89CE;
+    background-color: #E8F8FB!important;
+    color: #8F89CE;
+    width: 28.75px;
+    padding: 1px;
     position: absolute;
-    top: 3px;
-    left: 50px;
+    transition-duration: .5s;
+    top: 0px;
+    left: 0px;
+    box-sizing: border-box;
+}
+
+body .lang .lang-option-offset-0{
+    top: 30px;
+    transition-duration: .5s;
+}
+
+body .lang .lang-option-offset-1{
+    top: 60px;
+    transition-duration: .5s;
+}
+
+.lang-option-active{
+    z-index: 100;
+    font-size: 22px;
+    border: 1px solid #8F89CE;
+    background-color: #E8F8FB!important;
+    color: #8F89CE;
+    width: 28.75px;
+    padding: 1px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-sizing: border-box;
 }
 
 i.icon{
     color: #8F89CE;
     font-size: 22px;
-    background-color: ;
+    background-color: #E8F8FB!important;
+    border: 1px solid #8F89CE;
+    padding: 1px;
 }
 
-.header span{
-    position: absolute;
-    right: 5px;
-    top: 15px;
+.header .clock{
     font-size: 20px;
-}
-
-.header span img{
-    vertical-align: middle;
 }
 
 .container {
