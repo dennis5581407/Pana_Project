@@ -210,6 +210,14 @@ i.icon{
     background-color: rgb(223, 223, 255);
 }
 
+.last-main a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: black;
+}
+
 .item-2 td{
     border: 1px solid rgb(214, 214, 214);
     text-align: center;

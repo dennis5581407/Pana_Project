@@ -945,6 +945,7 @@ $(document).ready(function(){
 
         $('.clock').html(date_string); //html的method也會把子元素一併取代掉
     }
+    
     async function userAction(){
         var url = 'http://140.118.121.111:8000/test';
         var data = [
