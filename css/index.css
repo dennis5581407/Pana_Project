@@ -276,9 +276,22 @@ i.icon{
     padding: 2px;
 }
 
-.item-4 > div > div:first-child{
-    background-color: rgb(187, 187, 187);
+.item-4 > div > div:nth-child(1){
     border-right-style: none;
+}
+
+.item-4 > div > div:hover{
+    cursor: pointer;
+}
+
+.item-4 > div > div.btn-pressed-table{
+    background-color: rgb(187, 187, 187);
+    transition-duration: .5s;
+}
+
+.item-4 > div > div.btn-unpressed-table:hover{
+    background-color: rgb(187, 187, 187);
+    transition-duration: .5s;
 }
 
 .item-3 > div,

@@ -838,7 +838,7 @@ $(document).ready(function(){
             $(".lang > div").removeClass("lang-option-active");
             $(this).removeClass("lang-option");
             $(this).addClass("lang-option-active");
-            
+
             if($(this).hasClass('lang-japanese'))
             {
 
@@ -854,7 +854,77 @@ $(document).ready(function(){
 
             }
         });
+
+        //家電別接續率表格click_event
+        $(".item-4").on('click','.btn-unpressed-table',function(){
+            $(".btn-pressed-table").addClass("btn-unpressed-table");
+            $(".item-4 > div > div").removeClass("btn-pressed-table");
+            $(this).addClass("btn-pressed-table");
+
+            if($(this).hasClass("in-appliance"))
+            {
+                let data = {
+                    "air_conditioner":  
+                        {
+                            "sell": getRandom(),   
+                            "login": getRandom(),     
+                            "accept": getRandom()   
+                        },
+                    "dehumidifier": 
+                        {
+                            "sell": getRandom(),  
+                            "login": getRandom(),   
+                            "accept": getRandom()   
+                        },
+                    "washing_machine":  
+                        {
+                            "sell": getRandom(),   
+                            "login": getRandom(),    
+                            "accept": getRandom()   
+                        },
+                    "refrigerator": 
+                        {
+                            "sell": getRandom(),   
+                            "login": getRandom(),     
+                            "accept": getRandom()   
+                        }
+                };
+                show_accept_table(data);
+            }
+
+            else if($(this).hasClass("all-appliance"))
+            {
+                let data = {
+                    "air_conditioner":  
+                        {
+                            "sell": getRandom(),   
+                            "login": getRandom(),     
+                            "accept": getRandom()   
+                        },
+                    "dehumidifier": 
+                        {
+                            "sell": getRandom(),  
+                            "login": getRandom(),   
+                            "accept": getRandom()   
+                        },
+                    "washing_machine":  
+                        {
+                            "sell": getRandom(),   
+                            "login": getRandom(),    
+                            "accept": getRandom()   
+                        },
+                    "refrigerator": 
+                        {
+                            "sell": getRandom(),   
+                            "login": getRandom(),     
+                            "accept": getRandom()   
+                        }
+                };
+                show_accept_table(data);
+            }
+        });
         
+
     }
     
     function show_time(){
@@ -955,9 +1025,63 @@ $(document).ready(function(){
         
     })();
 
-    // userAction(); //API test
-    
+    //家電別接續率表格更新
+    function show_accept_table(data){
+        let queue = [];
+        queue.push(data.air_conditioner.sell, data.air_conditioner.login, data.air_conditioner.accept, data.dehumidifier.sell, data.dehumidifier.login, data.dehumidifier.accept, data.washing_machine.sell, data.washing_machine.login, data.washing_machine.accept, data.refrigerator.sell, data.refrigerator.login, data.refrigerator.accept);
+        let accept_table = $(".appliance-accept td");
+        let data_index = 0;
+        accept_table.each(function(i,value){
+            if(i%4!=0) 
+            {   
+                if((i+1)%4!=0)
+                {
+                    $(this).text(queue[data_index]);
+                    data_index +=1;
+                }
 
+                else
+                {
+                    $(this).text(queue[data_index] + '%');
+                    data_index +=1;
+                }
+            }
+            
+        });    
+    };
+
+    //initial 家電別接續率表格 預設為全般
+    (function(){
+        let data = {
+            "air_conditioner":  
+                {
+                    "sell": getRandom(),   
+                    "login": getRandom(),     
+                    "accept": getRandom()   
+                },
+            "dehumidifier": 
+                {
+                    "sell": getRandom(),  
+                    "login": getRandom(),   
+                    "accept": getRandom()   
+                },
+            "washing_machine":  
+                {
+                    "sell": getRandom(),   
+                    "login": getRandom(),    
+                    "accept": getRandom()   
+                },
+            "refrigerator": 
+                {
+                    "sell": getRandom(),   
+                    "login": getRandom(),     
+                    "accept": getRandom()   
+                }
+        };
+        show_accept_table(data);
+    })()
+
+    // userAction(); //API test
     click_event();
     chart_3(); //draw chart_3
     taiwan_svg(); //draw taiwan
