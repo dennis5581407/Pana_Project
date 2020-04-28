@@ -3,9 +3,16 @@ $(document).ready(function(){
     function chart_1(dataset_1){ //-------------------------chart_1---------------------------
 
         let Xdata_1 = dataset_1.map(function(d){
-            return d.month;
+            return d.date;
         });
         
+        let xdata_show = [];
+
+        Xdata_1.forEach(function(item,index){
+            if(index%3==0){
+                xdata_show.push(item);
+            }
+        });
 
         let Ydata_1 = dataset_1.map(function(d){
             return d.value;
@@ -38,7 +45,7 @@ $(document).ready(function(){
             .style('opacity', '0.3');
         
         svg_1.append('g') //x axis
-            .call(d3.axisBottom(xAxisScale).tickSize(0))
+            .call(d3.axisBottom(xAxisScale).tickSize(0).tickValues(xdata_show))
             .attr('transform', `translate(0, ${svg_height_1})`)
             .attr('class', 'axis')
             .select('path')
@@ -53,7 +60,7 @@ $(document).ready(function(){
             .data(dataset_1)
             .enter()
             .append('rect')
-            .attr('x', (d) => xAxisScale(d.month))
+            .attr('x', (d) => xAxisScale(d.date))
             .attr('y', (d) => yAxisScale_1(d.value))
             .attr('width', xAxisScale.bandwidth())
             .style('fill','#6030ff')
@@ -69,7 +76,7 @@ $(document).ready(function(){
 
         let line = d3.line()
             .x(function (d) {
-                return xAxisScale(d.month);
+                return xAxisScale(d.date);
             })
             .y(function (d) {
                 return yAxisScale_1(d.connect);
@@ -89,7 +96,7 @@ $(document).ready(function(){
             .data(dataset_1)
             .enter()
             .append('circle')
-            .attr('cx', (d) => xAxisScale(d.month))
+            .attr('cx', (d) => xAxisScale(d.date))
             .attr('fill', '#F87C00')
             .attr('cy', (d) => yAxisScale_1(d.connect))
             .attr('r', '2.5')
@@ -558,19 +565,37 @@ $(document).ready(function(){
                 $('.item-3 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-3 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-                let data = [{month:'1月', value:getRandom(), connect:getRandom()},
-                {month:'2月', value:getRandom(), connect:getRandom()},
-                {month:'3月', value:getRandom(), connect:getRandom()},
-                {month:'4月', value:getRandom(), connect:getRandom()},
-                {month:'5月', value:getRandom(), connect:getRandom()},
-                {month:'6月', value:getRandom(), connect:getRandom()},
-                {month:'7月', value:getRandom(), connect:getRandom()},
-                {month:'8月', value:getRandom(), connect:getRandom()},
-                {month:'9月', value:getRandom(), connect:getRandom()},
-                {month:'10月', value:getRandom(), connect:getRandom()},
-                {month:'11月', value:getRandom(), connect:getRandom()},
-                {month:'12月', value:getRandom(), connect:getRandom()}
-                ];
+                let data = [{date:'4/1', value:getRandom(), connect:getRandom()},
+                {date:'4/2', value:getRandom(), connect:getRandom()},
+                {date:'4/3', value:getRandom(), connect:getRandom()},
+                {date:'4/4', value:getRandom(), connect:getRandom()},
+                {date:'4/5', value:getRandom(), connect:getRandom()},
+                {date:'4/6', value:getRandom(), connect:getRandom()},
+                {date:'4/7', value:getRandom(), connect:getRandom()},
+                {date:'4/8', value:getRandom(), connect:getRandom()},
+                {date:'4/9', value:getRandom(), connect:getRandom()},
+                {date:'4/10', value:getRandom(), connect:getRandom()},
+                {date:'4/11', value:getRandom(), connect:getRandom()},
+                {date:'4/12', value:getRandom(), connect:getRandom()},
+                {date:'4/13', value:getRandom(), connect:getRandom()},
+                {date:'4/14', value:getRandom(), connect:getRandom()},
+                {date:'4/15', value:getRandom(), connect:getRandom()},
+                {date:'4/16', value:getRandom(), connect:getRandom()},
+                {date:'4/17', value:getRandom(), connect:getRandom()},
+                {date:'4/18', value:getRandom(), connect:getRandom()},
+                {date:'4/19', value:getRandom(), connect:getRandom()},
+                {date:'4/20', value:getRandom(), connect:getRandom()},
+                {date:'4/21', value:getRandom(), connect:getRandom()},
+                {date:'4/22', value:getRandom(), connect:getRandom()},
+                {date:'4/23', value:getRandom(), connect:getRandom()},
+                {date:'4/24', value:getRandom(), connect:getRandom()},
+                {date:'4/25', value:getRandom(), connect:getRandom()},
+                {date:'4/26', value:getRandom(), connect:getRandom()},
+                {date:'4/27', value:getRandom(), connect:getRandom()},
+                {date:'4/28', value:getRandom(), connect:getRandom()},
+                {date:'4/29', value:getRandom(), connect:getRandom()},
+                {date:'4/30', value:getRandom(), connect:getRandom()}
+                ]
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_1 > svg').remove();
@@ -590,19 +615,37 @@ $(document).ready(function(){
                 $('.item-3 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-3 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-                let data = [{month:'1月', value:getRandom(), connect:getRandom()},
-                {month:'2月', value:getRandom(), connect:getRandom()},
-                {month:'3月', value:getRandom(), connect:getRandom()},
-                {month:'4月', value:getRandom(), connect:getRandom()},
-                {month:'5月', value:getRandom(), connect:getRandom()},
-                {month:'6月', value:getRandom(), connect:getRandom()},
-                {month:'7月', value:getRandom(), connect:getRandom()},
-                {month:'8月', value:getRandom(), connect:getRandom()},
-                {month:'9月', value:getRandom(), connect:getRandom()},
-                {month:'10月', value:getRandom(), connect:getRandom()},
-                {month:'11月', value:getRandom(), connect:getRandom()},
-                {month:'12月', value:getRandom(), connect:getRandom()}
-                ];
+                let data = [{date:'4/1', value:getRandom(), connect:getRandom()},
+                {date:'4/2', value:getRandom(), connect:getRandom()},
+                {date:'4/3', value:getRandom(), connect:getRandom()},
+                {date:'4/4', value:getRandom(), connect:getRandom()},
+                {date:'4/5', value:getRandom(), connect:getRandom()},
+                {date:'4/6', value:getRandom(), connect:getRandom()},
+                {date:'4/7', value:getRandom(), connect:getRandom()},
+                {date:'4/8', value:getRandom(), connect:getRandom()},
+                {date:'4/9', value:getRandom(), connect:getRandom()},
+                {date:'4/10', value:getRandom(), connect:getRandom()},
+                {date:'4/11', value:getRandom(), connect:getRandom()},
+                {date:'4/12', value:getRandom(), connect:getRandom()},
+                {date:'4/13', value:getRandom(), connect:getRandom()},
+                {date:'4/14', value:getRandom(), connect:getRandom()},
+                {date:'4/15', value:getRandom(), connect:getRandom()},
+                {date:'4/16', value:getRandom(), connect:getRandom()},
+                {date:'4/17', value:getRandom(), connect:getRandom()},
+                {date:'4/18', value:getRandom(), connect:getRandom()},
+                {date:'4/19', value:getRandom(), connect:getRandom()},
+                {date:'4/20', value:getRandom(), connect:getRandom()},
+                {date:'4/21', value:getRandom(), connect:getRandom()},
+                {date:'4/22', value:getRandom(), connect:getRandom()},
+                {date:'4/23', value:getRandom(), connect:getRandom()},
+                {date:'4/24', value:getRandom(), connect:getRandom()},
+                {date:'4/25', value:getRandom(), connect:getRandom()},
+                {date:'4/26', value:getRandom(), connect:getRandom()},
+                {date:'4/27', value:getRandom(), connect:getRandom()},
+                {date:'4/28', value:getRandom(), connect:getRandom()},
+                {date:'4/29', value:getRandom(), connect:getRandom()},
+                {date:'4/30', value:getRandom(), connect:getRandom()}
+                ]
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_1 > svg').remove();
@@ -621,19 +664,37 @@ $(document).ready(function(){
                 $('.item-3 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-3 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-                let data = [{month:'1月', value:getRandom(), connect:getRandom()},
-                {month:'2月', value:getRandom(), connect:getRandom()},
-                {month:'3月', value:getRandom(), connect:getRandom()},
-                {month:'4月', value:getRandom(), connect:getRandom()},
-                {month:'5月', value:getRandom(), connect:getRandom()},
-                {month:'6月', value:getRandom(), connect:getRandom()},
-                {month:'7月', value:getRandom(), connect:getRandom()},
-                {month:'8月', value:getRandom(), connect:getRandom()},
-                {month:'9月', value:getRandom(), connect:getRandom()},
-                {month:'10月', value:getRandom(), connect:getRandom()},
-                {month:'11月', value:getRandom(), connect:getRandom()},
-                {month:'12月', value:getRandom(), connect:getRandom()}
-                ];
+                let data = [{date:'4/1', value:getRandom(), connect:getRandom()},
+                {date:'4/2', value:getRandom(), connect:getRandom()},
+                {date:'4/3', value:getRandom(), connect:getRandom()},
+                {date:'4/4', value:getRandom(), connect:getRandom()},
+                {date:'4/5', value:getRandom(), connect:getRandom()},
+                {date:'4/6', value:getRandom(), connect:getRandom()},
+                {date:'4/7', value:getRandom(), connect:getRandom()},
+                {date:'4/8', value:getRandom(), connect:getRandom()},
+                {date:'4/9', value:getRandom(), connect:getRandom()},
+                {date:'4/10', value:getRandom(), connect:getRandom()},
+                {date:'4/11', value:getRandom(), connect:getRandom()},
+                {date:'4/12', value:getRandom(), connect:getRandom()},
+                {date:'4/13', value:getRandom(), connect:getRandom()},
+                {date:'4/14', value:getRandom(), connect:getRandom()},
+                {date:'4/15', value:getRandom(), connect:getRandom()},
+                {date:'4/16', value:getRandom(), connect:getRandom()},
+                {date:'4/17', value:getRandom(), connect:getRandom()},
+                {date:'4/18', value:getRandom(), connect:getRandom()},
+                {date:'4/19', value:getRandom(), connect:getRandom()},
+                {date:'4/20', value:getRandom(), connect:getRandom()},
+                {date:'4/21', value:getRandom(), connect:getRandom()},
+                {date:'4/22', value:getRandom(), connect:getRandom()},
+                {date:'4/23', value:getRandom(), connect:getRandom()},
+                {date:'4/24', value:getRandom(), connect:getRandom()},
+                {date:'4/25', value:getRandom(), connect:getRandom()},
+                {date:'4/26', value:getRandom(), connect:getRandom()},
+                {date:'4/27', value:getRandom(), connect:getRandom()},
+                {date:'4/28', value:getRandom(), connect:getRandom()},
+                {date:'4/29', value:getRandom(), connect:getRandom()},
+                {date:'4/30', value:getRandom(), connect:getRandom()}
+                ]
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_1 > svg').remove();
@@ -652,19 +713,37 @@ $(document).ready(function(){
                 $('.item-3 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-3 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-                let data = [{month:'1月', value:getRandom(), connect:getRandom()},
-                {month:'2月', value:getRandom(), connect:getRandom()},
-                {month:'3月', value:getRandom(), connect:getRandom()},
-                {month:'4月', value:getRandom(), connect:getRandom()},
-                {month:'5月', value:getRandom(), connect:getRandom()},
-                {month:'6月', value:getRandom(), connect:getRandom()},
-                {month:'7月', value:getRandom(), connect:getRandom()},
-                {month:'8月', value:getRandom(), connect:getRandom()},
-                {month:'9月', value:getRandom(), connect:getRandom()},
-                {month:'10月', value:getRandom(), connect:getRandom()},
-                {month:'11月', value:getRandom(), connect:getRandom()},
-                {month:'12月', value:getRandom(), connect:getRandom()}
-                ];
+                let data = [{date:'4/1', value:getRandom(), connect:getRandom()},
+                {date:'4/2', value:getRandom(), connect:getRandom()},
+                {date:'4/3', value:getRandom(), connect:getRandom()},
+                {date:'4/4', value:getRandom(), connect:getRandom()},
+                {date:'4/5', value:getRandom(), connect:getRandom()},
+                {date:'4/6', value:getRandom(), connect:getRandom()},
+                {date:'4/7', value:getRandom(), connect:getRandom()},
+                {date:'4/8', value:getRandom(), connect:getRandom()},
+                {date:'4/9', value:getRandom(), connect:getRandom()},
+                {date:'4/10', value:getRandom(), connect:getRandom()},
+                {date:'4/11', value:getRandom(), connect:getRandom()},
+                {date:'4/12', value:getRandom(), connect:getRandom()},
+                {date:'4/13', value:getRandom(), connect:getRandom()},
+                {date:'4/14', value:getRandom(), connect:getRandom()},
+                {date:'4/15', value:getRandom(), connect:getRandom()},
+                {date:'4/16', value:getRandom(), connect:getRandom()},
+                {date:'4/17', value:getRandom(), connect:getRandom()},
+                {date:'4/18', value:getRandom(), connect:getRandom()},
+                {date:'4/19', value:getRandom(), connect:getRandom()},
+                {date:'4/20', value:getRandom(), connect:getRandom()},
+                {date:'4/21', value:getRandom(), connect:getRandom()},
+                {date:'4/22', value:getRandom(), connect:getRandom()},
+                {date:'4/23', value:getRandom(), connect:getRandom()},
+                {date:'4/24', value:getRandom(), connect:getRandom()},
+                {date:'4/25', value:getRandom(), connect:getRandom()},
+                {date:'4/26', value:getRandom(), connect:getRandom()},
+                {date:'4/27', value:getRandom(), connect:getRandom()},
+                {date:'4/28', value:getRandom(), connect:getRandom()},
+                {date:'4/29', value:getRandom(), connect:getRandom()},
+                {date:'4/30', value:getRandom(), connect:getRandom()}
+                ]
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_1 > svg').remove();
@@ -683,19 +762,37 @@ $(document).ready(function(){
                 $('.item-3 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-3 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-                let data = [{month:'1月', value:getRandom(), connect:getRandom()},
-                {month:'2月', value:getRandom(), connect:getRandom()},
-                {month:'3月', value:getRandom(), connect:getRandom()},
-                {month:'4月', value:getRandom(), connect:getRandom()},
-                {month:'5月', value:getRandom(), connect:getRandom()},
-                {month:'6月', value:getRandom(), connect:getRandom()},
-                {month:'7月', value:getRandom(), connect:getRandom()},
-                {month:'8月', value:getRandom(), connect:getRandom()},
-                {month:'9月', value:getRandom(), connect:getRandom()},
-                {month:'10月', value:getRandom(), connect:getRandom()},
-                {month:'11月', value:getRandom(), connect:getRandom()},
-                {month:'12月', value:getRandom(), connect:getRandom()}
-                ];
+                let data = [{date:'4/1', value:getRandom(), connect:getRandom()},
+                {date:'4/2', value:getRandom(), connect:getRandom()},
+                {date:'4/3', value:getRandom(), connect:getRandom()},
+                {date:'4/4', value:getRandom(), connect:getRandom()},
+                {date:'4/5', value:getRandom(), connect:getRandom()},
+                {date:'4/6', value:getRandom(), connect:getRandom()},
+                {date:'4/7', value:getRandom(), connect:getRandom()},
+                {date:'4/8', value:getRandom(), connect:getRandom()},
+                {date:'4/9', value:getRandom(), connect:getRandom()},
+                {date:'4/10', value:getRandom(), connect:getRandom()},
+                {date:'4/11', value:getRandom(), connect:getRandom()},
+                {date:'4/12', value:getRandom(), connect:getRandom()},
+                {date:'4/13', value:getRandom(), connect:getRandom()},
+                {date:'4/14', value:getRandom(), connect:getRandom()},
+                {date:'4/15', value:getRandom(), connect:getRandom()},
+                {date:'4/16', value:getRandom(), connect:getRandom()},
+                {date:'4/17', value:getRandom(), connect:getRandom()},
+                {date:'4/18', value:getRandom(), connect:getRandom()},
+                {date:'4/19', value:getRandom(), connect:getRandom()},
+                {date:'4/20', value:getRandom(), connect:getRandom()},
+                {date:'4/21', value:getRandom(), connect:getRandom()},
+                {date:'4/22', value:getRandom(), connect:getRandom()},
+                {date:'4/23', value:getRandom(), connect:getRandom()},
+                {date:'4/24', value:getRandom(), connect:getRandom()},
+                {date:'4/25', value:getRandom(), connect:getRandom()},
+                {date:'4/26', value:getRandom(), connect:getRandom()},
+                {date:'4/27', value:getRandom(), connect:getRandom()},
+                {date:'4/28', value:getRandom(), connect:getRandom()},
+                {date:'4/29', value:getRandom(), connect:getRandom()},
+                {date:'4/30', value:getRandom(), connect:getRandom()}
+                ]
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_1 > svg').remove();
@@ -863,64 +960,12 @@ $(document).ready(function(){
 
             if($(this).hasClass("in-appliance"))
             {
-                let data = {
-                    "air_conditioner":  
-                        {
-                            "sell": getRandom(),   
-                            "login": getRandom(),     
-                            "accept": getRandom()   
-                        },
-                    "dehumidifier": 
-                        {
-                            "sell": getRandom(),  
-                            "login": getRandom(),   
-                            "accept": getRandom()   
-                        },
-                    "washing_machine":  
-                        {
-                            "sell": getRandom(),   
-                            "login": getRandom(),    
-                            "accept": getRandom()   
-                        },
-                    "refrigerator": 
-                        {
-                            "sell": getRandom(),   
-                            "login": getRandom(),     
-                            "accept": getRandom()   
-                        }
-                };
-                show_accept_table(data);
+                callAPI('/dashboard/accept-appliance?ID=1', show_accept_table);
             }
 
             else if($(this).hasClass("all-appliance"))
             {
-                let data = {
-                    "air_conditioner":  
-                        {
-                            "sell": getRandom(),   
-                            "login": getRandom(),     
-                            "accept": getRandom()   
-                        },
-                    "dehumidifier": 
-                        {
-                            "sell": getRandom(),  
-                            "login": getRandom(),   
-                            "accept": getRandom()   
-                        },
-                    "washing_machine":  
-                        {
-                            "sell": getRandom(),   
-                            "login": getRandom(),    
-                            "accept": getRandom()   
-                        },
-                    "refrigerator": 
-                        {
-                            "sell": getRandom(),   
-                            "login": getRandom(),     
-                            "accept": getRandom()   
-                        }
-                };
-                show_accept_table(data);
+                callAPI('/dashboard/accept-appliance?ID=0', show_accept_table);
             }
         });
         
@@ -946,22 +991,72 @@ $(document).ready(function(){
         $('.clock').html(date_string); //html的method也會把子元素一併取代掉
     }
     
-    async function userAction(){
-        var url = 'http://140.118.121.111:8000/test';
-        var data = [
-                        { 
-                        "ID" : '0'
-                        }    
-                   ];
-        const response = await fetch(url,  {
-        method: 'POST', 
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json',
-        }});
+    //家電別接續率表格更新
+    function show_accept_table(data){
+        let queue = [];
+        queue.push(data.air_conditioner.sell, data.air_conditioner.login, data.air_conditioner.accept, data.dehumidifier.sell, data.dehumidifier.login, data.dehumidifier.accept, data.washing_machine.sell, data.washing_machine.login, data.washing_machine.accept, data.refrigerator.sell, data.refrigerator.login, data.refrigerator.accept);
+        let accept_table = $(".appliance-accept td");
+        let data_index = 0;
+        accept_table.each(function(i,value){
+            if(i%4!=0) 
+            {   
+                if((i+1)%4!=0)
+                {
+                    $(this).text(queue[data_index]);
+                    data_index +=1;
+                }
 
-        const result = await response.json();
-        console.log(result);
+                else
+                {
+                    $(this).text(queue[data_index] + '%');
+                    data_index +=1;
+                }
+            }
+            
+        });    
+    };
+
+    //家電基本資料 頁面左上角的表格及登錄數更新
+    function show_basic_information(data){
+        let queue = [];
+        queue.push(data.total_login + '萬台', data.connect + '萬台',
+            data.connect_rate + '%', data.air_conditioner.day_connect + '%', 
+            data.air_conditioner.month_connect + '%', data.dehumidifier.day_connect + '%', 
+            data.dehumidifier.month_connect + '%', data.washing_machine.day_connect + '%',
+            data.washing_machine.month_connect + '%', data.refrigerator.day_connect + '%',
+            data.refrigerator.month_connect + '%');
+
+        let basic_information_item = $(".basic-information");
+        basic_information_item.each(function(i,value){
+            $(this).text(queue[i]);
+        });
+    };
+
+
+    //"action" parameter is the function which you want to pass the api result to
+    async function callAPI(path, action){
+        let url = 'http://140.118.121.111:8354' + path;
+
+        fetch(url)
+        .then(function(response) {
+            return(response.json());
+        })
+        .then(function(myJson) {
+            action(myJson);
+        });
+    }
+
+    //for test, to see what information it returns.
+    async function testAPI(path){
+        let url = 'http://140.118.121.111:8354' + path;
+
+        fetch(url)
+        .then(function(response) {
+            return(response.json());
+        })
+        .then(function(myJson) {
+            console.log(myJson);
+        });
     }
 
     //generate random data function for test
@@ -1005,19 +1100,37 @@ $(document).ready(function(){
             $('.item-3 > div > div:nth-child(1) > div').removeClass('button-pressed');
             $('.item-3 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-            let data = [{month:'1月', value:getRandom(), connect:getRandom()},
-            {month:'2月', value:getRandom(), connect:getRandom()},
-            {month:'3月', value:getRandom(), connect:getRandom()},
-            {month:'4月', value:getRandom(), connect:getRandom()},
-            {month:'5月', value:getRandom(), connect:getRandom()},
-            {month:'6月', value:getRandom(), connect:getRandom()},
-            {month:'7月', value:getRandom(), connect:getRandom()},
-            {month:'8月', value:getRandom(), connect:getRandom()},
-            {month:'9月', value:getRandom(), connect:getRandom()},
-            {month:'10月', value:getRandom(), connect:getRandom()},
-            {month:'11月', value:getRandom(), connect:getRandom()},
-            {month:'12月', value:getRandom(), connect:getRandom()}
-            ];
+            let data = [{date:'4/1', value:getRandom(), connect:getRandom()},
+                {date:'4/2', value:getRandom(), connect:getRandom()},
+                {date:'4/3', value:getRandom(), connect:getRandom()},
+                {date:'4/4', value:getRandom(), connect:getRandom()},
+                {date:'4/5', value:getRandom(), connect:getRandom()},
+                {date:'4/6', value:getRandom(), connect:getRandom()},
+                {date:'4/7', value:getRandom(), connect:getRandom()},
+                {date:'4/8', value:getRandom(), connect:getRandom()},
+                {date:'4/9', value:getRandom(), connect:getRandom()},
+                {date:'4/10', value:getRandom(), connect:getRandom()},
+                {date:'4/11', value:getRandom(), connect:getRandom()},
+                {date:'4/12', value:getRandom(), connect:getRandom()},
+                {date:'4/13', value:getRandom(), connect:getRandom()},
+                {date:'4/14', value:getRandom(), connect:getRandom()},
+                {date:'4/15', value:getRandom(), connect:getRandom()},
+                {date:'4/16', value:getRandom(), connect:getRandom()},
+                {date:'4/17', value:getRandom(), connect:getRandom()},
+                {date:'4/18', value:getRandom(), connect:getRandom()},
+                {date:'4/19', value:getRandom(), connect:getRandom()},
+                {date:'4/20', value:getRandom(), connect:getRandom()},
+                {date:'4/21', value:getRandom(), connect:getRandom()},
+                {date:'4/22', value:getRandom(), connect:getRandom()},
+                {date:'4/23', value:getRandom(), connect:getRandom()},
+                {date:'4/24', value:getRandom(), connect:getRandom()},
+                {date:'4/25', value:getRandom(), connect:getRandom()},
+                {date:'4/26', value:getRandom(), connect:getRandom()},
+                {date:'4/27', value:getRandom(), connect:getRandom()},
+                {date:'4/28', value:getRandom(), connect:getRandom()},
+                {date:'4/29', value:getRandom(), connect:getRandom()},
+                {date:'4/30', value:getRandom(), connect:getRandom()}
+                ]
             $("#chart-1-1").addClass('button-pressed');
             $("#chart-1-1").removeClass('button-unpressed');
             $('#chart_1 > svg').remove();
@@ -1026,63 +1139,15 @@ $(document).ready(function(){
         
     })();
 
-    //家電別接續率表格更新
-    function show_accept_table(data){
-        let queue = [];
-        queue.push(data.air_conditioner.sell, data.air_conditioner.login, data.air_conditioner.accept, data.dehumidifier.sell, data.dehumidifier.login, data.dehumidifier.accept, data.washing_machine.sell, data.washing_machine.login, data.washing_machine.accept, data.refrigerator.sell, data.refrigerator.login, data.refrigerator.accept);
-        let accept_table = $(".appliance-accept td");
-        let data_index = 0;
-        accept_table.each(function(i,value){
-            if(i%4!=0) 
-            {   
-                if((i+1)%4!=0)
-                {
-                    $(this).text(queue[data_index]);
-                    data_index +=1;
-                }
-
-                else
-                {
-                    $(this).text(queue[data_index] + '%');
-                    data_index +=1;
-                }
-            }
-            
-        });    
-    };
-
+    
     //initial 家電別接續率表格 預設為全般
     (function(){
-        let data = {
-            "air_conditioner":  
-                {
-                    "sell": getRandom(),   
-                    "login": getRandom(),     
-                    "accept": getRandom()   
-                },
-            "dehumidifier": 
-                {
-                    "sell": getRandom(),  
-                    "login": getRandom(),   
-                    "accept": getRandom()   
-                },
-            "washing_machine":  
-                {
-                    "sell": getRandom(),   
-                    "login": getRandom(),    
-                    "accept": getRandom()   
-                },
-            "refrigerator": 
-                {
-                    "sell": getRandom(),   
-                    "login": getRandom(),     
-                    "accept": getRandom()   
-                }
-        };
-        show_accept_table(data);
-    })()
+        callAPI('/dashboard/accept-appliance?ID=0', show_accept_table);
+    })();
 
-    // userAction(); //API test
+    
+    // testAPI('/dashboard/basic-information');
+    callAPI('/dashboard/basic-information', show_basic_information); //show 家電基本資料(頁面左上角的表格及登錄數)
     click_event();
     chart_3(); //draw chart_3
     taiwan_svg(); //draw taiwan
