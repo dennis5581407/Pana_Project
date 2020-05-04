@@ -2,6 +2,7 @@ body{
     font-family: Microsoft JhengHei;
     font-weight: bolder;
     background-color:#F2F2F2;
+    margin-bottom: 20px;
 }
 
 
@@ -101,11 +102,11 @@ i.icon{
 .container {
     width: 100%;
     max-width: 1300px;
-    min-width: 1200px;
+    min-width: 1300px;
     height: 700px;
     margin: auto;
     display: grid;
-    grid-template-rows: calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7);
+    grid-template-rows: calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7);
     grid-template-columns: 37% 42% 21%;
     grid-gap: 2px;
     /* background-color: rgb(242, 242, 255); */
@@ -173,42 +174,23 @@ div.logo-item{
 }
 
 .login-sum-item{
-    color: black;
-    font-weight: bold;
-    font-size: 24px;
-    text-align: center;
-    padding: 6px 16px;
-    position: relative;
     grid-row: 4 / 6;
 }
 
-.login-sum-item > div{
-    position: absolute;
-    display: flex;
-    align-items: center;
-    right: 12px;
-    width: 30%;
-    height: 10%;
-    padding: 0px;
+.login-sum-item, .connect-amount-item{
+    color: black;
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+    padding: 4px 2px;
 }
 
-.login-sum-item > div > div{
-    font-size: 15px;
-    width: 50%;
-}
-
-.login-sum-item > div > div:nth-child(1){
-    border: 1px solid #5656D6;
-}
-
-.btn-pressed-login{
-    color: white;
-    background-color: #5656d6;
-}
-
-.login-sum-item > div > div:nth-child(2){
-    border: 1px solid #5656D6;
-    border-left: none;
+.connect-48h-item{
+    color: black;
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+    padding: 4px 2px;
 }
 
 .region-home-item{
