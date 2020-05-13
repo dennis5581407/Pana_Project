@@ -1,0 +1,113 @@
+body{
+    font-family: Microsoft JhengHei;
+    font-weight: bolder;
+    background-color:#F2F2F2;
+    margin-bottom: 20px;
+}
+
+
+.header{
+    width: cal(100% - 0px);
+    height: 50px;
+    min-width: 1200px;
+    box-shadow: 0px 3px 3px #1f1d1d;
+    position: relative;
+    margin: auto;
+    margin-bottom: 9px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-0{
+    width: 10%;
+    padding-left: 1%;
+    box-sizing: border-box;
+}
+
+.nav-1{
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.home{
+    margin-right: 7px;
+
+}
+.lang{
+    padding: 1px;
+    margin-right: 8px;
+    height: 26px;
+    width: 28.75px;
+    box-sizing: border-box;
+    text-align: center;
+    -webkit-user-select: none; 
+    -moz-user-select: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.lang .lang-option{
+    font-size: 22px;
+    border: 1px solid #8F89CE;
+    background-color: #E8F8FB!important;
+    color: #8F89CE;
+    width: 28.75px;
+    padding: 1px;
+    position: absolute;
+    transition-duration: .5s;
+    top: 0px;
+    left: 0px;
+    box-sizing: border-box;
+}
+
+body .lang .lang-option-offset-0{
+    top: 30px;
+    transition-duration: .5s;
+}
+
+body .lang .lang-option-offset-1{
+    top: 60px;
+    transition-duration: .5s;
+}
+
+.lang-option-active{
+    z-index: 100;
+    font-size: 22px;
+    border: 1px solid #8F89CE;
+    background-color: #E8F8FB!important;
+    color: #8F89CE;
+    width: 28.75px;
+    padding: 1px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    box-sizing: border-box;
+}
+
+i.icon{
+    color: #8F89CE;
+    font-size: 22px;
+    background-color: #E8F8FB!important;
+    border: 1px solid #8F89CE;
+    padding: 1px;
+}
+
+.header .clock{
+    font-size: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1300px;
+    min-width: 1300px;
+    height: 700px;
+    margin: auto;
+    display: grid;
+    grid-template-rows: calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7) calc(100%/7);
+    grid-template-columns: 37% 42% 21%;
+    grid-gap: 2px;
+    /* background-color: rgb(242, 242, 255); */
+}  

@@ -142,7 +142,7 @@ i.icon{
 }
 
 .basic-information div p:nth-child(2){
-    color: #000abf;
+    color: #000abf; 
     font-weight: bold;
     font-size: 27px;
 }
@@ -171,6 +171,56 @@ div.logo-item{
 
 .detail-item{
     grid-row: 3 / 5;
+    display: flex;
+}
+
+.detail-item > div{
+    /* border: 1px solid black; */
+}
+
+.detail-item > div:nth-child(1){
+    width: 14%;
+    padding: 0px 10px 0px 10px; 
+}
+
+.detail-item > .detail-chart,
+.mode-chart{
+    width: 86%;
+    color: black;
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+}
+
+.detail-item .calendar{
+    height: 28%;
+    text-align: center;
+    line-height: 50px;
+}
+
+.button-region{
+    height: 72%;
+}
+
+.button-region div{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 4px 5px;
+    border: 1px solid black;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 4px;
+    border-radius: 15px;
+    background-color: rgb(217, 217, 252);
+    box-shadow: 2px 3px 3px rgb(134, 134, 134);
+}
+
+.button-unpressed:hover{
+    background-color: rgb(105, 105, 221);
+    color: #ffffff;
+    cursor: pointer;
+    transition-duration: .5s;
 }
 
 .login-sum-item{
@@ -199,6 +249,12 @@ div.logo-item{
 
 .mode-rate-item{
     grid-row: 5 / 7;
+    display: flex;
+}
+
+.mode-rate-item > div:nth-child(1){
+    width: 14%;
+    padding: 50px 10px 0px 10px; 
 }
 
 .connect-amount-item{

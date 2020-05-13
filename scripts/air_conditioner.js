@@ -713,7 +713,7 @@ function connect_48h_chart(){
     svg.append('path')
         .transition().duration(1000)
         .attr('d', line_td_running(dataset))
-        .attr('stroke', '#FF0040')
+        .attr('stroke', '#006837')
         .attr('stroke-width',1.5)
         .attr('fill', 'none')
         .attr('transform', `translate(${offset},0)`);
@@ -730,7 +730,7 @@ function connect_48h_chart(){
     svg.append('path')
         .transition().duration(1000)
         .attr('d', line_yd_running(dataset))
-        .attr('stroke', '#4DE262')
+        .attr('stroke', '#FF0040')
         .attr('stroke-width',1.5)
         .attr('fill', 'none')
         .attr('transform', `translate(${offset},0)`);
@@ -801,21 +801,535 @@ function connect_48h_chart(){
         .attr('x2', line_length + 287)
         .attr('y2', 5)
         .attr('stroke-width',2)
-        .style('stroke', '#4DE262');
+        .style('stroke', '#006837');
     
     note
         .append('text')
         .attr('x', line_length + 292)
         .attr('y', 9)
-        .text('昨日運轉台數')
+        .text('當日運轉台數')
         .style('font-size', '12px')
         .style('font-weight', 'bold');
 
     note.attr('transform', `translate(0,${yAxisScale(0) + 16})`);
 }
 
+function detail_chart(){
+    let dataset = [
+        {
+            'date': '4/1', 
+            'temp': 12,   //平均氣溫 單位為度c
+            'humidity': 70,   //濕度 單位為%
+            'amount': 70   //運轉台數 單位萬台
+        },
+        {
+            'date': '4/4', 
+            'temp': -5,   
+            'humidity': 70,   
+            'amount': 70
+        },
+        {
+            'date': '4/7', 
+            'temp': 30,   
+            'humidity': 70,   
+            'amount': 70   
+        },
+        {
+            'date': '4/10', 
+            'temp': 27,  
+            'humidity': 70,   
+            'amount': 70   
+        },
+        {
+            'date': '4/13', 
+            'temp': 29,   
+            'humidity': 70,   
+            'amount': 70   
+        },
+        {
+            'date': '4/16', 
+            'temp': 18,   
+            'humidity': 70,   
+            'amount': 70   
+        },
+        {
+            'date': '4/19', 
+            'temp': 22,  
+            'humidity': 70,   
+            'amount': 70   
+        },
+        {
+            'date': '4/22', 
+            'temp': 31,   
+            'humidity': 70,   
+            'amount': 70  
+        },
+        {
+            'date': '4/25', 
+            'temp': 11,  
+            'humidity': 70,   
+            'amount': 70   
+        },
+        {
+            'date': '4/28', 
+            'temp': 7,   
+            'humidity': 70,  
+            'amount': 70   
+        },
+        {
+            'date': '4/30', 
+            'temp': 38,  
+            'humidity': 70,   
+            'amount': 70  
+        }
+    ];
+
+    let Xdata = dataset.map(function(d){
+        return d.date;
+    });
+    
+    let svg = d3.select(".detail-chart")
+        .append("svg")
+        .attr("width",100+"%")
+        .attr("height",100+"%")
+        .style("margin-top",1+"px");
+
+    let svg_height = $(".detail-chart").height() - 40;
+    let svg_width = $(".detail-chart").width() - 30;
+
+    let yAxisScale_temp = d3.scaleLinear()
+        .domain([-10,40])
+        .range([svg_height, 30]);
+
+    let yAxisScale_run = d3.scaleLinear()
+        .domain([0,100])
+        .range([svg_height, 30]);
+
+    let yAxisScale_humid = d3.scaleLinear()
+        .domain([0,100])
+        .range([svg_height, 30]);
+    
+    let xAxisScale = d3.scaleBand()
+    .domain(Xdata)
+    .range([40,svg_width])
+    .paddingInner(0.5)
+    .paddingOuter(0.2);
+
+    svg.append('g') //y temprature axis
+        .call(d3.axisLeft(yAxisScale_temp).tickSize(0).ticks(10,".0f" ))
+        .attr('transform', `translate(40, 0)`)
+        .style('color', '#FF0040')
+        .select('path')
+        .style('opacity', '0');
+    
+    svg.append('g') //y running axis
+        .call(d3.axisLeft(yAxisScale_run).tickSize(0).ticks(10,".0f" ))
+        .attr('transform', `translate(23, 0)`)
+        .select('path')
+        .style('opacity', '0');
+
+    svg.append('g') //y humidity axis
+        .call(d3.axisLeft(yAxisScale_humid).tickSize(0).ticks(10,".0f" ))
+        .attr('transform', `translate(${svg_width + 23}, 0)`)
+        .select('path')
+        .style('opacity', '0');
+
+    svg.append('g') //x axis
+        .call(d3.axisBottom(xAxisScale).tickSize(0))
+        .attr('transform', `translate(0, ${svg_height})`)
+        .attr('font-size', 11)
+        .select('path')
+        .style('opacity', '0');
+       
+
+    svg.append('g') //網狀格
+        .call(d3.axisLeft(yAxisScale_temp).tickSize(-svg_width + 40).tickFormat(' '))
+        .attr('transform', `translate(40, 0)`)
+        .style('opacity','0.3');
+
+    //append humidity bar in bar chart
+    svg.selectAll('.rect_humidity') 
+        .data(dataset)
+        .enter()
+        .append('rect')
+        .attr('class', 'rect_humidity')
+        .attr('x', (d) => xAxisScale(d.date))
+        .attr('y', (d) => yAxisScale_humid(d.humidity))
+        .attr('width', xAxisScale.bandwidth()/2)
+        .style('fill','#3FA9F5')
+        .transition().duration(1000)
+        .attr('height', (d) => svg_height - yAxisScale_humid(d.humidity));
+
+    //append "運轉台數" bar in bar chart
+    svg.selectAll('.rect_run') 
+        .data(dataset)
+        .enter()
+        .append('rect')
+        .attr('class', 'rect_run')
+        .attr('x', (d) => xAxisScale(d.date) + xAxisScale.bandwidth()/2)
+        .attr('y', (d) => yAxisScale_run(d.amount))
+        .attr('width', xAxisScale.bandwidth()/2)
+        .style('fill','#F7931E')
+        .transition().duration(1000)
+        .attr('height', (d) => svg_height - yAxisScale_run(d.amount));
+    
+    svg.selectAll('.rect_humidity') //display value when mouserover on bar
+        .data(dataset)
+        .append('title')
+        .text((d) => "溫度:" + d.temp +
+                       "  運轉台數:" + d.amount +
+                       "  濕度:" + d.humidity);
+
+    svg.selectAll('.rect_run') //display value when mouserover on bar
+        .data(dataset)
+        .append('title')
+        .text((d) => "溫度:" + d.temp +
+                       "  運轉台數:" + d.amount +
+                       "  濕度:" + d.humidity);
+
+    //畫出當月溫度曲線
+    let line_temp = d3.line()
+    .x(function (d) {
+        return xAxisScale(d.date);
+    })
+    .y(function (d) {
+        return yAxisScale_temp(d.temp);
+    });
+ 
+    let offset = xAxisScale.bandwidth() / 2;
+
+    svg.append('path')
+        .transition().duration(1000)
+        .attr('d', line_temp(dataset))
+        .attr('stroke', '#FF0040')
+        .attr('stroke-width',1.5)
+        .attr('fill', 'none')
+        .attr('transform', `translate(${offset},0)`);
+
+
+    //文字說明
+    svg.append('text') 
+        .attr('x', 50)
+        .attr('y', 22)
+        .attr('fill', '#000000')
+        .text('平均氣溫 & 濕度 & 運轉台數')
+        .style('font-size', '22px');
+
+    svg.append('text') 
+        .attr('x', 0)
+        .attr('y', yAxisScale_temp(40) - 10)
+        .attr('fill', '#FF0040')
+        .text('溫度(°C)')
+        .style('font-size', '11px');
+
+    svg.append('text') 
+        .attr('x', 410)
+        .attr('y', 20)
+        .attr('fill', '#000000')
+        .text('濕度(%)')
+        .style('font-size', '11px');
+
+    svg.append('text') 
+        .attr('x', 0)
+        .attr('y', 178)
+        .attr('fill', '#000000')
+        .text('運轉台數')
+        .style('font-size', '11px');
+
+    svg.append('text') 
+        .attr('x', 0)
+        .attr('y', 192)
+        .attr('fill', '#000000')
+        .text('(單位:萬台)')
+        .style('font-size', '11px');
+
+    let note = svg.append('g');
+    let line_length = 16; //line initial position
+
+    note
+        .attr('transform', `translate(60,180)`);
+
+
+    note
+        .append('line')
+        .attr('x1', 0)
+        .attr('y1', 5)
+        .attr('x2', line_length)
+        .attr('y2', 5)
+        .attr('stroke-width',2)
+        .style('stroke', '#FF0040');
+
+    note
+        .append('text')
+        .attr('x', line_length + 2)
+        .attr('y', 10)
+        .text('平均氣溫')
+        .style('font-size', '12px')
+        .style('font-weight', 'bold');
+
+    note
+        .append('rect')
+        .attr('x', line_length + 59)
+        .attr('y', 0)
+        .attr('width', 10)
+        .attr('height', 10)
+        .style('fill','#3FA9F5');
+    
+    note
+        .append('text')
+        .attr('x', line_length + 71)
+        .attr('y', 10)
+        .text('濕度')
+        .style('font-size', '12px')
+        .style('font-weight', 'bold');
+
+    note
+        .append('rect')
+        .attr('x', line_length + 105)
+        .attr('y', 0)
+        .attr('width', 10)
+        .attr('height', 10)
+        .style('fill','#F7931E');
+
+    note
+        .append('text')
+        .attr('x', line_length + 117)
+        .attr('y', 10)
+        .text('運轉台數')
+        .style('font-size', '12px')
+        .style('font-weight', 'bold');
+
+}
+
+function mode_chart(){
+    let dataset = {
+        "cold_mode": 24,     //冷氣模式的比例 單位為%
+        "dehumid_mode": 16,     //除溼模式的比例 單位為%
+        "fan_mode": 14,     //送風模式的比例 單位為%
+        "warm_mode": 15,    //暖氣模式的比例 單位為%
+        "auto_mode": 31    //自動模式的比例 單位為%
+    };
+
+    // let Xdata = dataset.map(function(d){
+    //     return d.date;
+    // });
+    
+    // let svg = d3.select(".detail-chart")
+    //     .append("svg")
+    //     .attr("width",100+"%")
+    //     .attr("height",100+"%")
+    //     .style("margin-top",1+"px");
+
+    // let svg_height = $(".detail-chart").height() - 40;
+    // let svg_width = $(".detail-chart").width() - 30;
+
+    // let yAxisScale_temp = d3.scaleLinear()
+    //     .domain([-10,40])
+    //     .range([svg_height, 30]);
+
+    // let yAxisScale_run = d3.scaleLinear()
+    //     .domain([0,100])
+    //     .range([svg_height, 30]);
+
+    // let yAxisScale_humid = d3.scaleLinear()
+    //     .domain([0,100])
+    //     .range([svg_height, 30]);
+    
+    // let xAxisScale = d3.scaleBand()
+    // .domain(Xdata)
+    // .range([40,svg_width])
+    // .paddingInner(0.5)
+    // .paddingOuter(0.2);
+
+    // svg.append('g') //y temprature axis
+    //     .call(d3.axisLeft(yAxisScale_temp).tickSize(0).ticks(10,".0f" ))
+    //     .attr('transform', `translate(40, 0)`)
+    //     .style('color', '#FF0040')
+    //     .select('path')
+    //     .style('opacity', '0');
+    
+    // svg.append('g') //y running axis
+    //     .call(d3.axisLeft(yAxisScale_run).tickSize(0).ticks(10,".0f" ))
+    //     .attr('transform', `translate(23, 0)`)
+    //     .select('path')
+    //     .style('opacity', '0');
+
+    // svg.append('g') //y humidity axis
+    //     .call(d3.axisLeft(yAxisScale_humid).tickSize(0).ticks(10,".0f" ))
+    //     .attr('transform', `translate(${svg_width + 23}, 0)`)
+    //     .select('path')
+    //     .style('opacity', '0');
+
+    // svg.append('g') //x axis
+    //     .call(d3.axisBottom(xAxisScale).tickSize(0))
+    //     .attr('transform', `translate(0, ${svg_height})`)
+    //     .attr('font-size', 11)
+    //     .select('path')
+    //     .style('opacity', '0');
+       
+
+    // svg.append('g') //網狀格
+    //     .call(d3.axisLeft(yAxisScale_temp).tickSize(-svg_width + 40).tickFormat(' '))
+    //     .attr('transform', `translate(40, 0)`)
+    //     .style('opacity','0.3');
+
+    // //append humidity bar in bar chart
+    // svg.selectAll('.rect_humidity') 
+    //     .data(dataset)
+    //     .enter()
+    //     .append('rect')
+    //     .attr('class', 'rect_humidity')
+    //     .attr('x', (d) => xAxisScale(d.date))
+    //     .attr('y', (d) => yAxisScale_humid(d.humidity))
+    //     .attr('width', xAxisScale.bandwidth()/2)
+    //     .style('fill','#3FA9F5')
+    //     .transition().duration(1000)
+    //     .attr('height', (d) => svg_height - yAxisScale_humid(d.humidity));
+
+    // //append "運轉台數" bar in bar chart
+    // svg.selectAll('.rect_run') 
+    //     .data(dataset)
+    //     .enter()
+    //     .append('rect')
+    //     .attr('class', 'rect_run')
+    //     .attr('x', (d) => xAxisScale(d.date) + xAxisScale.bandwidth()/2)
+    //     .attr('y', (d) => yAxisScale_run(d.amount))
+    //     .attr('width', xAxisScale.bandwidth()/2)
+    //     .style('fill','#F7931E')
+    //     .transition().duration(1000)
+    //     .attr('height', (d) => svg_height - yAxisScale_run(d.amount));
+    
+    // svg.selectAll('.rect_humidity') //display value when mouserover on bar
+    //     .data(dataset)
+    //     .append('title')
+    //     .text((d) => "溫度:" + d.temp +
+    //                    "  運轉台數:" + d.amount +
+    //                    "  濕度:" + d.humidity);
+
+    // svg.selectAll('.rect_run') //display value when mouserover on bar
+    //     .data(dataset)
+    //     .append('title')
+    //     .text((d) => "溫度:" + d.temp +
+    //                    "  運轉台數:" + d.amount +
+    //                    "  濕度:" + d.humidity);
+
+    // //畫出當月溫度曲線
+    // let line_temp = d3.line()
+    // .x(function (d) {
+    //     return xAxisScale(d.date);
+    // })
+    // .y(function (d) {
+    //     return yAxisScale_temp(d.temp);
+    // });
+ 
+    // let offset = xAxisScale.bandwidth() / 2;
+
+    // svg.append('path')
+    //     .transition().duration(1000)
+    //     .attr('d', line_temp(dataset))
+    //     .attr('stroke', '#FF0040')
+    //     .attr('stroke-width',1.5)
+    //     .attr('fill', 'none')
+    //     .attr('transform', `translate(${offset},0)`);
+
+
+    // //文字說明
+    // svg.append('text') 
+    //     .attr('x', 50)
+    //     .attr('y', 22)
+    //     .attr('fill', '#000000')
+    //     .text('平均氣溫 & 濕度 & 運轉台數')
+    //     .style('font-size', '22px');
+
+    // svg.append('text') 
+    //     .attr('x', 0)
+    //     .attr('y', yAxisScale_temp(40) - 10)
+    //     .attr('fill', '#FF0040')
+    //     .text('溫度(°C)')
+    //     .style('font-size', '11px');
+
+    // svg.append('text') 
+    //     .attr('x', 410)
+    //     .attr('y', 20)
+    //     .attr('fill', '#000000')
+    //     .text('濕度(%)')
+    //     .style('font-size', '11px');
+
+    // svg.append('text') 
+    //     .attr('x', 0)
+    //     .attr('y', 178)
+    //     .attr('fill', '#000000')
+    //     .text('運轉台數')
+    //     .style('font-size', '11px');
+
+    // svg.append('text') 
+    //     .attr('x', 0)
+    //     .attr('y', 192)
+    //     .attr('fill', '#000000')
+    //     .text('(單位:萬台)')
+    //     .style('font-size', '11px');
+
+    // let note = svg.append('g');
+    // let line_length = 16; //line initial position
+
+    // note
+    //     .attr('transform', `translate(60,180)`);
+
+
+    // note
+    //     .append('line')
+    //     .attr('x1', 0)
+    //     .attr('y1', 5)
+    //     .attr('x2', line_length)
+    //     .attr('y2', 5)
+    //     .attr('stroke-width',2)
+    //     .style('stroke', '#FF0040');
+
+    // note
+    //     .append('text')
+    //     .attr('x', line_length + 2)
+    //     .attr('y', 10)
+    //     .text('平均氣溫')
+    //     .style('font-size', '12px')
+    //     .style('font-weight', 'bold');
+
+    // note
+    //     .append('rect')
+    //     .attr('x', line_length + 59)
+    //     .attr('y', 0)
+    //     .attr('width', 10)
+    //     .attr('height', 10)
+    //     .style('fill','#3FA9F5');
+    
+    // note
+    //     .append('text')
+    //     .attr('x', line_length + 71)
+    //     .attr('y', 10)
+    //     .text('濕度')
+    //     .style('font-size', '12px')
+    //     .style('font-weight', 'bold');
+
+    // note
+    //     .append('rect')
+    //     .attr('x', line_length + 105)
+    //     .attr('y', 0)
+    //     .attr('width', 10)
+    //     .attr('height', 10)
+    //     .style('fill','#F7931E');
+
+    // note
+    //     .append('text')
+    //     .attr('x', line_length + 117)
+    //     .attr('y', 10)
+    //     .text('運轉台數')
+    //     .style('font-size', '12px')
+    //     .style('font-weight', 'bold');
+
+}
+
 sum_login_chart();
 connect_amount_chart();
 connect_48h_chart();
+detail_chart();
 click_event();
 setInterval(show_time, 1000);//show time per sec
