@@ -1110,128 +1110,63 @@ function mode_chart(){
         "auto_mode": 31    //自動模式的比例 單位為%
     };
 
-    // let Xdata = dataset.map(function(d){
-    //     return d.date;
-    // });
+    let data = [];
+    data.push(dataset.cold_mode, dataset.dehumid_mode, dataset.fan_mode, dataset.warm_mode, dataset.auto_mode);
     
-    // let svg = d3.select(".detail-chart")
-    //     .append("svg")
-    //     .attr("width",100+"%")
-    //     .attr("height",100+"%")
-    //     .style("margin-top",1+"px");
+    let svg = d3.select(".mode-chart")
+        .append("svg")
+        .attr("width",100+"%")
+        .attr("height",100+"%");
 
-    // let svg_height = $(".detail-chart").height() - 40;
-    // let svg_width = $(".detail-chart").width() - 30;
+    let svg_height = $(".mode-chart > svg").height();
+    let svg_width = $(".mode-chart > svg").width();
 
-    // let yAxisScale_temp = d3.scaleLinear()
-    //     .domain([-10,40])
-    //     .range([svg_height, 30]);
+    let g = svg.append("g")
+            .attr('transform', `translate(${svg_width/2 - 40}, ${svg_height/2 + 15} )`);
 
-    // let yAxisScale_run = d3.scaleLinear()
-    //     .domain([0,100])
-    //     .range([svg_height, 30]);
+    let color = d3.scaleOrdinal(['#3FA9F5','#4DE262 ','#F7931E','#FF0040','#F932EF']);
 
-    // let yAxisScale_humid = d3.scaleLinear()
-    //     .domain([0,100])
-    //     .range([svg_height, 30]);
-    
-    // let xAxisScale = d3.scaleBand()
-    // .domain(Xdata)
-    // .range([40,svg_width])
-    // .paddingInner(0.5)
-    // .paddingOuter(0.2);
+    // Generate the pie
+    let pie = d3.pie();
 
-    // svg.append('g') //y temprature axis
-    //     .call(d3.axisLeft(yAxisScale_temp).tickSize(0).ticks(10,".0f" ))
-    //     .attr('transform', `translate(40, 0)`)
-    //     .style('color', '#FF0040')
-    //     .select('path')
-    //     .style('opacity', '0');
-    
-    // svg.append('g') //y running axis
-    //     .call(d3.axisLeft(yAxisScale_run).tickSize(0).ticks(10,".0f" ))
-    //     .attr('transform', `translate(23, 0)`)
-    //     .select('path')
-    //     .style('opacity', '0');
+    // Generate the arcs
+    let arc_path = d3.arc()
+                .innerRadius(0)
+                .outerRadius(70);
 
-    // svg.append('g') //y humidity axis
-    //     .call(d3.axisLeft(yAxisScale_humid).tickSize(0).ticks(10,".0f" ))
-    //     .attr('transform', `translate(${svg_width + 23}, 0)`)
-    //     .select('path')
-    //     .style('opacity', '0');
+    let label_path = d3.arc()
+                .innerRadius(60)
+                .outerRadius(100);
 
-    // svg.append('g') //x axis
-    //     .call(d3.axisBottom(xAxisScale).tickSize(0))
-    //     .attr('transform', `translate(0, ${svg_height})`)
-    //     .attr('font-size', 11)
-    //     .select('path')
-    //     .style('opacity', '0');
-       
+    //Generate groups
+    let arcs = g.selectAll(".arc")
+                .data(pie(data))
+                .enter()
+                .append("g")
+                .attr("class", "arc")
 
-    // svg.append('g') //網狀格
-    //     .call(d3.axisLeft(yAxisScale_temp).tickSize(-svg_width + 40).tickFormat(' '))
-    //     .attr('transform', `translate(40, 0)`)
-    //     .style('opacity','0.3');
+    //Draw arc paths
+    arcs.append("path")
+        .attr("fill", function(d, i) {
+            return color(i);
+        })
+        .attr("d", arc_path);
 
-    // //append humidity bar in bar chart
-    // svg.selectAll('.rect_humidity') 
-    //     .data(dataset)
-    //     .enter()
-    //     .append('rect')
-    //     .attr('class', 'rect_humidity')
-    //     .attr('x', (d) => xAxisScale(d.date))
-    //     .attr('y', (d) => yAxisScale_humid(d.humidity))
-    //     .attr('width', xAxisScale.bandwidth()/2)
-    //     .style('fill','#3FA9F5')
-    //     .transition().duration(1000)
-    //     .attr('height', (d) => svg_height - yAxisScale_humid(d.humidity));
-
-    // //append "運轉台數" bar in bar chart
-    // svg.selectAll('.rect_run') 
-    //     .data(dataset)
-    //     .enter()
-    //     .append('rect')
-    //     .attr('class', 'rect_run')
-    //     .attr('x', (d) => xAxisScale(d.date) + xAxisScale.bandwidth()/2)
-    //     .attr('y', (d) => yAxisScale_run(d.amount))
-    //     .attr('width', xAxisScale.bandwidth()/2)
-    //     .style('fill','#F7931E')
-    //     .transition().duration(1000)
-    //     .attr('height', (d) => svg_height - yAxisScale_run(d.amount));
-    
-    // svg.selectAll('.rect_humidity') //display value when mouserover on bar
-    //     .data(dataset)
-    //     .append('title')
-    //     .text((d) => "溫度:" + d.temp +
-    //                    "  運轉台數:" + d.amount +
-    //                    "  濕度:" + d.humidity);
-
-    // svg.selectAll('.rect_run') //display value when mouserover on bar
-    //     .data(dataset)
-    //     .append('title')
-    //     .text((d) => "溫度:" + d.temp +
-    //                    "  運轉台數:" + d.amount +
-    //                    "  濕度:" + d.humidity);
-
-    // //畫出當月溫度曲線
-    // let line_temp = d3.line()
-    // .x(function (d) {
-    //     return xAxisScale(d.date);
-    // })
-    // .y(function (d) {
-    //     return yAxisScale_temp(d.temp);
-    // });
- 
-    // let offset = xAxisScale.bandwidth() / 2;
-
-    // svg.append('path')
-    //     .transition().duration(1000)
-    //     .attr('d', line_temp(dataset))
-    //     .attr('stroke', '#FF0040')
-    //     .attr('stroke-width',1.5)
-    //     .attr('fill', 'none')
-    //     .attr('transform', `translate(${offset},0)`);
-
+    arcs.append("text")
+        .attr("transform", function(d) { 
+            return "translate(" + label_path.centroid(d) + ")"; 
+         })
+        .style('font-size', '16px')
+        .attr('fill', function(d,i){
+            return color(i);
+        })
+        .attr("text-anchor", function(d) {
+            // are we past the center?
+            return (d.endAngle + d.startAngle)/2 > Math.PI ?
+                "end" : "start";
+        })
+        .text(function(d) { return d.data+'%'});
+     
 
     // //文字說明
     // svg.append('text') 
@@ -1331,5 +1266,6 @@ sum_login_chart();
 connect_amount_chart();
 connect_48h_chart();
 detail_chart();
+mode_chart();
 click_event();
 setInterval(show_time, 1000);//show time per sec
