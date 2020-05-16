@@ -450,7 +450,7 @@ $(document).ready(function(){
         let data = dataset[0];
 
         let svg = d3.select("#taiwan > svg");
-        let height = 841.9; //svg viewbox
+        let height = 841.9; //svg viewbox 不能直接用jquery獲得svg的height及width 這只是viewport 並不是viewbox 
         let width = 750; //svg viewbox
 
         let xScale = d3.scaleLinear()
@@ -461,25 +461,21 @@ $(document).ready(function(){
             .domain([0,100])
             .range([0,height]);
         
-        let circleScale = d3.scaleLinear()
-            .domain([0,100])
-            .range([15,50]);
-
         // north circle
         svg
             .append('circle')
             .attr('cx', xScale(40))
             .attr('fill', '#FF0040')
             .attr('cy', yScale(9))
-            .attr('r', circleScale(data.north));
+            .attr('r', 15);
 
         svg
             .append('text')
-            .attr('x', xScale(47))
-            .attr('y', yScale(11))
+            .attr('x', xScale(45))
+            .attr('y', yScale(12))
             .attr('font-weight', 'bold')
             .text(`${data.north}%`)
-            .style('font-size', '50px')
+            .style('font-size', '60px')
             .style('fill', '#FF0040');
         
         // west circle
@@ -488,15 +484,15 @@ $(document).ready(function(){
             .attr('cx', xScale(26))
             .attr('fill', '#3FA9F5')
             .attr('cy', yScale(27))
-            .attr('r', circleScale(data.west));
+            .attr('r', 15);
 
         svg
             .append('text')
-            .attr('x', xScale(32))
-            .attr('y', yScale(29))
+            .attr('x', xScale(31))
+            .attr('y', yScale(30))
             .attr('font-weight', 'bold')
             .text(`${data.west}%`)
-            .style('font-size', '50px')
+            .style('font-size', '60px')
             .style('fill', '#3FA9F5');
 
         // south circle
@@ -505,15 +501,15 @@ $(document).ready(function(){
             .attr('cx', xScale(18))
             .attr('fill', '#F7931E')
             .attr('cy', yScale(83))
-            .attr('r', circleScale(data.south));
+            .attr('r', 15);
 
         svg
             .append('text')
-            .attr('x', xScale(24))
-            .attr('y', yScale(85))
+            .attr('x', xScale(23))
+            .attr('y', yScale(86))
             .attr('font-weight', 'bold')
             .text(`${data.south}%`)
-            .style('font-size', '50px')
+            .style('font-size', '60px')
             .style('fill', '#F7931E');
 
         // east circle
@@ -522,32 +518,32 @@ $(document).ready(function(){
             .attr('cx', xScale(86))
             .attr('fill', '#4DE262')
             .attr('cy', yScale(50))
-            .attr('r', circleScale(data.east));
+            .attr('r', 15);
 
         svg
             .append('text')
             .attr('x', xScale(91))
-            .attr('y', yScale(52))
+            .attr('y', yScale(53))
             .attr('font-weight', 'bold')
             .text(`${data.east}%`)
-            .style('font-size', '50px')
+            .style('font-size', '60px')
             .style('fill', '#4DE262');
 
         // island circle
         svg
             .append('circle')
-            .attr('cx', xScale(2))
+            .attr('cx', xScale(0))
             .attr('fill', '#F932EF')
             .attr('cy', yScale(7))
-            .attr('r', circleScale(data.island));
+            .attr('r', 15);
 
         svg
             .append('text')
-            .attr('x', xScale(7))
-            .attr('y', yScale(9))
+            .attr('x', xScale(5))
+            .attr('y', yScale(10))
             .attr('font-weight', 'bold')
             .text(`${data.island}%`)
-            .style('font-size', '50px')
+            .style('font-size', '60px')
             .style('fill', '#F932EF');
 
 
@@ -1046,7 +1042,7 @@ $(document).ready(function(){
         });
     }
 
-    //for test, to see what information it returns.
+    //for test, to see what information returns.
     async function testAPI(path){
         let url = 'http://140.118.121.111:8354' + path;
 
