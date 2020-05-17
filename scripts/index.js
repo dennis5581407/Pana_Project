@@ -63,7 +63,7 @@ $(document).ready(function(){
             .attr('x', (d) => xAxisScale(d.date))
             .attr('y', (d) => yAxisScale_1(d.value))
             .attr('width', xAxisScale.bandwidth())
-            .style('fill','#6030ff')
+            .style('fill','#3FA9F5')
             .transition().duration(1000)
             .attr('height', (d) => svg_height_1 - yAxisScale_1(d.value));
         
@@ -87,7 +87,7 @@ $(document).ready(function(){
         svg_1.append('path')
             .transition().duration(1000)
             .attr('d', line(dataset_1))
-            .attr('stroke', '#F87C00')
+            .attr('stroke', '#FF0040')
             .attr('stroke-width',1)
             .attr('fill', 'none')
             .attr('transform', `translate(${offset_1},0)`);
@@ -97,7 +97,7 @@ $(document).ready(function(){
             .enter()
             .append('circle')
             .attr('cx', (d) => xAxisScale(d.date))
-            .attr('fill', '#F87C00')
+            .attr('fill', '#FF0040')
             .attr('cy', (d) => yAxisScale_1(d.connect))
             .attr('r', '2.5')
             .style('opacity','0')
@@ -170,6 +170,44 @@ $(document).ready(function(){
             return d.year;
         });
         
+        let xdata_show = [];
+
+        for (let i=0; i<3; i++)
+        {
+            xdata_show.push('1月', '4月', '7月', '10月'); 
+        }
+
+        let count = 0;
+        Xdata.forEach(function(item,index){
+
+            if(index%3==0){
+                if(count==0)
+                {
+                    Xdata[index] = "1月"
+                    count = 1;
+                }
+                else if(count==1)
+                {
+                    Xdata[index] = "4月"
+                    count = 2;
+                }
+                else if(count==2)
+                {
+                    Xdata[index] = "7月"
+                    count = 3;
+                }
+
+                else if(count==3)
+                {
+                    Xdata[index] = "10月"
+                    count = 0;
+                }
+            
+            }
+        });
+
+        console.log(Xdata);
+
         let Ydata_sell = dataset.map(function(d){
             return d.sell;
         });
@@ -203,7 +241,7 @@ $(document).ready(function(){
             .style('opacity', '0');
 
         svg.append('g') //x axis
-            .call(d3.axisBottom(xAxisScale).tickSize(0))
+            .call(d3.axisBottom(xAxisScale).tickSize(0).tickValues(xdata_show))
             .attr('transform', `translate(0, ${svg_height})`)
             .attr('font-size', 12)
             .select('path')
@@ -221,7 +259,7 @@ $(document).ready(function(){
             .attr('class', 'rect_sell')
             .attr('x', (d) => xAxisScale(d.year))
             .attr('y', (d) => yAxisScale(d.sell))
-            .attr('width', xAxisScale.bandwidth()/2)
+            .attr('width', xAxisScale.bandwidth())
             .style('fill','#128FFB')
             .transition().duration(1000)
             .attr('height', (d) => svg_height - yAxisScale(d.sell));
@@ -232,7 +270,7 @@ $(document).ready(function(){
             .enter()
             .append('rect')
             .attr('class', 'rect_login')
-            .attr('x', (d) => xAxisScale(d.year) + xAxisScale.bandwidth()/2)
+            .attr('x', (d) => xAxisScale(d.year))
             .attr('y', (d) => yAxisScale(d.login))
             .attr('width', xAxisScale.bandwidth()/2)
             .style('fill','#F38001')
@@ -1073,9 +1111,223 @@ $(document).ready(function(){
             $('.item-5 > div > div:nth-child(1) > div').removeClass('button-pressed');
             $('.item-5 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-            let data = [{year:'2018年', sell:getRandom(), login:getRandom(), accept:getRandom()},
-                {year:'2019年', sell:getRandom(), login:getRandom(), accept:getRandom()},
-                {year:'2020年', sell:getRandom(), login:getRandom(), accept:getRandom()}
+            let data = [
+                {
+                    "year": "201801",
+                    "sell": 0,
+                    "login": 43,
+                    "accept": 0
+                },
+                {
+                    "year": "201802",
+                    "sell": 0,
+                    "login": 34,
+                    "accept": 0
+                },
+                {
+                    "year": "201803",
+                    "sell": 0,
+                    "login": 70,
+                    "accept": 0
+                },
+                {
+                    "year": "201804",
+                    "sell": 0,
+                    "login": 123,
+                    "accept": 0
+                },
+                {
+                    "year": "201805",
+                    "sell": 0,
+                    "login": 152,
+                    "accept": 0
+                },
+                {
+                    "year": "201806",
+                    "sell": 0,
+                    "login": 166,
+                    "accept": 0
+                },
+                {
+                    "year": "201807",
+                    "sell": 0,
+                    "login": 135,
+                    "accept": 0
+                },
+                {
+                    "year": "201808",
+                    "sell": 0,
+                    "login": 140,
+                    "accept": 0
+                },
+                {
+                    "year": "201809",
+                    "sell": 0,
+                    "login": 90,
+                    "accept": 0
+                },
+                {
+                    "year": "201810",
+                    "sell": 0,
+                    "login": 55,
+                    "accept": 0
+                },
+                {
+                    "year": "201811",
+                    "sell": 0,
+                    "login": 73,
+                    "accept": 0
+                },
+                {
+                    "year": "201812",
+                    "sell": 0,
+                    "login": 38,
+                    "accept": 0
+                },
+                {
+                    "year": "201901",
+                    "sell": 0,
+                    "login": 29,
+                    "accept": 0
+                },
+                {
+                    "year": "201902",
+                    "sell": 0,
+                    "login": 52,
+                    "accept": 0
+                },
+                {
+                    "year": "201903",
+                    "sell": 0,
+                    "login": 66,
+                    "accept": 0
+                },
+                {
+                    "year": "201904",
+                    "sell": 0,
+                    "login": 104,
+                    "accept": 0
+                },
+                {
+                    "year": "201905",
+                    "sell": 0,
+                    "login": 115,
+                    "accept": 0
+                },
+                {
+                    "year": "201906",
+                    "sell": 0,
+                    "login": 182,
+                    "accept": 0
+                },
+                {
+                    "year": "201907",
+                    "sell": 0,
+                    "login": 198,
+                    "accept": 0
+                },
+                {
+                    "year": "201908",
+                    "sell": 0,
+                    "login": 147,
+                    "accept": 0
+                },
+                {
+                    "year": "201909",
+                    "sell": 0,
+                    "login": 104,
+                    "accept": 0
+                },
+                {
+                    "year": "201910",
+                    "sell": 0,
+                    "login": 89,
+                    "accept": 0
+                },
+                {
+                    "year": "201911",
+                    "sell": 0,
+                    "login": 62,
+                    "accept": 0
+                },
+                {
+                    "year": "201912",
+                    "sell": 0,
+                    "login": 71,
+                    "accept": 0
+                },
+                {
+                    "year": "202001",
+                    "sell": 0,
+                    "login": 66,
+                    "accept": 0
+                },
+                {
+                    "year": "202002",
+                    "sell": 0,
+                    "login": 73,
+                    "accept": 0
+                },
+                {
+                    "year": "202003",
+                    "sell": 8554,
+                    "login": 93,
+                    "accept": 1
+                },
+                {
+                    "year": "202004",
+                    "sell": 0,
+                    "login": 99,
+                    "accept": 0
+                },
+                {
+                    "year": "202005",
+                    "sell": 0,
+                    "login": 5,
+                    "accept": 0
+                },
+                {
+                    "year": "202006",
+                    "sell": 0,
+                    "login": 0,
+                    "accept": 0
+                },
+                {
+                    "year": "202007",
+                    "sell": 0,
+                    "login": 0,
+                    "accept": 0
+                },
+                {
+                    "year": "202008",
+                    "sell": 0,
+                    "login": 0,
+                    "accept": 0
+                },
+                {
+                    "year": "202009",
+                    "sell": 0,
+                    "login": 0,
+                    "accept": 0
+                },
+                {
+                    "year": "202010",
+                    "sell": 0,
+                    "login": 0,
+                    "accept": 0
+                },
+                {
+                    "year": "202011",
+                    "sell": 0,
+                    "login": 0,
+                    "accept": 0
+                },
+                {
+                    "year": "202012",
+                    "sell": 0,
+                    "login": 0,
+                    "accept": 0
+                }
             ];
             $("#chart-2-1").addClass('button-pressed');
             $("#chart-2-1").removeClass('button-unpressed');

@@ -214,6 +214,29 @@ function click_event(){
         }
     });
 
+    //點日曆圖示的click event
+    $(".calendar").on('click','svg',function(){
+            $('.month-picker').toggleClass('display-none');
+    });
+
+    $(".calendar").on('click','.months',function(){
+        if($(this).hasClass('active-month'))
+        {
+            
+        }
+
+        else
+        {   
+            $('.calendar .months').removeClass('active-month');
+            $(this).addClass('active-month');
+
+            let month = $(this).text();   
+            text_on_calendar(month);
+            $('.month-picker').addClass('display-none');
+        }
+        
+    });
+
 
 }
 
@@ -2025,17 +2048,35 @@ function region_home_svg(){
 }
 
 //日曆上的月份顯示
-function text_on_calendar(){
+function text_on_calendar(month){
     let svg = d3.select(".calendar > svg");
 
-    svg
+    d3.select(".calendar svg text").remove();
+
+    if(month == '10月' || month == '11月' || month == '12月')
+    {
+        svg
+        .append('text')
+        .attr('x', 6)
+        .attr('y', 44)
+        .attr('font-weight', 'bold')
+        .text(`${month}`)
+        .style('font-size', '24px')
+        .style('fill', '#00000');
+    }
+
+    else
+    {
+        svg
         .append('text')
         .attr('x', 13)
         .attr('y', 44)
         .attr('font-weight', 'bold')
-        .text(`9月`)
+        .text(`${month}`)
         .style('font-size', '24px')
         .style('fill', '#00000');
+    }
+  
 }
 
 async function callAPI(path, action){
@@ -2063,11 +2104,31 @@ async function testAPI(path){
     });
 }
 
+//initial calendar
+(function(){
+    let today = new Date();
+    let today_month = today.getMonth() + 1 + '月';
+
+    let month_items = $(".months");
+
+    month_items.each(function(){
+        if($(this).text() == today_month) 
+        {   
+            $('.calendar .months').removeClass('active-month');
+            $(this).addClass('active-month');
+
+            let month = $(this).text();   
+            text_on_calendar(month);
+        }
+        
+    });
+   
+})();
+
 sum_login_chart();
 connect_amount_chart();
 connect_48h_chart();
 detail_chart();
-text_on_calendar();
 mode_chart();
 region_connect_svg();
 region_home_svg();

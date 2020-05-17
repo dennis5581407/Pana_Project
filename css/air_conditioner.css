@@ -198,12 +198,63 @@ div.logo-item{
     line-height: 50px;
     padding: 3px 0px 0px 0px;
     box-sizing: border-box;
+    position: relative;
+    -webkit-user-select: none; 
+    -moz-user-select: none;
 }
 
+.detail-item .calendar:hover{
+    padding-bottom: 2px;
+}
+
+.month-picker{
+    position: absolute;
+    width: 300%;
+    height: 200%;
+    top: 48px;
+    left: 0px;
+    background-color: white;
+    border: 1px gray solid;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+    padding: 1px;
+    box-sizing: border-box;
+}
+
+.display-none{
+    display: none;
+}
+
+.month-picker .months{
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 23%;
+    height: 23%;
+    text-align: center;
+    line-height: 22px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.month-picker .months:hover{
+    background-color: #3FA9F5;
+    color: white;
+    transition-duration: .2s;
+}
+
+.month-picker .active-month{
+    background-color: #3FA9F5;
+    color: white;
+    cursor: not-allowed;
+}
 .calendar > svg{
     width: 90%;
     height: 90%;
     cursor: pointer;
+    transition: .5s;
 }
 
 .button-region{
