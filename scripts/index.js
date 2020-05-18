@@ -739,7 +739,7 @@ $(document).ready(function(){
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_2 > svg').remove();
-                callAPI('/dashboard/accept-appliance-3years?ID=0', chart_2);
+                callAPI('/dashboard/accept-appliance-3years?ID=1', chart_2);
             }
         });
 
@@ -988,7 +988,7 @@ $(document).ready(function(){
             $("#chart-2-1").addClass('button-pressed');
             $("#chart-2-1").removeClass('button-unpressed');
             $('#chart_2 > svg').remove();
-            callAPI('/dashboard/accept-appliance-3years?ID=0', chart_2);
+            callAPI('/dashboard/accept-appliance-3years?ID=1', chart_2);
         }
     })();
 

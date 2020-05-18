@@ -1,4 +1,3 @@
-
 function click_event(){
     //header click event
     $(".lang").on('click','.lang-option-active',function(){
@@ -75,8 +74,12 @@ function click_event(){
 
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
+
+            let month = $('.active-month').text();
+            month = month.substring(0,month.length-1);
+            
             $('.detail-chart > svg').remove();
-            detail_chart();
+            callAPI(`/air-conditioner/connect-48h?ID=0&month=${month}`, detail_chart);
         }  
     });
 
@@ -94,8 +97,12 @@ function click_event(){
 
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
+
+            let month = $('.active-month').text();
+            month = month.substring(0,month.length-1);
+            
             $('.detail-chart > svg').remove();
-            detail_chart();
+            callAPI(`/air-conditioner/connect-48h?ID=1&month=${month}`, detail_chart);
         }
     });
 
@@ -113,8 +120,12 @@ function click_event(){
 
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
+            
+            let month = $('.active-month').text();
+            month = month.substring(0,month.length-1);
+            
             $('.detail-chart > svg').remove();
-            detail_chart();
+            callAPI(`/air-conditioner/connect-48h?ID=2&month=${month}`, detail_chart);
         }
     });
 
@@ -132,8 +143,12 @@ function click_event(){
 
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
+            
+            let month = $('.active-month').text();
+            month = month.substring(0,month.length-1);
+            
             $('.detail-chart > svg').remove();
-            detail_chart();
+            callAPI(`/air-conditioner/connect-48h?ID=3&month=${month}`, detail_chart);
         }
     });
 
@@ -153,7 +168,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            mode_chart();
+            callAPI('/air-conditioner/region-mode?ID=0', mode_chart);
         }
     });
 
@@ -172,7 +187,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            mode_chart();
+            callAPI('/air-conditioner/region-mode?ID=1', mode_chart);
         }
     });
 
@@ -191,7 +206,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            mode_chart();
+            callAPI('/air-conditioner/region-mode?ID=2', mode_chart);
         }
     });
 
@@ -210,7 +225,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            mode_chart();
+            callAPI('/air-conditioner/region-mode?ID=3', mode_chart);
         }
     });
 
@@ -232,7 +247,32 @@ function click_event(){
 
             let month = $(this).text();   
             text_on_calendar(month);
+            month = month.substring(0,month.length-1);
+            
             $('.month-picker').addClass('display-none');
+
+            //按下月曆的月份時判斷按鈕是在北部、中部、南部、東部，並call API
+            let button_active = $('.detail-item .button-pressed');
+            $('.detail-chart > svg').remove();
+            if(button_active.hasClass('button-north'))
+            {
+                callAPI(`/air-conditioner/connect-48h?ID=0&month=${month}`, detail_chart);
+            }
+
+            else if(button_active.hasClass('button-center'))
+            {
+                callAPI(`/air-conditioner/connect-48h?ID=1&month=${month}`, detail_chart);
+            }
+
+            else if(button_active.hasClass('button-south'))
+            {
+                callAPI(`/air-conditioner/connect-48h?ID=2&month=${month}`, detail_chart);
+            }
+
+            else if(button_active.hasClass('button-east'))
+            {
+                callAPI(`/air-conditioner/connect-48h?ID=3&month=${month}`, detail_chart);
+            }
         }
         
     });
@@ -260,226 +300,7 @@ function show_time(){
 }
 
 //累積登錄台數畫圖
-function sum_login_chart(){
-
-    let dataset = [
-        {
-            'year': '201801', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '201802',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '201803',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '201804', 
-            'all': 27,  
-            'addOn': 13,  
-            'buildIn': 14    
-        },
-        {
-            'year': '201805',
-            'all': 68, 
-            'addOn': 33,  
-            'buildIn': 35  
-        },
-        {
-            'year': '201806',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '201807', 
-            'all': 30,  
-            'addOn': 15,  
-            'buildIn': 15    
-        },
-        {
-            'year': '201808',
-            'all': 88, 
-            'addOn': 25,  
-            'buildIn': 63  
-        },
-        {
-            'year': '201809',
-            'all': 77,   
-            'addOn': 7,  
-            'buildIn': 70  
-        },
-        {
-            'year': '201810', 
-            'all': 52,  
-            'addOn': 39,  
-            'buildIn': 13    
-        },
-        {
-            'year': '201811',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '201812',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '201901', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '201902',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '201903',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '201904', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '201905',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '201906',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '201907', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '201908',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '201909',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '201910', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '201911',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '201912',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '202001', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '202002',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '202003',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '202004', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '202005',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '202006',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '202007', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '202008',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '202009',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '202010', 
-            'all': 82,  
-            'addOn': 2,  
-            'buildIn': 80    
-        },
-        {
-            'year': '202011',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '202012',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        }
-    ];
+function sum_login_chart(dataset){
 
     let Xdata = dataset.map(function(d){
         return d.year;
@@ -536,7 +357,7 @@ function sum_login_chart(){
             return xAxisScale(d.year);
         })
         .y0(function (d) {
-            return yAxisScale(d.buildIn);
+            return yAxisScale(d.builtIn);
         })
         .y1(function (d) {
             return yAxisScale(d.all);
@@ -544,6 +365,7 @@ function sum_login_chart(){
         .curve(d3.curveMonotoneX);
 
     svg.append("path")
+        .attr("class", "sum-login-area")
         .attr("d",area_generator(dataset)) //d="M1,0L20,40.....  d-path data
         .style("fill","#3FA9F5")
         .attr('transform', `translate(${offset},0)`);
@@ -555,18 +377,42 @@ function sum_login_chart(){
         })
         .y0(yAxisScale(0))
         .y1(function (d) {
-            return yAxisScale(d.buildIn);
+            return yAxisScale(d.builtIn);
         })
         .curve(d3.curveMonotoneX);
 
     svg.append("path")
+        .attr("class", "sum-login-area")
         .attr("d",area_generator(dataset)) //d="M1,0L20,40.....  d-path data
         .style("fill","#F7931E")
         .attr('transform', `translate(${offset},0)`);
+    
+    
 
     let today = new Date();
     let year = today.getFullYear();
-    
+    let today_month = today.getMonth() + 1;
+    today_month = today_month.toString();
+    if(today_month.length < 2)
+    {
+        today_month = '0' + today_month; 
+    }
+
+    let yearmonth = year + today_month;
+    let title_str;
+
+    //title顯示文字處理
+    dataset.forEach(function(element, i){   
+        if(element.year == yearmonth)
+        {
+            title_str = `當月全般累積登錄台數: ${element.all}    當月內藏累積登錄台數: ${element.builtIn}`; 
+        }
+    })
+
+    svg.selectAll('.sum-login-area') //display value when mouserover on bar
+        .append('title')
+        .text(title_str); 
+
     //x軸標示 
     svg.append('text') 
         .attr('x', xAxisScale_year(1))
@@ -633,226 +479,7 @@ function sum_login_chart(){
 }
 
 //連線台數畫圖
-function connect_amount_chart(){
-
-    let dataset = [
-        {
-            'year': '201801', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '201802',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '201803',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '201804', 
-            'all': 27,  
-            'addOn': 13,  
-            'buildIn': 14    
-        },
-        {
-            'year': '201805',
-            'all': 68, 
-            'addOn': 33,  
-            'buildIn': 35  
-        },
-        {
-            'year': '201806',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '201807', 
-            'all': 30,  
-            'addOn': 15,  
-            'buildIn': 15    
-        },
-        {
-            'year': '201808',
-            'all': 88, 
-            'addOn': 25,  
-            'buildIn': 63  
-        },
-        {
-            'year': '201809',
-            'all': 77,   
-            'addOn': 7,  
-            'buildIn': 70  
-        },
-        {
-            'year': '201810', 
-            'all': 52,  
-            'addOn': 39,  
-            'buildIn': 13    
-        },
-        {
-            'year': '201811',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '201812',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '201901', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '201902',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '201903',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '201904', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '201905',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '201906',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '201907', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '201908',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '201909',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '201910', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '201911',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '201912',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '202001', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '202002',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '202003',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '202004', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '202005',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '202006',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '202007', 
-            'all': 67,  
-            'addOn': 34,  
-            'buildIn': 33    
-        },
-        {
-            'year': '202008',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '202009',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        },
-        {
-            'year': '202010', 
-            'all': 82,  
-            'addOn': 2,  
-            'buildIn': 80    
-        },
-        {
-            'year': '202011',
-            'all': 92, 
-            'addOn': 60,  
-            'buildIn': 32  
-        },
-        {
-            'year': '202012',
-            'all': 77,   
-            'addOn': 44,  
-            'buildIn': 33  
-        }
-    ];
+function connect_amount_chart(dataset){
 
     let Xdata = dataset.map(function(d){
         return d.year;
@@ -909,7 +536,7 @@ function connect_amount_chart(){
             return xAxisScale(d.year);
         })
         .y0(function (d) {
-            return yAxisScale(d.buildIn);
+            return yAxisScale(d.builtIn);
         })
         .y1(function (d) {
             return yAxisScale(d.all);
@@ -917,6 +544,7 @@ function connect_amount_chart(){
         .curve(d3.curveMonotoneX);
 
     svg.append("path")
+        .attr('class', 'connect-amount-area')
         .attr("d",area_generator(dataset)) //d="M1,0L20,40.....  d-path data
         .style("fill","#3FA9F5")
         .attr('transform', `translate(${offset},0)`);
@@ -928,17 +556,39 @@ function connect_amount_chart(){
         })
         .y0(yAxisScale(0))
         .y1(function (d) {
-            return yAxisScale(d.buildIn);
+            return yAxisScale(d.builtIn);
         })
         .curve(d3.curveMonotoneX);
 
     svg.append("path")
+        .attr('class', 'connect-amount-area')
         .attr("d",area_generator(dataset)) //d="M1,0L20,40.....  d-path data
         .style("fill","#F7931E")
         .attr('transform', `translate(${offset},0)`);
 
     let today = new Date();
     let year = today.getFullYear();
+    let today_month = today.getMonth() + 1;
+    today_month = today_month.toString();
+    if(today_month.length < 2)
+    {
+        today_month = '0' + today_month; 
+    }
+
+    let yearmonth = year + today_month;
+    let title_str;
+
+    //title顯示文字處理
+    dataset.forEach(function(element, i){   
+        if(element.year == yearmonth)
+        {
+            title_str = `當月全般連線台數: ${element.all}    當月內藏連線台數: ${element.builtIn}`; 
+        }
+    })
+
+    svg.selectAll('.connect-amount-area') //display value when mouserover on bar
+        .append('title')
+        .text(title_str); 
     
     //x軸標示 
     svg.append('text') 
@@ -1006,178 +656,178 @@ function connect_amount_chart(){
 }
 
 //48h連線數畫圖
-function connect_48h_chart(){
+function connect_48h_chart(dataset){
 
-    let dataset = [
-        {
-            'hour': '00',   //時間為00時
-            'today_connect': 37,   //今日連線數 單位為萬台
-            'today_amount': 32,   //今日??台數 單位為萬台
-            'yesterday_connect': 34,  //昨日連線數 單位為萬台
-            'yesterday_amount': 65   //昨日??台數 單位為萬台
-        },
-        {
-            'hour': '01',   
-            'today_connect': 45,   
-            'today_amount': 32,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '02',   
-            'today_connect': 11,   
-            'today_amount': 44,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 77  
-        },
-        {
-            'hour': '03',   
-            'today_connect': 23,   
-            'today_amount': 13,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 32  
-        },
-        {
-            'hour': '04',   
-            'today_connect': 17,   
-            'today_amount': 32,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 15  
-        },
-        {
-            'hour': '05',   
-            'today_connect': 41,   
-            'today_amount': 97,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 88  
-        },
-        {
-            'hour': '06',   
-            'today_connect': 46,   
-            'today_amount': 32,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '07',   
-            'today_connect': 23,   
-            'today_amount': 22,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '08',   
-            'today_connect': 44,   
-            'today_amount': 32,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '09',   
-            'today_connect': 36,   
-            'today_amount': 32,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '10',   
-            'today_connect': 17,   
-            'today_amount': 32,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '11',   
-            'today_connect': 23,   
-            'today_amount': 77,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '12',   
-            'today_connect': 33,   
-            'today_amount': 32,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '13',   
-            'today_connect': 54,   
-            'today_amount': 32,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '14',   
-            'today_connect': 34,   
-            'today_amount': 32,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '15',   
-            'today_connect': 12,   
-            'today_amount': 32,  
-            'yesterday_connect': 65,  
-            'yesterday_amount': 19  
-        },
-        {
-            'hour': '16',   
-            'today_connect': 46,   
-            'today_amount': 32,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '17',   
-            'today_connect': 5,   
-            'today_amount': 57,  
-            'yesterday_connect': 2,  
-            'yesterday_amount': 12  
-        },
-        {
-            'hour': '18',   
-            'today_connect': 12,   
-            'today_amount': 54,  
-            'yesterday_connect': 66,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '19',   
-            'today_connect': 34,   
-            'today_amount': 32,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '20',   
-            'today_connect': 12,   
-            'today_amount': 78,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '21',   
-            'today_connect': 23,   
-            'today_amount': 32,  
-            'yesterday_connect': 18,  
-            'yesterday_amount': 65  
-        },
-        {
-            'hour': '22',   
-            'today_connect': 43,   
-            'today_amount': 32,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 36  
-        },
-        {
-            'hour': '23',   
-            'today_connect': 13,   
-            'today_amount': 32,  
-            'yesterday_connect': 34,  
-            'yesterday_amount': 65  
-        }
-    ];
+    // let dataset = [
+    //     {
+    //         'hour': '00',   //時間為00時
+    //         'today_connect': 37,   //今日連線數 單位為萬台
+    //         'today_amount': 32,   //今日??台數 單位為萬台
+    //         'yesterday_connect': 34,  //昨日連線數 單位為萬台
+    //         'yesterday_amount': 65   //昨日??台數 單位為萬台
+    //     },
+    //     {
+    //         'hour': '01',   
+    //         'today_connect': 45,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '02',   
+    //         'today_connect': 11,   
+    //         'today_amount': 44,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 77  
+    //     },
+    //     {
+    //         'hour': '03',   
+    //         'today_connect': 23,   
+    //         'today_amount': 13,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 32  
+    //     },
+    //     {
+    //         'hour': '04',   
+    //         'today_connect': 17,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 15  
+    //     },
+    //     {
+    //         'hour': '05',   
+    //         'today_connect': 41,   
+    //         'today_amount': 97,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 88  
+    //     },
+    //     {
+    //         'hour': '06',   
+    //         'today_connect': 46,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '07',   
+    //         'today_connect': 23,   
+    //         'today_amount': 22,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '08',   
+    //         'today_connect': 44,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '09',   
+    //         'today_connect': 36,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '10',   
+    //         'today_connect': 17,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '11',   
+    //         'today_connect': 23,   
+    //         'today_amount': 77,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '12',   
+    //         'today_connect': 33,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '13',   
+    //         'today_connect': 54,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '14',   
+    //         'today_connect': 34,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '15',   
+    //         'today_connect': 12,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 65,  
+    //         'yesterday_amount': 19  
+    //     },
+    //     {
+    //         'hour': '16',   
+    //         'today_connect': 46,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '17',   
+    //         'today_connect': 5,   
+    //         'today_amount': 57,  
+    //         'yesterday_connect': 2,  
+    //         'yesterday_amount': 12  
+    //     },
+    //     {
+    //         'hour': '18',   
+    //         'today_connect': 12,   
+    //         'today_amount': 54,  
+    //         'yesterday_connect': 66,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '19',   
+    //         'today_connect': 34,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '20',   
+    //         'today_connect': 12,   
+    //         'today_amount': 78,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '21',   
+    //         'today_connect': 23,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 18,  
+    //         'yesterday_amount': 65  
+    //     },
+    //     {
+    //         'hour': '22',   
+    //         'today_connect': 43,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 36  
+    //     },
+    //     {
+    //         'hour': '23',   
+    //         'today_connect': 13,   
+    //         'today_amount': 32,  
+    //         'yesterday_connect': 34,  
+    //         'yesterday_amount': 65  
+    //     }
+    // ];
 
     let Xdata = dataset.map(function(d){
         return d.hour;
@@ -1370,7 +1020,6 @@ function connect_48h_chart(){
 
     note.attr('transform', `translate(0,${yAxisScale(0) + 16})`);
 }
-
 
 //平均氣溫&濕度&運轉台數畫圖
 function detail_chart(){
@@ -1662,14 +1311,14 @@ function detail_chart(){
 
 
 //設定模式比例畫圖
-function mode_chart(){
-    let dataset = {
-        "cold_mode": 24,     //冷氣模式的比例 單位為%
-        "dehumid_mode": 16,     //除溼模式的比例 單位為%
-        "fan_mode": 14,     //送風模式的比例 單位為%
-        "warm_mode": 15,    //暖氣模式的比例 單位為%
-        "auto_mode": 31    //自動模式的比例 單位為%
-    };
+function mode_chart(dataset){
+    // let dataset = {
+    //     "cold_mode": 24,     //冷氣模式的比例 單位為%
+    //     "dehumid_mode": 16,     //除溼模式的比例 單位為%
+    //     "fan_mode": 14,     //送風模式的比例 單位為%
+    //     "warm_mode": 15,    //暖氣模式的比例 單位為%
+    //     "auto_mode": 31    //自動模式的比例 單位為%
+    // };
 
     let data = [];
     data.push(dataset.cold_mode, dataset.dehumid_mode, dataset.fan_mode, dataset.warm_mode, dataset.auto_mode);
@@ -1827,14 +1476,14 @@ function mode_chart(){
 
 
 //連線區域比例畫圖
-function region_connect_svg(){
-    let data = {
-        'north': 50,  //北部連線區域比例 單位為%
-        'west': 33,   //西部連線區域比例 單位為%
-        'east': 53,   //東部連線區域比例 單位為%
-        'south': 10,   //南部連線區域比例 單位為%
-        'island': 2   //外島連線區域比例 單位為%
-    };
+function region_connect_svg(data){
+    // let data = {
+    //     'north': 50,  //北部連線區域比例 單位為%
+    //     'west': 33,   //西部連線區域比例 單位為%
+    //     'east': 53,   //東部連線區域比例 單位為%
+    //     'south': 10,   //南部連線區域比例 單位為%
+    //     'island': 2   //外島連線區域比例 單位為%
+    // };
     
     let svg = d3.select(".region-connect-item > svg");
 
@@ -1938,14 +1587,14 @@ function region_connect_svg(){
 
 
 //各區域運轉台數比例畫圈
-function region_home_svg(){
-    let data = {
-        'north': 50,  //北部連線區域比例 單位為%
-        'west': 33,   //西部連線區域比例 單位為%
-        'east': 53,   //東部連線區域比例 單位為%
-        'south': 10,   //南部連線區域比例 單位為%
-        'island': 2   //外島連線區域比例 單位為%
-    };
+function region_home_svg(data){
+    // let data = {
+    //     'north': 50,  //北部連線區域比例 單位為%
+    //     'west': 33,   //西部連線區域比例 單位為%
+    //     'east': 53,   //東部連線區域比例 單位為%
+    //     'south': 10,   //南部連線區域比例 單位為%
+    //     'island': 2   //外島連線區域比例 單位為%
+    // };
     
     let svg = d3.select(".region-home-item > svg");
 
@@ -2079,6 +1728,49 @@ function text_on_calendar(month){
   
 }
 
+//左上角基本資料顯示
+function show_basic_information(data){
+    let queue = [];
+    queue.push(data.total_login.amount + '萬台', data.out_login.amount + '萬台',
+        data.in_login.amount + '萬台', data.total_login.rate + '%',
+        data.out_login.rate + '%', data.in_login.rate + '%');
+
+    let basic_information_item = $(".information");
+    basic_information_item.each(function(i,value){
+        $(this).text(queue[i]);
+    });
+};
+
+//異常回報顯示
+function show_trouble_report(dataset){
+    // dataset = {
+    //     'today': 2,  //今日異常回報數量
+    //     '30days': 5,   //30日內異常回報數量
+    //     'trouble_list':  //當日異常回報list
+    //         [
+    //             {
+    //                 'time': '20:23:53',  //異常發生時間
+    //                 'GWID': '73HFJFJENG'  //異常機器的GWID
+    //             },
+    //             {
+    //                 'time': '09:18:03', 
+    //                 'GWID': 'OIHJ03JG22'
+    //             }
+    //         ]
+    // };
+
+    $('.today-trouble-count').text(dataset.today);
+    $('.month-trouble-count').text(dataset['30days']);
+
+    if(dataset.trouble_list != null)
+    {
+        dataset.trouble_list.forEach(function(element, i){
+            $(".trouble-list ul").append(`<li>LIST ${i+1} - 時間：${element.time}, GWID：${element.GWID}, 異常</li>`);
+        });
+    }
+    
+}
+
 async function callAPI(path, action){
     let url = 'http://140.118.121.111:8354' + path;
 
@@ -2125,13 +1817,16 @@ async function testAPI(path){
    
 })();
 
-sum_login_chart();
-connect_amount_chart();
-connect_48h_chart();
+callAPI('/air-conditioner/basic-information', show_basic_information); //show 基本資料(頁面左上角總登錄數等)
+callAPI('/air-conditioner/sum-login', sum_login_chart); //show 累積登錄台數圖表(頁面左中) 待測:測資不正常導致顯示錯誤
+callAPI('/air-conditioner/connect-amount', connect_amount_chart); //show 連線台數圖表(頁面左下)
+callAPI('/air-conditioner/connect-48h', connect_48h_chart); //show 48h連線數與運轉台數(頁面中上)
+callAPI('/air-conditioner/region-mode?ID=0', mode_chart); //show 設定模式比例圓餅圖(頁面中下圓餅圖)
+callAPI('/air-conditioner/trouble', show_trouble_report); //show 設定模式比例圓餅圖(頁面中下圓餅圖)
+callAPI('/air-conditioner/connect-region-rate', region_connect_svg); //show 台灣圖之連線區域比例(頁面右上台灣圖)
+callAPI('/air-conditioner/amount-region-rate', region_home_svg); //show 台灣圖之各區域運轉比例(頁面右中台灣圖)
+
 detail_chart();
-mode_chart();
-region_connect_svg();
-region_home_svg();
 click_event();
 // testAPI("/air-conditioner/information?ID=0");
 setInterval(show_time, 1000);//show time per sec

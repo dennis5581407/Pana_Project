@@ -174,9 +174,6 @@ div.logo-item{
     display: flex;
 }
 
-.detail-item > div{
-    /* border: 1px solid black; */
-}
 
 .detail-item > div:nth-child(1){
     width: 14%;
