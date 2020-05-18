@@ -3,7 +3,7 @@ $(document).ready(function(){
     function chart_1(dataset_1){ //-------------------------chart_1---------------------------
 
         let Xdata_1 = dataset_1.map(function(d){
-            return d.date;
+            return d.month;
         });
         
         let xdata_show = [];
@@ -60,7 +60,7 @@ $(document).ready(function(){
             .data(dataset_1)
             .enter()
             .append('rect')
-            .attr('x', (d) => xAxisScale(d.date))
+            .attr('x', (d) => xAxisScale(d.month))
             .attr('y', (d) => yAxisScale_1(d.value))
             .attr('width', xAxisScale.bandwidth())
             .style('fill','#3FA9F5')
@@ -76,7 +76,7 @@ $(document).ready(function(){
 
         let line = d3.line()
             .x(function (d) {
-                return xAxisScale(d.date);
+                return xAxisScale(d.month);
             })
             .y(function (d) {
                 return yAxisScale_1(d.connect);
@@ -96,7 +96,7 @@ $(document).ready(function(){
             .data(dataset_1)
             .enter()
             .append('circle')
-            .attr('cx', (d) => xAxisScale(d.date))
+            .attr('cx', (d) => xAxisScale(d.month))
             .attr('fill', '#FF0040')
             .attr('cy', (d) => yAxisScale_1(d.connect))
             .attr('r', '2.5')
@@ -169,56 +169,6 @@ $(document).ready(function(){
         let Xdata = dataset.map(function(d){
             return d.year;
         });
-        
-        let xdata_show = [];
-
-        for (let i=0; i<3; i++)
-        {
-            xdata_show.push('1月', '4月', '7月', '10月'); 
-        }
-
-        let count = 0;
-        Xdata.forEach(function(item,index){
-
-            if(index%3==0){
-                if(count==0)
-                {
-                    Xdata[index] = "1月"
-                    count = 1;
-                }
-                else if(count==1)
-                {
-                    Xdata[index] = "4月"
-                    count = 2;
-                }
-                else if(count==2)
-                {
-                    Xdata[index] = "7月"
-                    count = 3;
-                }
-
-                else if(count==3)
-                {
-                    Xdata[index] = "10月"
-                    count = 0;
-                }
-            
-            }
-        });
-
-        console.log(Xdata);
-
-        let Ydata_sell = dataset.map(function(d){
-            return d.sell;
-        });
-
-        let Ydata_login = dataset.map(function(d){
-            return d.login;
-        });
-
-        let Ydata_accept = dataset.map(function(d){
-            return d.accept;
-        });
 
         let svg_height = $("#chart_2 > svg").height() - 50;
         let svg_width = $('#chart_2 > svg').width() - 30;
@@ -230,7 +180,8 @@ $(document).ready(function(){
         let xAxisScale = d3.scaleBand()
             .domain(Xdata)
             .range([50,svg_width])
-            .padding(0.5);
+            .paddingInner(0.3)
+            .paddingOuter(0.2);
 
         let offset = xAxisScale.bandwidth() / 2;
 
@@ -241,7 +192,7 @@ $(document).ready(function(){
             .style('opacity', '0');
 
         svg.append('g') //x axis
-            .call(d3.axisBottom(xAxisScale).tickSize(0).tickValues(xdata_show))
+            .call(d3.axisBottom(xAxisScale).tickSize(0).tickFormat(' '))
             .attr('transform', `translate(0, ${svg_height})`)
             .attr('font-size', 12)
             .select('path')
@@ -260,9 +211,9 @@ $(document).ready(function(){
             .attr('x', (d) => xAxisScale(d.year))
             .attr('y', (d) => yAxisScale(d.sell))
             .attr('width', xAxisScale.bandwidth())
-            .style('fill','#128FFB')
+            .style('fill','#3FA9F5')
             .transition().duration(1000)
-            .attr('height', (d) => svg_height - yAxisScale(d.sell));
+            .attr('height', (d) => svg_height - (yAxisScale(d.sell - d.login)));
      
 
         svg.selectAll('.rect_login')
@@ -272,8 +223,8 @@ $(document).ready(function(){
             .attr('class', 'rect_login')
             .attr('x', (d) => xAxisScale(d.year))
             .attr('y', (d) => yAxisScale(d.login))
-            .attr('width', xAxisScale.bandwidth()/2)
-            .style('fill','#F38001')
+            .attr('width', xAxisScale.bandwidth())
+            .style('fill','#F7931E')
             .transition().duration(1000)
             .attr('height', (d) => svg_height - yAxisScale(d.login));
 
@@ -323,10 +274,104 @@ $(document).ready(function(){
             .attr('transform', `translate(${offset},0)`);
 
         svg.append('text') 
-            .attr('x', 10)
-            .attr('y', yAxisScale(0) + 23)
-            .text('單位萬台')
+            .attr('x', 7)
+            .attr('y', yAxisScale(0) + 28)
+            .text('單位:萬台')
+            .style('font-size', '12px');
+
+        //x軸座標標示
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[0]) - 5)
+            .attr('y', yAxisScale(0) + 13)
+            .text('1月')
             .style('font-size', '11px');
+
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[3]) - 5)
+            .attr('y', yAxisScale(0) + 13)
+            .text('4月')
+            .style('font-size', '11px');
+
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[6]) - 5)
+            .attr('y', yAxisScale(0) + 13)
+            .text('7月')
+            .style('font-size', '11px');
+            
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[9]) - 8)
+            .attr('y', yAxisScale(0) + 13)
+            .text('10月')
+            .style('font-size', '11px');
+
+            svg.append('text') 
+            .attr('x', xAxisScale(Xdata[12]) - 5)
+            .attr('y', yAxisScale(0) + 13)
+            .text('1月')
+            .style('font-size', '11px');
+
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[15]) - 5)
+            .attr('y', yAxisScale(0) + 13)
+            .text('4月')
+            .style('font-size', '11px');
+
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[18]) - 5)
+            .attr('y', yAxisScale(0) + 13)
+            .text('7月')
+            .style('font-size', '11px');
+            
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[21]) - 8)
+            .attr('y', yAxisScale(0) + 13)
+            .text('10月')
+            .style('font-size', '11px');
+        
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[24]) - 5)
+            .attr('y', yAxisScale(0) + 13)
+            .text('1月')
+            .style('font-size', '11px');
+
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[27]) - 5)
+            .attr('y', yAxisScale(0) + 13)
+            .text('4月')
+            .style('font-size', '11px');
+
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[30]) - 5)
+            .attr('y', yAxisScale(0) + 13)
+            .text('7月')
+            .style('font-size', '11px');
+            
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[33]) - 8)
+            .attr('y', yAxisScale(0) + 13)
+            .text('10月')
+            .style('font-size', '11px');
+
+        let today = new Date();
+        let year = today.getFullYear();
+
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[4]) - 5)
+            .attr('y', yAxisScale(0) + 27)
+            .text(`${year - 2}年`)
+            .style('font-size', '12px');
+        
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[16]) - 5)
+            .attr('y', yAxisScale(0) + 27)
+            .text(`${year - 1}年`)
+            .style('font-size', '12px');
+
+        svg.append('text') 
+            .attr('x', xAxisScale(Xdata[28]) - 5)
+            .attr('y', yAxisScale(0) + 27)
+            .text(`${year}年`)
+            .style('font-size', '12px');
 
         let note = svg.append('g');
         
@@ -599,41 +644,10 @@ $(document).ready(function(){
                 $('.item-3 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-3 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-                let data = [{date:'4/1', value:getRandom(), connect:getRandom()},
-                {date:'4/2', value:getRandom(), connect:getRandom()},
-                {date:'4/3', value:getRandom(), connect:getRandom()},
-                {date:'4/4', value:getRandom(), connect:getRandom()},
-                {date:'4/5', value:getRandom(), connect:getRandom()},
-                {date:'4/6', value:getRandom(), connect:getRandom()},
-                {date:'4/7', value:getRandom(), connect:getRandom()},
-                {date:'4/8', value:getRandom(), connect:getRandom()},
-                {date:'4/9', value:getRandom(), connect:getRandom()},
-                {date:'4/10', value:getRandom(), connect:getRandom()},
-                {date:'4/11', value:getRandom(), connect:getRandom()},
-                {date:'4/12', value:getRandom(), connect:getRandom()},
-                {date:'4/13', value:getRandom(), connect:getRandom()},
-                {date:'4/14', value:getRandom(), connect:getRandom()},
-                {date:'4/15', value:getRandom(), connect:getRandom()},
-                {date:'4/16', value:getRandom(), connect:getRandom()},
-                {date:'4/17', value:getRandom(), connect:getRandom()},
-                {date:'4/18', value:getRandom(), connect:getRandom()},
-                {date:'4/19', value:getRandom(), connect:getRandom()},
-                {date:'4/20', value:getRandom(), connect:getRandom()},
-                {date:'4/21', value:getRandom(), connect:getRandom()},
-                {date:'4/22', value:getRandom(), connect:getRandom()},
-                {date:'4/23', value:getRandom(), connect:getRandom()},
-                {date:'4/24', value:getRandom(), connect:getRandom()},
-                {date:'4/25', value:getRandom(), connect:getRandom()},
-                {date:'4/26', value:getRandom(), connect:getRandom()},
-                {date:'4/27', value:getRandom(), connect:getRandom()},
-                {date:'4/28', value:getRandom(), connect:getRandom()},
-                {date:'4/29', value:getRandom(), connect:getRandom()},
-                {date:'4/30', value:getRandom(), connect:getRandom()}
-                ]
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_1 > svg').remove();
-                chart_1(data);
+                callAPI('/dashboard/connect-appliance?ID=0', chart_1); //全般data
             }
             
         });
@@ -649,41 +663,10 @@ $(document).ready(function(){
                 $('.item-3 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-3 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-                let data = [{date:'4/1', value:getRandom(), connect:getRandom()},
-                {date:'4/2', value:getRandom(), connect:getRandom()},
-                {date:'4/3', value:getRandom(), connect:getRandom()},
-                {date:'4/4', value:getRandom(), connect:getRandom()},
-                {date:'4/5', value:getRandom(), connect:getRandom()},
-                {date:'4/6', value:getRandom(), connect:getRandom()},
-                {date:'4/7', value:getRandom(), connect:getRandom()},
-                {date:'4/8', value:getRandom(), connect:getRandom()},
-                {date:'4/9', value:getRandom(), connect:getRandom()},
-                {date:'4/10', value:getRandom(), connect:getRandom()},
-                {date:'4/11', value:getRandom(), connect:getRandom()},
-                {date:'4/12', value:getRandom(), connect:getRandom()},
-                {date:'4/13', value:getRandom(), connect:getRandom()},
-                {date:'4/14', value:getRandom(), connect:getRandom()},
-                {date:'4/15', value:getRandom(), connect:getRandom()},
-                {date:'4/16', value:getRandom(), connect:getRandom()},
-                {date:'4/17', value:getRandom(), connect:getRandom()},
-                {date:'4/18', value:getRandom(), connect:getRandom()},
-                {date:'4/19', value:getRandom(), connect:getRandom()},
-                {date:'4/20', value:getRandom(), connect:getRandom()},
-                {date:'4/21', value:getRandom(), connect:getRandom()},
-                {date:'4/22', value:getRandom(), connect:getRandom()},
-                {date:'4/23', value:getRandom(), connect:getRandom()},
-                {date:'4/24', value:getRandom(), connect:getRandom()},
-                {date:'4/25', value:getRandom(), connect:getRandom()},
-                {date:'4/26', value:getRandom(), connect:getRandom()},
-                {date:'4/27', value:getRandom(), connect:getRandom()},
-                {date:'4/28', value:getRandom(), connect:getRandom()},
-                {date:'4/29', value:getRandom(), connect:getRandom()},
-                {date:'4/30', value:getRandom(), connect:getRandom()}
-                ]
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_1 > svg').remove();
-                chart_1(data);
+                callAPI('/dashboard/connect-appliance?ID=1', chart_1); //空調data
             }
         });
 
@@ -697,42 +680,11 @@ $(document).ready(function(){
             {   
                 $('.item-3 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-3 > div > div:nth-child(1) > div').addClass('button-unpressed');
-
-                let data = [{date:'4/1', value:getRandom(), connect:getRandom()},
-                {date:'4/2', value:getRandom(), connect:getRandom()},
-                {date:'4/3', value:getRandom(), connect:getRandom()},
-                {date:'4/4', value:getRandom(), connect:getRandom()},
-                {date:'4/5', value:getRandom(), connect:getRandom()},
-                {date:'4/6', value:getRandom(), connect:getRandom()},
-                {date:'4/7', value:getRandom(), connect:getRandom()},
-                {date:'4/8', value:getRandom(), connect:getRandom()},
-                {date:'4/9', value:getRandom(), connect:getRandom()},
-                {date:'4/10', value:getRandom(), connect:getRandom()},
-                {date:'4/11', value:getRandom(), connect:getRandom()},
-                {date:'4/12', value:getRandom(), connect:getRandom()},
-                {date:'4/13', value:getRandom(), connect:getRandom()},
-                {date:'4/14', value:getRandom(), connect:getRandom()},
-                {date:'4/15', value:getRandom(), connect:getRandom()},
-                {date:'4/16', value:getRandom(), connect:getRandom()},
-                {date:'4/17', value:getRandom(), connect:getRandom()},
-                {date:'4/18', value:getRandom(), connect:getRandom()},
-                {date:'4/19', value:getRandom(), connect:getRandom()},
-                {date:'4/20', value:getRandom(), connect:getRandom()},
-                {date:'4/21', value:getRandom(), connect:getRandom()},
-                {date:'4/22', value:getRandom(), connect:getRandom()},
-                {date:'4/23', value:getRandom(), connect:getRandom()},
-                {date:'4/24', value:getRandom(), connect:getRandom()},
-                {date:'4/25', value:getRandom(), connect:getRandom()},
-                {date:'4/26', value:getRandom(), connect:getRandom()},
-                {date:'4/27', value:getRandom(), connect:getRandom()},
-                {date:'4/28', value:getRandom(), connect:getRandom()},
-                {date:'4/29', value:getRandom(), connect:getRandom()},
-                {date:'4/30', value:getRandom(), connect:getRandom()}
-                ]
+           
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_1 > svg').remove();
-                chart_1(data);
+                callAPI('/dashboard/connect-appliance?ID=4', chart_1); //除濕機data
             }
         });
 
@@ -747,41 +699,10 @@ $(document).ready(function(){
                 $('.item-3 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-3 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-                let data = [{date:'4/1', value:getRandom(), connect:getRandom()},
-                {date:'4/2', value:getRandom(), connect:getRandom()},
-                {date:'4/3', value:getRandom(), connect:getRandom()},
-                {date:'4/4', value:getRandom(), connect:getRandom()},
-                {date:'4/5', value:getRandom(), connect:getRandom()},
-                {date:'4/6', value:getRandom(), connect:getRandom()},
-                {date:'4/7', value:getRandom(), connect:getRandom()},
-                {date:'4/8', value:getRandom(), connect:getRandom()},
-                {date:'4/9', value:getRandom(), connect:getRandom()},
-                {date:'4/10', value:getRandom(), connect:getRandom()},
-                {date:'4/11', value:getRandom(), connect:getRandom()},
-                {date:'4/12', value:getRandom(), connect:getRandom()},
-                {date:'4/13', value:getRandom(), connect:getRandom()},
-                {date:'4/14', value:getRandom(), connect:getRandom()},
-                {date:'4/15', value:getRandom(), connect:getRandom()},
-                {date:'4/16', value:getRandom(), connect:getRandom()},
-                {date:'4/17', value:getRandom(), connect:getRandom()},
-                {date:'4/18', value:getRandom(), connect:getRandom()},
-                {date:'4/19', value:getRandom(), connect:getRandom()},
-                {date:'4/20', value:getRandom(), connect:getRandom()},
-                {date:'4/21', value:getRandom(), connect:getRandom()},
-                {date:'4/22', value:getRandom(), connect:getRandom()},
-                {date:'4/23', value:getRandom(), connect:getRandom()},
-                {date:'4/24', value:getRandom(), connect:getRandom()},
-                {date:'4/25', value:getRandom(), connect:getRandom()},
-                {date:'4/26', value:getRandom(), connect:getRandom()},
-                {date:'4/27', value:getRandom(), connect:getRandom()},
-                {date:'4/28', value:getRandom(), connect:getRandom()},
-                {date:'4/29', value:getRandom(), connect:getRandom()},
-                {date:'4/30', value:getRandom(), connect:getRandom()}
-                ]
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_1 > svg').remove();
-                chart_1(data);
+                callAPI('/dashboard/connect-appliance?ID=3', chart_1); //洗衣機data
             }
         });
 
@@ -796,41 +717,10 @@ $(document).ready(function(){
                 $('.item-3 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-3 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-                let data = [{date:'4/1', value:getRandom(), connect:getRandom()},
-                {date:'4/2', value:getRandom(), connect:getRandom()},
-                {date:'4/3', value:getRandom(), connect:getRandom()},
-                {date:'4/4', value:getRandom(), connect:getRandom()},
-                {date:'4/5', value:getRandom(), connect:getRandom()},
-                {date:'4/6', value:getRandom(), connect:getRandom()},
-                {date:'4/7', value:getRandom(), connect:getRandom()},
-                {date:'4/8', value:getRandom(), connect:getRandom()},
-                {date:'4/9', value:getRandom(), connect:getRandom()},
-                {date:'4/10', value:getRandom(), connect:getRandom()},
-                {date:'4/11', value:getRandom(), connect:getRandom()},
-                {date:'4/12', value:getRandom(), connect:getRandom()},
-                {date:'4/13', value:getRandom(), connect:getRandom()},
-                {date:'4/14', value:getRandom(), connect:getRandom()},
-                {date:'4/15', value:getRandom(), connect:getRandom()},
-                {date:'4/16', value:getRandom(), connect:getRandom()},
-                {date:'4/17', value:getRandom(), connect:getRandom()},
-                {date:'4/18', value:getRandom(), connect:getRandom()},
-                {date:'4/19', value:getRandom(), connect:getRandom()},
-                {date:'4/20', value:getRandom(), connect:getRandom()},
-                {date:'4/21', value:getRandom(), connect:getRandom()},
-                {date:'4/22', value:getRandom(), connect:getRandom()},
-                {date:'4/23', value:getRandom(), connect:getRandom()},
-                {date:'4/24', value:getRandom(), connect:getRandom()},
-                {date:'4/25', value:getRandom(), connect:getRandom()},
-                {date:'4/26', value:getRandom(), connect:getRandom()},
-                {date:'4/27', value:getRandom(), connect:getRandom()},
-                {date:'4/28', value:getRandom(), connect:getRandom()},
-                {date:'4/29', value:getRandom(), connect:getRandom()},
-                {date:'4/30', value:getRandom(), connect:getRandom()}
-                ]
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_1 > svg').remove();
-                chart_1(data);
+                callAPI('/dashboard/connect-appliance?ID=2', chart_1); //冰箱data
             }
         });
 
@@ -846,14 +736,10 @@ $(document).ready(function(){
                 $('.item-5 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-5 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-                let data = [{year:'2018年', sell:getRandom(), login:getRandom(), accept:getRandom()},
-                    {year:'2019年', sell:getRandom(), login:getRandom(), accept:getRandom()},
-                    {year:'2020年', sell:getRandom(), login:getRandom(), accept:getRandom()}
-                ];
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_2 > svg').remove();
-                chart_2(data);
+                callAPI('/dashboard/accept-appliance-3years?ID=0', chart_2);
             }
         });
 
@@ -869,14 +755,10 @@ $(document).ready(function(){
                 $('.item-5 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-5 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-                let data = [{year:'2018年', sell:getRandom(), login:getRandom(), accept:getRandom()},
-                    {year:'2019年', sell:getRandom(), login:getRandom(), accept:getRandom()},
-                    {year:'2020年', sell:getRandom(), login:getRandom(), accept:getRandom()}
-                ];
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_2 > svg').remove();
-                chart_2(data);
+                callAPI('/dashboard/accept-appliance-3years?ID=4', chart_2);
             }
         });
 
@@ -892,14 +774,10 @@ $(document).ready(function(){
                 $('.item-5 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-5 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-                let data = [{year:'2018年', sell:getRandom(), login:getRandom(), accept:getRandom()},
-                    {year:'2019年', sell:getRandom(), login:getRandom(), accept:getRandom()},
-                    {year:'2020年', sell:getRandom(), login:getRandom(), accept:getRandom()}
-                ];
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_2 > svg').remove();
-                chart_2(data);
+                callAPI('/dashboard/accept-appliance-3years?ID=3', chart_2);
             }
         });
 
@@ -915,14 +793,10 @@ $(document).ready(function(){
                 $('.item-5 > div > div:nth-child(1) > div').removeClass('button-pressed');
                 $('.item-5 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-                let data = [{year:'2018年', sell:getRandom(), login:getRandom(), accept:getRandom()},
-                    {year:'2019年', sell:getRandom(), login:getRandom(), accept:getRandom()},
-                    {year:'2020年', sell:getRandom(), login:getRandom(), accept:getRandom()}
-                ];
                 $(this).addClass('button-pressed');
                 $(this).removeClass('button-unpressed');
                 $('#chart_2 > svg').remove();
-                chart_2(data);
+                callAPI('/dashboard/accept-appliance-3years?ID=2', chart_2);
             }
         });
 
@@ -1110,229 +984,11 @@ $(document).ready(function(){
 
             $('.item-5 > div > div:nth-child(1) > div').removeClass('button-pressed');
             $('.item-5 > div > div:nth-child(1) > div').addClass('button-unpressed');
-
-            let data = [
-                {
-                    "year": "201801",
-                    "sell": 0,
-                    "login": 43,
-                    "accept": 0
-                },
-                {
-                    "year": "201802",
-                    "sell": 0,
-                    "login": 34,
-                    "accept": 0
-                },
-                {
-                    "year": "201803",
-                    "sell": 0,
-                    "login": 70,
-                    "accept": 0
-                },
-                {
-                    "year": "201804",
-                    "sell": 0,
-                    "login": 123,
-                    "accept": 0
-                },
-                {
-                    "year": "201805",
-                    "sell": 0,
-                    "login": 152,
-                    "accept": 0
-                },
-                {
-                    "year": "201806",
-                    "sell": 0,
-                    "login": 166,
-                    "accept": 0
-                },
-                {
-                    "year": "201807",
-                    "sell": 0,
-                    "login": 135,
-                    "accept": 0
-                },
-                {
-                    "year": "201808",
-                    "sell": 0,
-                    "login": 140,
-                    "accept": 0
-                },
-                {
-                    "year": "201809",
-                    "sell": 0,
-                    "login": 90,
-                    "accept": 0
-                },
-                {
-                    "year": "201810",
-                    "sell": 0,
-                    "login": 55,
-                    "accept": 0
-                },
-                {
-                    "year": "201811",
-                    "sell": 0,
-                    "login": 73,
-                    "accept": 0
-                },
-                {
-                    "year": "201812",
-                    "sell": 0,
-                    "login": 38,
-                    "accept": 0
-                },
-                {
-                    "year": "201901",
-                    "sell": 0,
-                    "login": 29,
-                    "accept": 0
-                },
-                {
-                    "year": "201902",
-                    "sell": 0,
-                    "login": 52,
-                    "accept": 0
-                },
-                {
-                    "year": "201903",
-                    "sell": 0,
-                    "login": 66,
-                    "accept": 0
-                },
-                {
-                    "year": "201904",
-                    "sell": 0,
-                    "login": 104,
-                    "accept": 0
-                },
-                {
-                    "year": "201905",
-                    "sell": 0,
-                    "login": 115,
-                    "accept": 0
-                },
-                {
-                    "year": "201906",
-                    "sell": 0,
-                    "login": 182,
-                    "accept": 0
-                },
-                {
-                    "year": "201907",
-                    "sell": 0,
-                    "login": 198,
-                    "accept": 0
-                },
-                {
-                    "year": "201908",
-                    "sell": 0,
-                    "login": 147,
-                    "accept": 0
-                },
-                {
-                    "year": "201909",
-                    "sell": 0,
-                    "login": 104,
-                    "accept": 0
-                },
-                {
-                    "year": "201910",
-                    "sell": 0,
-                    "login": 89,
-                    "accept": 0
-                },
-                {
-                    "year": "201911",
-                    "sell": 0,
-                    "login": 62,
-                    "accept": 0
-                },
-                {
-                    "year": "201912",
-                    "sell": 0,
-                    "login": 71,
-                    "accept": 0
-                },
-                {
-                    "year": "202001",
-                    "sell": 0,
-                    "login": 66,
-                    "accept": 0
-                },
-                {
-                    "year": "202002",
-                    "sell": 0,
-                    "login": 73,
-                    "accept": 0
-                },
-                {
-                    "year": "202003",
-                    "sell": 8554,
-                    "login": 93,
-                    "accept": 1
-                },
-                {
-                    "year": "202004",
-                    "sell": 0,
-                    "login": 99,
-                    "accept": 0
-                },
-                {
-                    "year": "202005",
-                    "sell": 0,
-                    "login": 5,
-                    "accept": 0
-                },
-                {
-                    "year": "202006",
-                    "sell": 0,
-                    "login": 0,
-                    "accept": 0
-                },
-                {
-                    "year": "202007",
-                    "sell": 0,
-                    "login": 0,
-                    "accept": 0
-                },
-                {
-                    "year": "202008",
-                    "sell": 0,
-                    "login": 0,
-                    "accept": 0
-                },
-                {
-                    "year": "202009",
-                    "sell": 0,
-                    "login": 0,
-                    "accept": 0
-                },
-                {
-                    "year": "202010",
-                    "sell": 0,
-                    "login": 0,
-                    "accept": 0
-                },
-                {
-                    "year": "202011",
-                    "sell": 0,
-                    "login": 0,
-                    "accept": 0
-                },
-                {
-                    "year": "202012",
-                    "sell": 0,
-                    "login": 0,
-                    "accept": 0
-                }
-            ];
+            
             $("#chart-2-1").addClass('button-pressed');
             $("#chart-2-1").removeClass('button-unpressed');
             $('#chart_2 > svg').remove();
-            chart_2(data);
+            callAPI('/dashboard/accept-appliance-3years?ID=0', chart_2);
         }
     })();
 
@@ -1348,41 +1004,10 @@ $(document).ready(function(){
             $('.item-3 > div > div:nth-child(1) > div').removeClass('button-pressed');
             $('.item-3 > div > div:nth-child(1) > div').addClass('button-unpressed');
 
-            let data = [{date:'4/1', value:getRandom(), connect:getRandom()},
-                {date:'4/2', value:getRandom(), connect:getRandom()},
-                {date:'4/3', value:getRandom(), connect:getRandom()},
-                {date:'4/4', value:getRandom(), connect:getRandom()},
-                {date:'4/5', value:getRandom(), connect:getRandom()},
-                {date:'4/6', value:getRandom(), connect:getRandom()},
-                {date:'4/7', value:getRandom(), connect:getRandom()},
-                {date:'4/8', value:getRandom(), connect:getRandom()},
-                {date:'4/9', value:getRandom(), connect:getRandom()},
-                {date:'4/10', value:getRandom(), connect:getRandom()},
-                {date:'4/11', value:getRandom(), connect:getRandom()},
-                {date:'4/12', value:getRandom(), connect:getRandom()},
-                {date:'4/13', value:getRandom(), connect:getRandom()},
-                {date:'4/14', value:getRandom(), connect:getRandom()},
-                {date:'4/15', value:getRandom(), connect:getRandom()},
-                {date:'4/16', value:getRandom(), connect:getRandom()},
-                {date:'4/17', value:getRandom(), connect:getRandom()},
-                {date:'4/18', value:getRandom(), connect:getRandom()},
-                {date:'4/19', value:getRandom(), connect:getRandom()},
-                {date:'4/20', value:getRandom(), connect:getRandom()},
-                {date:'4/21', value:getRandom(), connect:getRandom()},
-                {date:'4/22', value:getRandom(), connect:getRandom()},
-                {date:'4/23', value:getRandom(), connect:getRandom()},
-                {date:'4/24', value:getRandom(), connect:getRandom()},
-                {date:'4/25', value:getRandom(), connect:getRandom()},
-                {date:'4/26', value:getRandom(), connect:getRandom()},
-                {date:'4/27', value:getRandom(), connect:getRandom()},
-                {date:'4/28', value:getRandom(), connect:getRandom()},
-                {date:'4/29', value:getRandom(), connect:getRandom()},
-                {date:'4/30', value:getRandom(), connect:getRandom()}
-                ]
             $("#chart-1-1").addClass('button-pressed');
             $("#chart-1-1").removeClass('button-unpressed');
             $('#chart_1 > svg').remove();
-            chart_1(data);
+            callAPI('/dashboard/connect-appliance?ID=0', chart_1);
         }
         
     })();
