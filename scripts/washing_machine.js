@@ -60,7 +60,7 @@ function click_event(){
         }
     });
 
-    //平均溫度&濕度&運轉台數圖表的click event
+    //24H開機分布回數圖表的click event
     $(".detail-item").on('click','.button-north',function(){
         if($(this).hasClass('button-pressed'))
         {
@@ -74,12 +74,9 @@ function click_event(){
 
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
-
-            let month = $('.active-month').text();
-            month = month.substring(0,month.length-1);
             
             $('.detail-chart > svg').remove();
-            callAPI(`/dehumidifier/information?ID=0&month=${month}`, detail_chart);
+            callAPI(`/washing-machine/information?ID=0`, boot_24h_chart);
         }  
     });
 
@@ -98,11 +95,8 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
 
-            let month = $('.active-month').text();
-            month = month.substring(0,month.length-1);
-            
             $('.detail-chart > svg').remove();
-            callAPI(`/dehumidifier/information?ID=1&month=${month}`, detail_chart);
+            callAPI(`/washing-machine/information?ID=1`, boot_24h_chart);
         }
     });
 
@@ -121,11 +115,8 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             
-            let month = $('.active-month').text();
-            month = month.substring(0,month.length-1);
-            
             $('.detail-chart > svg').remove();
-            callAPI(`/dehumidifier/information?ID=2&month=${month}`, detail_chart);
+            callAPI(`/washing-machine/information?ID=2`, boot_24h_chart);
         }
     });
 
@@ -148,7 +139,7 @@ function click_event(){
             month = month.substring(0,month.length-1);
             
             $('.detail-chart > svg').remove();
-            callAPI(`/dehumidifier/information?ID=3&month=${month}`, detail_chart);
+            callAPI(`/washing-machine/information?ID=3`, boot_24h_chart);
         }
     });
 
@@ -168,7 +159,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            callAPI('/dehumidifier/region-mode?ID=0', mode_chart);
+            callAPI('/washing-machine/region-mode?ID=0', mode_chart);
         }
     });
 
@@ -187,7 +178,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            callAPI('/dehumidifier/region-mode?ID=1', mode_chart);
+            callAPI('/washing-machine/region-mode?ID=1', mode_chart);
         }
     });
 
@@ -206,7 +197,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            callAPI('/dehumidifier/region-mode?ID=2', mode_chart);
+            callAPI('/washing-machine/region-mode?ID=2', mode_chart);
         }
     });
 
@@ -225,58 +216,9 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            callAPI('/dehumidifier/region-mode?ID=3', mode_chart);
+            callAPI('/washing-machine/region-mode?ID=3', mode_chart);
         }
     });
-
-    //點日曆圖示的click event
-    $(".calendar").on('click','svg',function(){
-            $('.month-picker').toggleClass('display-none');
-    });
-
-    $(".calendar").on('click','.months',function(){
-        if($(this).hasClass('active-month'))
-        {
-            
-        }
-
-        else
-        {   
-            $('.calendar .months').removeClass('active-month');
-            $(this).addClass('active-month');
-
-            let month = $(this).text();   
-            text_on_calendar(month);
-            month = month.substring(0,month.length-1);
-            
-            $('.month-picker').addClass('display-none');
-
-            //按下月曆的月份時判斷按鈕是在北部、中部、南部、東部，並call API
-            let button_active = $('.detail-item .button-pressed');
-            $('.detail-chart > svg').remove();
-            if(button_active.hasClass('button-north'))
-            {
-                callAPI(`/dehumidifier/connect-48h?ID=0&month=${month}`, detail_chart);
-            }
-
-            else if(button_active.hasClass('button-center'))
-            {
-                callAPI(`/dehumidifier/connect-48h?ID=1&month=${month}`, detail_chart);
-            }
-
-            else if(button_active.hasClass('button-south'))
-            {
-                callAPI(`/dehumidifier/connect-48h?ID=2&month=${month}`, detail_chart);
-            }
-
-            else if(button_active.hasClass('button-east'))
-            {
-                callAPI(`/dehumidifier/connect-48h?ID=3&month=${month}`, detail_chart);
-            }
-        }
-        
-    });
-
 
 }
 
@@ -1021,80 +963,136 @@ function connect_48h_chart(dataset){
     note.attr('transform', `translate(0,${yAxisScale(0) + 16})`);
 }
 
-//平均氣溫&濕度&運轉台數畫圖
-function detail_chart(){
-    let dataset = [
-        {
-            'date': '4/1', 
-            'temp': 12,   //平均氣溫 單位為度c
-            'humidity': 70,   //濕度 單位為%
-            'amount': 70   //運轉台數 單位萬台
-        },
-        {
-            'date': '4/4', 
-            'temp': -5,   
-            'humidity': 70,   
-            'amount': 70
-        },
-        {
-            'date': '4/7', 
-            'temp': 30,   
-            'humidity': 70,   
-            'amount': 70   
-        },
-        {
-            'date': '4/10', 
-            'temp': 27,  
-            'humidity': 70,   
-            'amount': 70   
-        },
-        {
-            'date': '4/13', 
-            'temp': 29,   
-            'humidity': 70,   
-            'amount': 70   
-        },
-        {
-            'date': '4/16', 
-            'temp': 18,   
-            'humidity': 70,   
-            'amount': 70   
-        },
-        {
-            'date': '4/19', 
-            'temp': 22,  
-            'humidity': 70,   
-            'amount': 70   
-        },
-        {
-            'date': '4/22', 
-            'temp': 31,   
-            'humidity': 70,   
-            'amount': 70  
-        },
-        {
-            'date': '4/25', 
-            'temp': 11,  
-            'humidity': 70,   
-            'amount': 70   
-        },
-        {
-            'date': '4/28', 
-            'temp': 7,   
-            'humidity': 70,  
-            'amount': 70   
-        },
-        {
-            'date': '4/30', 
-            'temp': 38,  
-            'humidity': 70,   
-            'amount': 70  
-        }
-    ];
+//24h開機分布回數
+function boot_24h_chart(dataset){
+    // let dataset = [
+    //     {
+    //         'hour': '00',   //時間為00時
+    //         'wash': 65,   //當時洗衣回數
+    //         'dry': 32   //當時乾燥回數
+    //     },
+    //     {
+    //         'hour': '01',   
+    //         'wash': 65, 
+    //         'dry': 32   
+    //     },
+    //     {
+    //         'hour': '02',   
+    //         'wash': 65, 
+    //         'dry': 32   
+    //     },
+    //     {
+    //         'hour': '03',   
+    //         'wash': 65, 
+    //         'dry': 32   
+    //     },
+    //     {
+    //         'hour': '04',   
+    //         'wash': 66, 
+    //         'dry': 31   
+    //     },
+    //     {
+    //         'hour': '05',   
+    //         'wash': 12, 
+    //         'dry': 68   
+    //     },
+    //     {
+    //         'hour': '06',   
+    //         'wash': 22, 
+    //         'dry': 42   
+    //     },
+    //     {
+    //         'hour': '07',   
+    //         'wash': 12, 
+    //         'dry': 41   
+    //     },
+    //     {
+    //         'hour': '08',   
+    //         'wash': 35, 
+    //         'dry': 32  
+    //     },
+    //     {
+    //         'hour': '09',   
+    //         'wash': 65, 
+    //         'dry': 32   
+    //     },
+    //     {
+    //         'hour': '10',   
+    //         'wash': 65, 
+    //         'dry': 32   
+    //     },
+    //     {
+    //         'hour': '11',   
+    //         'wash': 65, 
+    //         'dry': 32   
+    //     },
+    //     {
+    //         'hour': '12',   
+    //         'wash': 65, 
+    //         'dry': 32   
+    //     },
+    //     {
+    //         'hour': '13',   
+    //         'wash': 43, 
+    //         'dry': 8   
+    //     },
+    //     {
+    //         'hour': '14',   
+    //         'wash': 12, 
+    //         'dry': 53   
+    //     },
+    //     {
+    //         'hour': '15',   
+    //         'wash': 34, 
+    //         'dry': 46   
+    //     },
+    //     {
+    //         'hour': '16',   
+    //         'wash': 12, 
+    //         'dry': 66   
+    //     },
+    //     {
+    //         'hour': '17',   
+    //         'wash': 16, 
+    //         'dry': 35   
+    //     },
+    //     {
+    //         'hour': '18',   
+    //         'wash': 7, 
+    //         'dry': 14   
+    //     },
+    //     {
+    //         'hour': '19',   
+    //         'wash': 13, 
+    //         'dry': 66   
+    //     },
+    //     {
+    //         'hour': '20',   
+    //         'wash': 31, 
+    //         'dry': 25   
+    //     },
+    //     {
+    //         'hour': '21',   
+    //         'wash': 9, 
+    //         'dry': 55   
+    //     },
+    //     {
+    //         'hour': '22',   
+    //         'wash': 12, 
+    //         'dry': 12   
+    //     },
+    //     {
+    //         'hour': '23',   
+    //         'wash': 65, 
+    //         'dry': 32  
+    //     }
+    // ];
 
     let Xdata = dataset.map(function(d){
-        return d.date;
+        return d.hour + ':00';
     });
+
+    let xdata_show = ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'];
     
     let svg = d3.select(".detail-chart")
         .append("svg")
@@ -1103,47 +1101,28 @@ function detail_chart(){
         .style("margin-top",1+"px");
 
     let svg_height = $(".detail-chart").height() - 40;
-    let svg_width = $(".detail-chart").width() - 30;
+    let svg_width = $(".detail-chart").width() - 5;
 
-    let yAxisScale_temp = d3.scaleLinear()
-        .domain([-10,40])
-        .range([svg_height, 30]);
-
-    let yAxisScale_run = d3.scaleLinear()
-        .domain([0,100])
-        .range([svg_height, 30]);
-
-    let yAxisScale_humid = d3.scaleLinear()
+    let yAxisScale = d3.scaleLinear()
         .domain([0,100])
         .range([svg_height, 30]);
     
     let xAxisScale = d3.scaleBand()
     .domain(Xdata)
-    .range([40,svg_width])
-    .paddingInner(0.5)
-    .paddingOuter(0.2);
+    .range([23,svg_width])
+    .paddingInner(0.4)
+    .paddingOuter(0.3);
 
-    svg.append('g') //y temprature axis
-        .call(d3.axisLeft(yAxisScale_temp).tickSize(0).ticks(10,".0f" ))
-        .attr('transform', `translate(40, 0)`)
-        .style('color', '#FF0040')
-        .select('path')
-        .style('opacity', '0');
     
     svg.append('g') //y running axis
-        .call(d3.axisLeft(yAxisScale_run).tickSize(0).ticks(10,".0f" ))
+        .call(d3.axisLeft(yAxisScale).tickSize(0).ticks(10,".0f" ))
         .attr('transform', `translate(23, 0)`)
         .select('path')
-        .style('opacity', '0');
+        .style('opacity', '0');;
 
-    svg.append('g') //y humidity axis
-        .call(d3.axisLeft(yAxisScale_humid).tickSize(0).ticks(10,".0f" ))
-        .attr('transform', `translate(${svg_width + 23}, 0)`)
-        .select('path')
-        .style('opacity', '0');
 
     svg.append('g') //x axis
-        .call(d3.axisBottom(xAxisScale).tickSize(0))
+        .call(d3.axisBottom(xAxisScale).tickSize(0).tickValues(xdata_show))
         .attr('transform', `translate(0, ${svg_height})`)
         .attr('font-size', 11)
         .select('path')
@@ -1151,102 +1130,62 @@ function detail_chart(){
        
 
     svg.append('g') //網狀格
-        .call(d3.axisLeft(yAxisScale_temp).tickSize(-svg_width + 40).tickFormat(' '))
-        .attr('transform', `translate(40, 0)`)
+        .call(d3.axisLeft(yAxisScale).tickSize(-svg_width + 23).tickFormat(' '))
+        .attr('transform', `translate(23, 0)`)
         .style('opacity','0.3');
 
-    //append humidity bar in bar chart
-    svg.selectAll('.rect_humidity') 
+    //append "洗衣回數" bar in bar chart
+    svg.selectAll('.rect_wash') 
         .data(dataset)
         .enter()
         .append('rect')
-        .attr('class', 'rect_humidity')
-        .attr('x', (d) => xAxisScale(d.date))
-        .attr('y', (d) => yAxisScale_humid(d.humidity))
-        .attr('width', xAxisScale.bandwidth()/2)
+        .attr('class', 'rect_wash')
+        .attr('x', (d) => xAxisScale(d.hour + ':00'))
+        .attr('y', (d) => yAxisScale(d.wash + d.dry))
+        .attr('width', xAxisScale.bandwidth())
         .style('fill','#3FA9F5')
         .transition().duration(1000)
-        .attr('height', (d) => svg_height - yAxisScale_humid(d.humidity));
+        .attr('height', (d) => svg_height - yAxisScale(d.wash));
 
-    //append "運轉台數" bar in bar chart
-    svg.selectAll('.rect_run') 
+    //append "乾燥台數" bar in bar chart
+    svg.selectAll('.rect_dry') 
         .data(dataset)
         .enter()
         .append('rect')
-        .attr('class', 'rect_run')
-        .attr('x', (d) => xAxisScale(d.date) + xAxisScale.bandwidth()/2)
-        .attr('y', (d) => yAxisScale_run(d.amount))
-        .attr('width', xAxisScale.bandwidth()/2)
+        .attr('class', 'rect_dry')
+        .attr('x', (d) => xAxisScale(d.hour + ':00'))
+        .attr('y', (d) => yAxisScale(d.dry))
+        .attr('width', xAxisScale.bandwidth())
         .style('fill','#F7931E')
         .transition().duration(1000)
-        .attr('height', (d) => svg_height - yAxisScale_run(d.amount));
+        .attr('height', (d) => svg_height - yAxisScale(d.dry));
     
-    svg.selectAll('.rect_humidity') //display value when mouserover on bar
+    svg.selectAll('.rect_wash') //display value when mouserover on bar
         .data(dataset)
         .append('title')
-        .text((d) => "溫度:" + d.temp +
-                       "  運轉台數:" + d.amount +
-                       "  濕度:" + d.humidity);
+        .text((d) => "洗衣回數:" + d.wash +
+                       "  乾燥台數:" + d.dry);
 
-    svg.selectAll('.rect_run') //display value when mouserover on bar
+    svg.selectAll('.rect_dry') //display value when mouserover on bar
         .data(dataset)
         .append('title')
-        .text((d) => "溫度:" + d.temp +
-                       "  運轉台數:" + d.amount +
-                       "  濕度:" + d.humidity);
+        .text((d) => "洗衣回數:" + d.wash +
+                       "  乾燥台數:" + d.dry);
 
-    //畫出當月溫度曲線
-    let line_temp = d3.line()
-    .x(function (d) {
-        return xAxisScale(d.date);
-    })
-    .y(function (d) {
-        return yAxisScale_temp(d.temp);
-    });
  
     let offset = xAxisScale.bandwidth() / 2;
 
-    svg.append('path')
-        .transition().duration(1000)
-        .attr('d', line_temp(dataset))
-        .attr('stroke', '#FF0040')
-        .attr('stroke-width',1.5)
-        .attr('fill', 'none')
-        .attr('transform', `translate(${offset},0)`);
-
-
     //文字說明
     svg.append('text') 
-        .attr('x', 50)
+        .attr('x', 90)
         .attr('y', 22)
         .attr('fill', '#000000')
-        .text('平均氣溫 & 濕度 & 運轉台數')
+        .text('24H開機分布回數')
         .style('font-size', '22px');
 
     svg.append('text') 
-        .attr('x', 0)
-        .attr('y', yAxisScale_temp(40) - 10)
-        .attr('fill', '#FF0040')
-        .text('溫度(°C)')
-        .style('font-size', '11px');
-
-    svg.append('text') 
-        .attr('x', 410)
-        .attr('y', 20)
-        .attr('fill', '#000000')
-        .text('濕度(%)')
-        .style('font-size', '11px');
-
-    svg.append('text') 
-        .attr('x', 0)
-        .attr('y', 178)
-        .attr('fill', '#000000')
-        .text('運轉台數')
-        .style('font-size', '11px');
-
-    svg.append('text') 
-        .attr('x', 0)
-        .attr('y', 192)
+        .attr('x', 3)
+        .attr('y', 185)
         .attr('fill', '#000000')
         .text('(單位:萬台)')
         .style('font-size', '11px');
@@ -1255,25 +1194,7 @@ function detail_chart(){
     let line_length = 16; //line initial position
 
     note
-        .attr('transform', `translate(60,180)`);
-
-
-    note
-        .append('line')
-        .attr('x1', 0)
-        .attr('y1', 5)
-        .attr('x2', line_length)
-        .attr('y2', 5)
-        .attr('stroke-width',2)
-        .style('stroke', '#FF0040');
-
-    note
-        .append('text')
-        .attr('x', line_length + 2)
-        .attr('y', 10)
-        .text('平均氣溫')
-        .style('font-size', '12px')
-        .style('font-weight', 'bold');
+        .attr('transform', `translate(-10,180)`);
 
     note
         .append('rect')
@@ -1287,13 +1208,13 @@ function detail_chart(){
         .append('text')
         .attr('x', line_length + 71)
         .attr('y', 10)
-        .text('濕度')
+        .text('洗衣回數')
         .style('font-size', '12px')
         .style('font-weight', 'bold');
 
     note
         .append('rect')
-        .attr('x', line_length + 105)
+        .attr('x', line_length + 130)
         .attr('y', 0)
         .attr('width', 10)
         .attr('height', 10)
@@ -1301,9 +1222,9 @@ function detail_chart(){
 
     note
         .append('text')
-        .attr('x', line_length + 117)
+        .attr('x', line_length + 142)
         .attr('y', 10)
-        .text('運轉台數')
+        .text('乾燥回數')
         .style('font-size', '12px')
         .style('font-weight', 'bold');
 
@@ -1312,16 +1233,15 @@ function detail_chart(){
 
 //設定模式比例畫圖
 function mode_chart(dataset){
-    // let dataset = {
-    //     "cold_mode": 24,     //冷氣模式的比例 單位為%
-    //     "dehumid_mode": 16,     //除溼模式的比例 單位為%
-    //     "fan_mode": 14,     //送風模式的比例 單位為%
-    //     "warm_mode": 15,    //暖氣模式的比例 單位為%
-    //     "auto_mode": 31    //自動模式的比例 單位為%
-    // };
-
+    dataset = {
+        "standard": 3,
+        "optional": 1,
+        "soak": 2,
+        "fast": 4,
+        "advanced": 7
+    }
     let data = [];
-    data.push(dataset.continuous, dataset.auto, dataset.defense, dataset.fan, dataset.dry);
+    data.push(dataset.standard, dataset.optional, dataset.soak, dataset.fast, dataset.advanced);
     
     let svg = d3.select(".mode-chart")
         .append("svg")
@@ -1404,7 +1324,7 @@ function mode_chart(dataset){
         .append('text')
         .attr('x', 20)
         .attr('y', 32 + note_offset)
-        .text('連續除溼')
+        .text('標準')
         .style('font-size', '16px')
         .style('font-weight', 'bold');
 
@@ -1420,7 +1340,7 @@ function mode_chart(dataset){
         .append('text')
         .attr('x', 20)
         .attr('y', 65 + note_offset)
-        .text('自動除溼')
+        .text('自選')
         .style('font-size', '16px')
         .style('font-weight', 'bold');
 
@@ -1436,7 +1356,7 @@ function mode_chart(dataset){
         .append('text')
         .attr('x', 20)
         .attr('y', 98 + note_offset)
-        .text('防霉抑菌')
+        .text('浸泡')
         .style('font-size', '16px')
         .style('font-weight', 'bold');
 
@@ -1452,7 +1372,7 @@ function mode_chart(dataset){
         .append('text')
         .attr('x', 20)
         .attr('y', 130 + note_offset)
-        .text('送風模式')
+        .text('快洗')
         .style('font-size', '16px')
         .style('font-weight', 'bold');
 
@@ -1468,7 +1388,7 @@ function mode_chart(dataset){
         .append('text')
         .attr('x', 20)
         .attr('y', 162 + note_offset)
-        .text('衣物乾燥')
+        .text('高級行程')
         .style('font-size', '16px')
         .style('font-weight', 'bold');
 
@@ -1696,37 +1616,6 @@ function region_home_svg(data){
 
 }
 
-//日曆上的月份顯示
-function text_on_calendar(month){
-    let svg = d3.select(".calendar > svg");
-
-    d3.select(".calendar svg text").remove();
-
-    if(month == '10月' || month == '11月' || month == '12月')
-    {
-        svg
-        .append('text')
-        .attr('x', 6)
-        .attr('y', 44)
-        .attr('font-weight', 'bold')
-        .text(`${month}`)
-        .style('font-size', '24px')
-        .style('fill', '#00000');
-    }
-
-    else
-    {
-        svg
-        .append('text')
-        .attr('x', 13)
-        .attr('y', 44)
-        .attr('font-weight', 'bold')
-        .text(`${month}`)
-        .style('font-size', '24px')
-        .style('fill', '#00000');
-    }
-  
-}
 
 //左上角基本資料顯示
 function show_basic_information(data){
@@ -1796,37 +1685,17 @@ async function testAPI(path){
     });
 }
 
-//initial calendar
-(function(){
-    let today = new Date();
-    let today_month = today.getMonth() + 1 + '月';
 
-    let month_items = $(".months");
+callAPI('/washing-machine/basic-information', show_basic_information); //show 基本資料(頁面左上角總登錄數等)
+callAPI('/washing-machine/sum-login', sum_login_chart); //show 累積登錄台數圖表(頁面左中) 待測:測資不正常導致顯示錯誤
+callAPI('/washing-machine/connect-amount', connect_amount_chart); //show 連線台數圖表(頁面左下)
+callAPI('/washing-machine/connect-48h', connect_48h_chart); //show 48h連線數與運轉台數(頁面中上)
+callAPI('/washing-machine/region-mode?ID=0', mode_chart); //show 設定模式比例圓餅圖(頁面中下圓餅圖)
+callAPI('/washing-machine/trouble', show_trouble_report); //show 異常回報資料(頁面最下)
+callAPI('/washing-machine/connect-region-rate', region_connect_svg); //show 台灣圖之連線區域比例(頁面右上台灣圖)
+callAPI('/washing-machine/amount-region-rate', region_home_svg); //show 台灣圖之各區域運轉比例(頁面右中台灣圖)
+callAPI('/washing-machine/information?ID=0', boot_24h_chart); //show 台灣圖之各區域運轉比例(頁面右中台灣圖)
 
-    month_items.each(function(){
-        if($(this).text() == today_month) 
-        {   
-            $('.calendar .months').removeClass('active-month');
-            $(this).addClass('active-month');
-
-            let month = $(this).text();   
-            text_on_calendar(month);
-        }
-        
-    });
-   
-})();
-
-callAPI('/dehumidifier/basic-information', show_basic_information); //show 基本資料(頁面左上角總登錄數等)
-callAPI('/dehumidifier/sum-login', sum_login_chart); //show 累積登錄台數圖表(頁面左中) 待測:測資不正常導致顯示錯誤
-callAPI('/dehumidifier/connect-amount', connect_amount_chart); //show 連線台數圖表(頁面左下)
-callAPI('/dehumidifier/connect-48h', connect_48h_chart); //show 48h連線數與運轉台數(頁面中上)
-callAPI('/dehumidifier/region-mode?ID=0', mode_chart); //show 設定模式比例圓餅圖(頁面中下圓餅圖)
-callAPI('/dehumidifier/trouble', show_trouble_report); //show 異常回報資料(頁面最下)
-callAPI('/dehumidifier/connect-region-rate', region_connect_svg); //show 台灣圖之連線區域比例(頁面右上台灣圖)
-callAPI('/dehumidifier/amount-region-rate', region_home_svg); //show 台灣圖之各區域運轉比例(頁面右中台灣圖)
-
-detail_chart();
 click_event();
-// testAPI("/dehumidifier/information?ID=0");
+// testAPI("/washing-machine/information?ID=0");
 setInterval(show_time, 1000);//show time per sec

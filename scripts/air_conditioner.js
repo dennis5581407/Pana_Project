@@ -79,7 +79,7 @@ function click_event(){
             month = month.substring(0,month.length-1);
             
             $('.detail-chart > svg').remove();
-            callAPI(`/air-conditioner/connect-48h?ID=0&month=${month}`, detail_chart);
+            callAPI(`/air-conditioner/information?ID=0&month=${month}`, detail_chart);
         }  
     });
 
@@ -102,7 +102,7 @@ function click_event(){
             month = month.substring(0,month.length-1);
             
             $('.detail-chart > svg').remove();
-            callAPI(`/air-conditioner/connect-48h?ID=1&month=${month}`, detail_chart);
+            callAPI(`/air-conditioner/information?ID=1&month=${month}`, detail_chart);
         }
     });
 
@@ -125,7 +125,7 @@ function click_event(){
             month = month.substring(0,month.length-1);
             
             $('.detail-chart > svg').remove();
-            callAPI(`/air-conditioner/connect-48h?ID=2&month=${month}`, detail_chart);
+            callAPI(`/air-conditioner/information?ID=2&month=${month}`, detail_chart);
         }
     });
 
@@ -148,7 +148,7 @@ function click_event(){
             month = month.substring(0,month.length-1);
             
             $('.detail-chart > svg').remove();
-            callAPI(`/air-conditioner/connect-48h?ID=3&month=${month}`, detail_chart);
+            callAPI(`/air-conditioner/information?ID=3&month=${month}`, detail_chart);
         }
     });
 

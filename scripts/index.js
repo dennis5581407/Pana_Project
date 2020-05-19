@@ -450,10 +450,6 @@ $(document).ready(function(){
             return d.hour;
         });
         
-        let Ydata = dataset.map(function(d){
-            return d.connect;
-        });
-
         let svg = d3.select("#chart_3")
             .append("svg")
             .attr("width",100+"%")
