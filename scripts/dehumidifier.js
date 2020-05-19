@@ -79,7 +79,7 @@ function click_event(){
             month = month.substring(0,month.length-1);
             
             $('.detail-chart > svg').remove();
-            callAPI(`/air-conditioner/connect-48h?ID=0&month=${month}`, detail_chart);
+            callAPI(`/dehumidifier/connect-48h?ID=0&month=${month}`, detail_chart);
         }  
     });
 
@@ -102,7 +102,7 @@ function click_event(){
             month = month.substring(0,month.length-1);
             
             $('.detail-chart > svg').remove();
-            callAPI(`/air-conditioner/connect-48h?ID=1&month=${month}`, detail_chart);
+            callAPI(`/dehumidifier/connect-48h?ID=1&month=${month}`, detail_chart);
         }
     });
 
@@ -125,7 +125,7 @@ function click_event(){
             month = month.substring(0,month.length-1);
             
             $('.detail-chart > svg').remove();
-            callAPI(`/air-conditioner/connect-48h?ID=2&month=${month}`, detail_chart);
+            callAPI(`/dehumidifier/connect-48h?ID=2&month=${month}`, detail_chart);
         }
     });
 
@@ -148,7 +148,7 @@ function click_event(){
             month = month.substring(0,month.length-1);
             
             $('.detail-chart > svg').remove();
-            callAPI(`/air-conditioner/connect-48h?ID=3&month=${month}`, detail_chart);
+            callAPI(`/dehumidifier/connect-48h?ID=3&month=${month}`, detail_chart);
         }
     });
 
@@ -168,7 +168,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            callAPI('/air-conditioner/region-mode?ID=0', mode_chart);
+            callAPI('/dehumidifier/region-mode?ID=0', mode_chart);
         }
     });
 
@@ -187,7 +187,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            callAPI('/air-conditioner/region-mode?ID=1', mode_chart);
+            callAPI('/dehumidifier/region-mode?ID=1', mode_chart);
         }
     });
 
@@ -206,7 +206,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            callAPI('/air-conditioner/region-mode?ID=2', mode_chart);
+            callAPI('/dehumidifier/region-mode?ID=2', mode_chart);
         }
     });
 
@@ -225,7 +225,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            callAPI('/air-conditioner/region-mode?ID=3', mode_chart);
+            callAPI('/dehumidifier/region-mode?ID=3', mode_chart);
         }
     });
 
@@ -256,22 +256,22 @@ function click_event(){
             $('.detail-chart > svg').remove();
             if(button_active.hasClass('button-north'))
             {
-                callAPI(`/air-conditioner/connect-48h?ID=0&month=${month}`, detail_chart);
+                callAPI(`/dehumidifier/connect-48h?ID=0&month=${month}`, detail_chart);
             }
 
             else if(button_active.hasClass('button-center'))
             {
-                callAPI(`/air-conditioner/connect-48h?ID=1&month=${month}`, detail_chart);
+                callAPI(`/dehumidifier/connect-48h?ID=1&month=${month}`, detail_chart);
             }
 
             else if(button_active.hasClass('button-south'))
             {
-                callAPI(`/air-conditioner/connect-48h?ID=2&month=${month}`, detail_chart);
+                callAPI(`/dehumidifier/connect-48h?ID=2&month=${month}`, detail_chart);
             }
 
             else if(button_active.hasClass('button-east'))
             {
-                callAPI(`/air-conditioner/connect-48h?ID=3&month=${month}`, detail_chart);
+                callAPI(`/dehumidifier/connect-48h?ID=3&month=${month}`, detail_chart);
             }
         }
         
@@ -1321,7 +1321,7 @@ function mode_chart(dataset){
     // };
 
     let data = [];
-    data.push(dataset.cold_mode, dataset.dehumid_mode, dataset.fan_mode, dataset.warm_mode, dataset.auto_mode);
+    data.push(dataset.continuous, dataset.auto, dataset.defense, dataset.fan, dataset.dry);
     
     let svg = d3.select(".mode-chart")
         .append("svg")
@@ -1404,7 +1404,7 @@ function mode_chart(dataset){
         .append('text')
         .attr('x', 20)
         .attr('y', 32 + note_offset)
-        .text('冷氣')
+        .text('連續除溼')
         .style('font-size', '16px')
         .style('font-weight', 'bold');
 
@@ -1420,7 +1420,7 @@ function mode_chart(dataset){
         .append('text')
         .attr('x', 20)
         .attr('y', 65 + note_offset)
-        .text('除溼')
+        .text('自動除溼')
         .style('font-size', '16px')
         .style('font-weight', 'bold');
 
@@ -1436,7 +1436,7 @@ function mode_chart(dataset){
         .append('text')
         .attr('x', 20)
         .attr('y', 98 + note_offset)
-        .text('送風')
+        .text('防霉抑菌')
         .style('font-size', '16px')
         .style('font-weight', 'bold');
 
@@ -1452,7 +1452,7 @@ function mode_chart(dataset){
         .append('text')
         .attr('x', 20)
         .attr('y', 130 + note_offset)
-        .text('暖氣')
+        .text('送風模式')
         .style('font-size', '16px')
         .style('font-weight', 'bold');
 
@@ -1468,7 +1468,7 @@ function mode_chart(dataset){
         .append('text')
         .attr('x', 20)
         .attr('y', 162 + note_offset)
-        .text('自動')
+        .text('衣物乾燥')
         .style('font-size', '16px')
         .style('font-weight', 'bold');
 
@@ -1817,16 +1817,16 @@ async function testAPI(path){
    
 })();
 
-callAPI('/air-conditioner/basic-information', show_basic_information); //show 基本資料(頁面左上角總登錄數等)
-callAPI('/air-conditioner/sum-login', sum_login_chart); //show 累積登錄台數圖表(頁面左中) 待測:測資不正常導致顯示錯誤
-callAPI('/air-conditioner/connect-amount', connect_amount_chart); //show 連線台數圖表(頁面左下)
-callAPI('/air-conditioner/connect-48h', connect_48h_chart); //show 48h連線數與運轉台數(頁面中上)
-callAPI('/air-conditioner/region-mode?ID=0', mode_chart); //show 設定模式比例圓餅圖(頁面中下圓餅圖)
-callAPI('/air-conditioner/trouble', show_trouble_report); //show 異常回報資料(頁面最下)
-callAPI('/air-conditioner/connect-region-rate', region_connect_svg); //show 台灣圖之連線區域比例(頁面右上台灣圖)
-callAPI('/air-conditioner/amount-region-rate', region_home_svg); //show 台灣圖之各區域運轉比例(頁面右中台灣圖)
+callAPI('/dehumidifier/basic-information', show_basic_information); //show 基本資料(頁面左上角總登錄數等)
+callAPI('/dehumidifier/sum-login', sum_login_chart); //show 累積登錄台數圖表(頁面左中) 待測:測資不正常導致顯示錯誤
+callAPI('/dehumidifier/connect-amount', connect_amount_chart); //show 連線台數圖表(頁面左下)
+callAPI('/dehumidifier/connect-48h', connect_48h_chart); //show 48h連線數與運轉台數(頁面中上)
+callAPI('/dehumidifier/region-mode?ID=0', mode_chart); //show 設定模式比例圓餅圖(頁面中下圓餅圖)
+callAPI('/dehumidifier/trouble', show_trouble_report); //show 異常回報資料(頁面最下)
+callAPI('/dehumidifier/connect-region-rate', region_connect_svg); //show 台灣圖之連線區域比例(頁面右上台灣圖)
+callAPI('/dehumidifier/amount-region-rate', region_home_svg); //show 台灣圖之各區域運轉比例(頁面右中台灣圖)
 
 detail_chart();
 click_event();
-// testAPI("/air-conditioner/information?ID=0");
+// testAPI("/dehumidifier/information?ID=0");
 setInterval(show_time, 1000);//show time per sec

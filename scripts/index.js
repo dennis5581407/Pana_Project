@@ -434,16 +434,16 @@ $(document).ready(function(){
         
     }
     
-    function chart_3(){
+    function chart_3(data){
 
-        let dataset = [{hour:'3', connect:70},
-            {hour:'6', connect:23},
-            {hour:'9', connect:30},
-            {hour:'12', connect:93},
-            {hour:'15', connect:55},
-            {hour:'18', connect:67},
-            {hour:'21', connect:15},
-            {hour:'24', connect:87},
+        let dataset = [{hour:'3', connect:data['3h']},
+            {hour:'6', connect:data['6h']},
+            {hour:'9', connect:data['9h']},
+            {hour:'12', connect:data['12h']},
+            {hour:'15', connect:data['15h']},
+            {hour:'18', connect:data['18h']},
+            {hour:'21', connect:data['21h']},
+            {hour:'24', connect:data['24h']},
         ];
 
         let Xdata = dataset.map(function(d){
@@ -521,16 +521,14 @@ $(document).ready(function(){
             
     }
 
-    function taiwan_svg(){
-        let dataset = [{
-            north : 50,
-            west : 30,
-            east : 8,
-            south : 10,
-            island : 2
-        }];
-
-        let data = dataset[0];
+    function taiwan_svg(data){
+        // let dataset = [{
+        //     north : 50,
+        //     west : 30,
+        //     east : 8,
+        //     south : 10,
+        //     island : 2
+        // }];
 
         let svg = d3.select("#taiwan > svg");
         let height = 841.9; //svg viewbox 不能直接用jquery獲得svg的height及width 這只是viewport 並不是viewbox 
@@ -1021,9 +1019,9 @@ $(document).ready(function(){
     
     // testAPI('/dashboard/basic-information');
     callAPI('/dashboard/basic-information', show_basic_information); //show 家電基本資料(頁面左上角的表格及登錄數)
+    callAPI('/dashboard/region-rate', taiwan_svg); //show 連線區域比例台灣圖(頁面右上角)
+    callAPI('/dashboard/connect-24h', chart_3); //show 連線數24H推移(頁面右中圖表)
     click_event();
-    chart_3(); //draw chart_3
-    taiwan_svg(); //draw taiwan
     setInterval(show_time, 1000);//show time per sec
 
 });
