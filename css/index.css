@@ -224,6 +224,11 @@ i.icon{
     box-sizing: border-box;
 }
 
+.last-main a:hover{
+    width: 105%;
+    height: 105%;
+}
+
 .item-2 td{
     border: 1px solid rgb(214, 214, 214);
     text-align: center;
