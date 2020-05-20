@@ -560,14 +560,34 @@
             <div class="right-content" id="chart_3">
                 連線數24H推移
             </div>
-            <div class="right-content">
+            <div class="right-content gauge-wrap">
                 Server健康狀況
+                <div class="gauge-top-item">
+                    <canvas width="70" height="70" id="gauge-cpu">
+    
+                    </canvas>
+                    <p>CPU</p>
+                </div>
+                <div class="gauge-bottom-item">
+                    <div>
+                        <canvas width="70" height="70" id="gauge-hdd">
+    
+                        </canvas>
+                        <p>HDD</p>
+                    </div>
+                    <div>
+                        <canvas width="70" height="70" id="gauge-memory">
+    
+                        </canvas>
+                        <p>Memory</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
 
-
+    <script src='https://bernii.github.io/gauge.js/dist/gauge.min.js'></script>
     <script src="scripts/index.js"></script>  
 </body>
 

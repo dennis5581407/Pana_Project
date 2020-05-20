@@ -374,3 +374,30 @@ i.icon{
     background-color: #5656D6;
     color: #FFFFFF;
 }
+
+.gauge-wrap{
+    padding: 3px 0px 0px 0px;
+}
+
+.gauge-top-item{
+    box-sizing: border-box;
+    padding-top: 5px;
+}
+
+.gauge-wrap > div{
+    position: relative;
+    width: 100%;
+    height: 44%;
+}
+
+.gauge-wrap p{
+    font-size: 14px;
+    color: #0000FF;
+    font-weight: bolder;
+
+}
+
+.gauge-bottom-item{
+    display: flex;
+    justify-content: space-around;
+}

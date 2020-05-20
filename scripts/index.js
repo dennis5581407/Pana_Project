@@ -934,6 +934,53 @@ $(document).ready(function(){
         });
     };
 
+    //show gauge (畫面右下角 Server健康狀況)
+    function gauge(dataset){
+
+        let opts = {
+            angle: -0.25, // The span of the gauge arc
+            lineWidth: 0.18, // The line thickness
+            radiusScale: 0.89, // Relative radius
+            pointer: {
+              length: 0.55, // // Relative to gauge radius
+              strokeWidth: 0.07, // The thickness
+              color: '#5B5BD8' // Fill color
+            },
+            limitMax: false,     // If false, max value increases automatically if value > maxValue
+            limitMin: false,     // If true, the min value of the gauge will be fixed
+            colorStart: '#6FADCF',   // Colors
+            colorStop: '#8FC0DA',    // just experiment with them
+            strokeColor: '#E0E0E0',  // to see which ones work best for you
+            generateGradient: true,
+            highDpiSupport: true,     // High resolution support
+            staticZones: [
+                {strokeStyle: "#00FF00", min: 0, max: 50}, // Green
+                {strokeStyle: "#FFDD00", min: 50, max: 85}, // Yellow
+                {strokeStyle: "#FF0000", min: 85, max: 100}  // Red
+             ],
+            
+          };
+          let target_cpu = document.getElementById('gauge-cpu'); // your canvas element
+          let gauge_cpu = new Gauge(target_cpu).setOptions(opts); // create sexy gauge!
+          gauge_cpu.maxValue = 100; // set max gauge value
+          gauge_cpu.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+          gauge_cpu.animationSpeed = 32; // set animation speed (32 is default value)
+          gauge_cpu.set(dataset.CPU); // set actual value
+
+          let target_hdd = document.getElementById('gauge-hdd'); // your canvas element
+          let gauge_hdd = new Gauge(target_hdd).setOptions(opts); // create sexy gauge!
+          gauge_hdd.maxValue = 100; // set max gauge value
+          gauge_hdd.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+          gauge_hdd.animationSpeed = 32; // set animation speed (32 is default value)
+          gauge_hdd.set(dataset.HDD); // set actual value
+
+          let target_memory = document.getElementById('gauge-memory'); // your canvas element
+          let gauge_memory = new Gauge(target_memory).setOptions(opts); // create sexy gauge!
+          gauge_memory.maxValue = 100; // set max gauge value
+          gauge_memory.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+          gauge_memory.animationSpeed = 32; // set animation speed (32 is default value)
+          gauge_memory.set(dataset.Memory); // set actual value
+    }
 
     //"action" parameter is the function which you want to pass the api result to
     async function callAPI(path, action){
@@ -1017,7 +1064,7 @@ $(document).ready(function(){
     callAPI('/dashboard/basic-information', show_basic_information); //show 家電基本資料(頁面左上角的表格及登錄數)
     callAPI('/dashboard/region-rate', taiwan_svg); //show 連線區域比例台灣圖(頁面右上角)
     callAPI('/dashboard/connect-24h', chart_3); //show 連線數24H推移(頁面右中圖表)
+    callAPI('/dashboard/server-health', gauge); //show Server健康狀況(頁面右下圖表)
     click_event();
     setInterval(show_time, 1000);//show time per sec
-
 });
