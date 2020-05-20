@@ -207,7 +207,7 @@ i.icon{
     margin: 12px 7px 0px;
     box-shadow: 2px 3px 3px rgb(46, 46, 46);
     text-align: justify;
-    background-color: rgb(223, 223, 255);
+    background-color: #E6E6E6;
     font-weight: bolder;
 }
 
@@ -350,13 +350,13 @@ i.icon{
     text-align: center;
     margin-bottom: 10px;
     border-radius: 15px;
-    background-color: rgb(217, 217, 252);
+    background-color: #E6E6E6;
     box-shadow: 2px 3px 3px rgb(134, 134, 134);
 }
 
 .item-5 > div > div:nth-child(1) > .button-unpressed:hover,
 .item-3 > div > div:nth-child(1) > .button-unpressed:hover{
-    background-color: rgb(105, 105, 221);
+    background-color: #5656D6;
     color: #ffffff;
     cursor: pointer;
     transition-duration: .5s;
