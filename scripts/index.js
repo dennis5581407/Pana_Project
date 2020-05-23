@@ -108,7 +108,7 @@ $(document).ready(function(){
         svg_1.append('text') 
             .attr('x', 10)
             .attr('y', yAxisScale_1(0) + 23)
-            .text('單位萬台')
+            .text('單位:萬台')
             .style('font-size', '11px');
 
         let note_1 = svg_1.append('g');

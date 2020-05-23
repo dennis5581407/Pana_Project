@@ -159,8 +159,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            callAPI('/refrigerator/region-mode?ID=0&mode=0', mode_chart_fridge);
-            callAPI('/refrigerator/region-mode?ID=0&mode=1', mode_chart_freeze);
+            callAPI('/refrigerator/region-mode?ID=0', mode_chart);
         }
     });
 
@@ -179,8 +178,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            callAPI('/refrigerator/region-mode?ID=1&mode=0', mode_chart_fridge);
-            callAPI('/refrigerator/region-mode?ID=1&mode=1', mode_chart_freeze);
+            callAPI('/refrigerator/region-mode?ID=1', mode_chart);
         }
     });
 
@@ -199,8 +197,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            callAPI('/refrigerator/region-mode?ID=2&mode=0', mode_chart_fridge);
-            callAPI('/refrigerator/region-mode?ID=2&mode=1', mode_chart_freeze);
+            callAPI('/refrigerator/region-mode?ID=2', mode_chart);
         }
     });
 
@@ -219,8 +216,7 @@ function click_event(){
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
             $('.mode-chart > svg').remove();
-            callAPI('/refrigerator/region-mode?ID=3&mode=0', mode_chart_fridge);
-            callAPI('/refrigerator/region-mode?ID=3&mode=1', mode_chart_freeze);
+            callAPI('/refrigerator/region-mode?ID=3', mode_chart);
         }
     });
 
@@ -1039,16 +1035,18 @@ function econavi_rate_chart(dataset){
 }
 
 
-//設定模式比例_冷藏 畫圖
-function mode_chart_fridge(dataset){
-    // dataset = {
-    //     "strong": 5,
-    //     "medium": 4,
-    //     "weak": 1
-    // }
+//設定模式比例 畫圖
 
-    let data = [];
-    data.push(dataset.strong, dataset.medium, dataset.weak);
+function mode_chart(dataset){
+    dataset_fridge = dataset.fridge;
+
+    let data_fridge = [];
+    data_fridge.push(dataset_fridge.strong, dataset_fridge.medium, dataset_fridge.weak);
+
+    dataset_freeze = dataset.freeze;
+
+    let data_freeze = [];
+    data_freeze.push(dataset_freeze.strong, dataset_freeze.medium, dataset_freeze.weak);
     
     let svg = d3.select(".mode-chart")
         .append("svg")
@@ -1058,7 +1056,7 @@ function mode_chart_fridge(dataset){
     let svg_height = $(".mode-chart > svg").height();
     let svg_width = $(".mode-chart > svg").width();
 
-    let g = svg.append("g")
+    let g_fridge = svg.append("g")
             .attr('transform', `translate(${svg_width/2 - 115}, ${svg_height/2 + 10} )`);
 
     let color = d3.scaleOrdinal(['#3FA9F5','#4DE262 ','#F7931E']);
@@ -1076,20 +1074,20 @@ function mode_chart_fridge(dataset){
                 .outerRadius(84);
 
     //Generate groups
-    let arcs = g.selectAll(".arc")
-                .data(pie(data))
+    let arcs_fridge = g_fridge.selectAll(".arc-fridge")
+                .data(pie(data_fridge))
                 .enter()
                 .append("g")
-                .attr("class", "arc");
+                .attr("class", "arc-fridge");
 
     //Draw arc paths
-    arcs.append("path")
+    arcs_fridge.append("path")
         .attr("fill", function(d, i) {
             return color(i);
         })
         .attr("d", arc_path);
 
-    arcs.append("text")
+    arcs_fridge.append("text")
         .attr("transform", function(d) { 
             return "translate(" + label_path.centroid(d) + ")"; 
          })
@@ -1102,7 +1100,12 @@ function mode_chart_fridge(dataset){
             return (d.endAngle + d.startAngle)/2 > Math.PI ?
                 "end" : "start";
         })
-        .text(function(d) { return d.data+'%'});
+        .text(function(d) { 
+            if(d.data!=0)
+            {  
+                return d.data+'%';
+            } 
+        });
      
 
     //文字說明
@@ -1173,79 +1176,53 @@ function mode_chart_fridge(dataset){
         .text('弱')
         .style('font-size', '16px')
         .style('font-weight', 'bold');
-
-}
-
-//設定模式比例_冷凍 畫圖
-function mode_chart_freeze(dataset){
-    // dataset = {
-    //     "strong": 5,
-    //     "medium": 4,
-    //     "weak": 1
-    // }
-
-    let data = [];
-    data.push(dataset.strong, dataset.medium, dataset.weak);
     
-    let svg = d3.select(".mode-chart > svg")
+        let g_freeze = svg.append("g")
+        .attr('transform', `translate(${svg_width/2 + 80}, ${svg_height/2 + 10} )`);
 
-    let svg_height = $(".mode-chart > svg").height();
-    let svg_width = $(".mode-chart > svg").width();
 
-    let g = svg.append("g")
-            .attr('transform', `translate(${svg_width/2 + 80}, ${svg_height/2 + 10} )`);
+        //Generate groups
+        let arcs_freeze = g_freeze.selectAll(".arc-freeze")
+                    .data(pie(data_freeze))
+                    .enter()
+                    .append("g")
+                    .attr("class", "arc-freeze");
 
-    let color = d3.scaleOrdinal(['#3FA9F5','#4DE262 ','#F7931E']);
+        //Draw arc paths
+        arcs_freeze.append("path")
+            .attr("fill", function(d, i) {
+                return color(i);
+            })
+            .attr("d", arc_path);
 
-    // Generate the pie
-    let pie = d3.pie();
+        arcs_freeze.append("text")
+            .attr("transform", function(d) { 
+                return "translate(" + label_path.centroid(d) + ")"; 
+            })
+            .style('font-size', '16px')
+            .attr('fill', function(d,i){
+                return color(i);
+            })
+            .attr("text-anchor", function(d) {
+                // are we past the center?
+                return (d.endAngle + d.startAngle)/2 > Math.PI ?
+                    "end" : "start";
+            })
+            .text(function(d) { 
+                if(d.data!=0)
+                {  
+                    return d.data+'%';
+                } 
+            });
+        
 
-    // Generate the arcs
-    let arc_path = d3.arc()
-                .innerRadius(0)
-                .outerRadius(60);
-
-    let label_path = d3.arc()
-                .innerRadius(60)
-                .outerRadius(84);
-
-    //Generate groups
-    let arcs = g.selectAll(".arc")
-                .data(pie(data))
-                .enter()
-                .append("g")
-                .attr("class", "arc");
-
-    //Draw arc paths
-    arcs.append("path")
-        .attr("fill", function(d, i) {
-            return color(i);
-        })
-        .attr("d", arc_path);
-
-    arcs.append("text")
-        .attr("transform", function(d) { 
-            return "translate(" + label_path.centroid(d) + ")"; 
-         })
-        .style('font-size', '16px')
-        .attr('fill', function(d,i){
-            return color(i);
-        })
-        .attr("text-anchor", function(d) {
-            // are we past the center?
-            return (d.endAngle + d.startAngle)/2 > Math.PI ?
-                "end" : "start";
-        })
-        .text(function(d) { return d.data+'%'});
-     
-
-    //文字說明
-    svg.append('text') 
-        .attr('x', 289)
-        .attr('y', 190)
-        .attr('fill', '#000000')
-        .text('冷凍')
-        .style('font-size', '16px');
+        //文字說明
+        svg.append('text') 
+            .attr('x', 289)
+            .attr('y', 190)
+            .attr('fill', '#000000')
+            .text('冷凍')
+            .style('font-size', '16px');
 }
 
 
@@ -1544,8 +1521,7 @@ callAPI('/refrigerator/basic-information', show_basic_information); //show 基�
 callAPI('/refrigerator/sum-login', sum_login_chart); //show 累積登錄台數圖表(頁面左中) 待測:測資不正常導致顯示錯誤
 callAPI('/refrigerator/connect-amount', connect_amount_chart); //show 連線台數圖表(頁面左下)
 callAPI('/refrigerator/connect-48h', connect_48h_chart); //show 48h連線數與運轉台數(頁面中上)
-callAPI('/refrigerator/region-mode?ID=0&mode=0', mode_chart_fridge); //show 設定模式比例圓餅圖_冷藏(頁面中下圓餅圖)
-callAPI('/refrigerator/region-mode?ID=0&mode=1', mode_chart_freeze); //show 設定模式比例圓餅圖_冷凍(頁面中下圓餅圖)
+callAPI('/refrigerator/region-mode?ID=0', mode_chart); //show 設定模式比例圓餅圖_冷藏(頁面中下圓餅圖)
 callAPI('/refrigerator/trouble', show_trouble_report); //show 異常回報資料(頁面最下)
 callAPI('/refrigerator/connect-region-rate', region_connect_svg); //show 台灣圖之連線區域比例(頁面右上台灣圖)
 callAPI('/refrigerator/amount-region-rate', region_home_svg); //show 台灣圖之各區域運轉比例(頁面右中台灣圖)

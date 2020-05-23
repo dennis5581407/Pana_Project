@@ -1233,13 +1233,13 @@ function boot_24h_chart(dataset){
 
 //設定模式比例畫圖
 function mode_chart(dataset){
-    dataset = {
-        "standard": 3,
-        "optional": 1,
-        "soak": 2,
-        "fast": 4,
-        "advanced": 7
-    }
+    // dataset = {
+    //     "standard": 3,
+    //     "optional": 1,
+    //     "soak": 2,
+    //     "fast": 4,
+    //     "advanced": 7
+    // }
     let data = [];
     data.push(dataset.standard, dataset.optional, dataset.soak, dataset.fast, dataset.advanced);
     
@@ -1295,7 +1295,12 @@ function mode_chart(dataset){
             return (d.endAngle + d.startAngle)/2 > Math.PI ?
                 "end" : "start";
         })
-        .text(function(d) { return d.data+'%'});
+        .text(function(d) { 
+            if(d.data!=0)
+            {  
+                return d.data+'%';
+            } 
+        });
      
 
     //文字說明

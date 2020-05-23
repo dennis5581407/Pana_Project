@@ -256,22 +256,22 @@ function click_event(){
             $('.detail-chart > svg').remove();
             if(button_active.hasClass('button-north'))
             {
-                callAPI(`/air-conditioner/connect-48h?ID=0&month=${month}`, detail_chart);
+                callAPI(`/air-conditioner/information?ID=0&month=${month}`, detail_chart);
             }
 
             else if(button_active.hasClass('button-center'))
             {
-                callAPI(`/air-conditioner/connect-48h?ID=1&month=${month}`, detail_chart);
+                callAPI(`/air-conditioner/information?ID=1&month=${month}`, detail_chart);
             }
 
             else if(button_active.hasClass('button-south'))
             {
-                callAPI(`/air-conditioner/connect-48h?ID=2&month=${month}`, detail_chart);
+                callAPI(`/air-conditioner/information?ID=2&month=${month}`, detail_chart);
             }
 
             else if(button_active.hasClass('button-east'))
             {
-                callAPI(`/air-conditioner/connect-48h?ID=3&month=${month}`, detail_chart);
+                callAPI(`/air-conditioner/information?ID=3&month=${month}`, detail_chart);
             }
         }
         
@@ -1022,75 +1022,75 @@ function connect_48h_chart(dataset){
 }
 
 //平均氣溫&濕度&運轉台數畫圖
-function detail_chart(){
-    let dataset = [
-        {
-            'date': '4/1', 
-            'temp': 12,   //平均氣溫 單位為度c
-            'humidity': 70,   //濕度 單位為%
-            'amount': 70   //運轉台數 單位萬台
-        },
-        {
-            'date': '4/4', 
-            'temp': -5,   
-            'humidity': 70,   
-            'amount': 70
-        },
-        {
-            'date': '4/7', 
-            'temp': 30,   
-            'humidity': 70,   
-            'amount': 70   
-        },
-        {
-            'date': '4/10', 
-            'temp': 27,  
-            'humidity': 70,   
-            'amount': 70   
-        },
-        {
-            'date': '4/13', 
-            'temp': 29,   
-            'humidity': 70,   
-            'amount': 70   
-        },
-        {
-            'date': '4/16', 
-            'temp': 18,   
-            'humidity': 70,   
-            'amount': 70   
-        },
-        {
-            'date': '4/19', 
-            'temp': 22,  
-            'humidity': 70,   
-            'amount': 70   
-        },
-        {
-            'date': '4/22', 
-            'temp': 31,   
-            'humidity': 70,   
-            'amount': 70  
-        },
-        {
-            'date': '4/25', 
-            'temp': 11,  
-            'humidity': 70,   
-            'amount': 70   
-        },
-        {
-            'date': '4/28', 
-            'temp': 7,   
-            'humidity': 70,  
-            'amount': 70   
-        },
-        {
-            'date': '4/30', 
-            'temp': 38,  
-            'humidity': 70,   
-            'amount': 70  
-        }
-    ];
+function detail_chart(dataset){
+    // dataset = [
+    //     {
+    //         'date': '4/1', 
+    //         'temp': 12,   //平均氣溫 單位為度c
+    //         'humidity': 70,   //濕度 單位為%
+    //         'amount': 70   //運轉台數 單位萬台
+    //     },
+    //     {
+    //         'date': '4/4', 
+    //         'temp': -5,   
+    //         'humidity': 70,   
+    //         'amount': 70
+    //     },
+    //     {
+    //         'date': '4/7', 
+    //         'temp': 30,   
+    //         'humidity': 70,   
+    //         'amount': 70   
+    //     },
+    //     {
+    //         'date': '4/10', 
+    //         'temp': 27,  
+    //         'humidity': 70,   
+    //         'amount': 70   
+    //     },
+    //     {
+    //         'date': '4/13', 
+    //         'temp': 29,   
+    //         'humidity': 70,   
+    //         'amount': 70   
+    //     },
+    //     {
+    //         'date': '4/16', 
+    //         'temp': 18,   
+    //         'humidity': 70,   
+    //         'amount': 70   
+    //     },
+    //     {
+    //         'date': '4/19', 
+    //         'temp': 22,  
+    //         'humidity': 70,   
+    //         'amount': 70   
+    //     },
+    //     {
+    //         'date': '4/22', 
+    //         'temp': 31,   
+    //         'humidity': 70,   
+    //         'amount': 70  
+    //     },
+    //     {
+    //         'date': '4/25', 
+    //         'temp': 11,  
+    //         'humidity': 70,   
+    //         'amount': 70   
+    //     },
+    //     {
+    //         'date': '4/28', 
+    //         'temp': 7,   
+    //         'humidity': 70,  
+    //         'amount': 70   
+    //     },
+    //     {
+    //         'date': '4/30', 
+    //         'temp': 38,  
+    //         'humidity': 70,   
+    //         'amount': 70  
+    //     }
+    // ];
 
     let Xdata = dataset.map(function(d){
         return d.date;
@@ -1375,7 +1375,12 @@ function mode_chart(dataset){
             return (d.endAngle + d.startAngle)/2 > Math.PI ?
                 "end" : "start";
         })
-        .text(function(d) { return d.data+'%'});
+        .text(function(d) { 
+            if(d.data!=0)
+            {  
+                return d.data+'%';
+            } 
+        });
      
 
     //文字說明
@@ -1796,7 +1801,7 @@ async function testAPI(path){
     });
 }
 
-//initial calendar
+//initial calendar & detail chart
 (function(){
     let today = new Date();
     let today_month = today.getMonth() + 1 + '月';
@@ -1811,6 +1816,8 @@ async function testAPI(path){
 
             let month = $(this).text();   
             text_on_calendar(month);
+            month = month.substring(0,month.length-1);
+            callAPI(`/air-conditioner/information?ID=0&${month}`, detail_chart); //show 平均溫溼度&運轉台數圖表(頁面正中間)
         }
         
     });
@@ -1826,7 +1833,7 @@ callAPI('/air-conditioner/trouble', show_trouble_report); //show 異常回報資
 callAPI('/air-conditioner/connect-region-rate', region_connect_svg); //show 台灣圖之連線區域比例(頁面右上台灣圖)
 callAPI('/air-conditioner/amount-region-rate', region_home_svg); //show 台灣圖之各區域運轉比例(頁面右中台灣圖)
 
-detail_chart();
+
 click_event();
-// testAPI("/air-conditioner/information?ID=0");
+// testAPI("/air-conditioner/information?ID=0&month=5");
 setInterval(show_time, 1000);//show time per sec
