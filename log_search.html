@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="shortcut icon" href="img/favicon.ico" >
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/air_conditioner.css">
+    <link rel="stylesheet" href="css/log_search.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -20,7 +21,7 @@
 <body>
     <div class="header">
         <div class="nav-0">
-            <img id="logo" src="https://picsum.photos/100/45?random=1" alt="LOGO">
+            <img id="logo" src="img/lgo-nav-global-panasonic.png" alt="LOGO">
         </div>
         <div class="nav-1">
             <div class="clock"></div>
@@ -36,6 +37,40 @@
     </div>
 
     <div class="container">
+       <div class="wrap-search">
+            <div class="item-search">
+                <label for="gwid">GWID</label>  
+                <input type="text" id="gwid" placeholder="Search here...">
+            </div>
+       </div>
+       <div class="wrap-information">
+            <div class="item-information">
+                <label for="information">機器資訊</label>
+                <span class="information">機器類型：<span>冷氣</span>, 位置：<span>台北</span>, <span>線上中</span></span>
+            </div>
+       </div>
+       <div class="wrap-main">
+            <div class="item-select">
+                <div class="button-region">
+                    <div class="button-active">連線履歷</div>
+                    <div class="button-unpressed">LOG</div>
+                    <div class="button-unpressed">Moniter</div>
+                </div>
 
+                <div class="option-region"> 
+
+                </div>
+                
+            </div>
+            <div class="item-result"> 
+
+            </div>
+       </div>
     </div>
+
+    <script src="scripts/log_search.js"></script>  
 </body>
+
+
+
+</html>
