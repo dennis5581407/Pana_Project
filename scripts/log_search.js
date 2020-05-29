@@ -82,3 +82,12 @@ function show_time(){
 
 click_event();
 setInterval(show_time, 1000);//show time per sec
+
+new Vue({
+    el: '#app',
+    vuetify: new Vuetify(),
+    data: {
+      date: new Date().toISOString().substr(0, 10),
+      menu: false
+    }
+  })

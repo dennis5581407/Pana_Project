@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/log_search.css">
+    <link rel="stylesheet" href="css/vuetify.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -57,8 +61,31 @@
                     <div class="button-unpressed">Moniter</div>
                 </div>
 
-                <div class="option-region"> 
-
+                <div id="app" class="option-region"> 
+                    <v-menu
+                        ref="menu"
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        :return-value.sync="date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                    >
+                        <template v-slot:activator="{ on }">
+                            <v-text-field
+                            v-model="date"
+                            label="Picker in menu"
+                            prepend-icon="event"
+                            readonly
+                            v-on="on"
+                            ></v-text-field>
+                        </template>
+                        <v-date-picker v-model="date" no-title scrollable>
+                            <v-spacer></v-spacer>
+                            <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                            <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                        </v-date-picker>
+                    </v-menu>
                 </div>
                 
             </div>
@@ -68,9 +95,9 @@
        </div>
     </div>
 
-    <script src="scripts/log_search.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="scripts/log_search.js"></script>
+    
 </body>
-
-
-
 </html>
