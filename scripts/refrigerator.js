@@ -1,11 +1,11 @@
-function click_event(){
+function click_event() {
     //header click event
-    $(".lang").on('click','.lang-option-active',function(){
+    $(".lang").on('click', '.lang-option-active', function () {
         $(".lang .lang-option:nth(0)").toggleClass('lang-option-offset-0');
         $(".lang .lang-option:nth(1)").toggleClass('lang-option-offset-1');
     });
 
-    $('.lang').on('click','.lang-option-offset-0',function(){ 
+    $('.lang').on('click', '.lang-option-offset-0', function () {
 
         $(".lang .lang-option:nth(0)").toggleClass('lang-option-offset-0');
         $(".lang .lang-option:nth(1)").toggleClass('lang-option-offset-1');
@@ -14,28 +14,24 @@ function click_event(){
         $(this).removeClass("lang-option");
         $(this).addClass("lang-option-active");
 
-        if($(this).hasClass('lang-japanese'))
-        {
+        if ($(this).hasClass('lang-japanese')) {
 
         }
 
-        else if($(this).hasClass('lang-chinese'))
-        {
+        else if ($(this).hasClass('lang-chinese')) {
 
         }
 
-        else if($(this).hasClass('lang-english'))
-        {
+        else if ($(this).hasClass('lang-english')) {
 
         }
 
-        else
-        {
+        else {
             console("change language error")
         }
     });
 
-    $('.lang').on('click','.lang-option-offset-1',function(){
+    $('.lang').on('click', '.lang-option-offset-1', function () {
 
         $(".lang .lang-option:nth(0)").toggleClass('lang-option-offset-0');
         $(".lang .lang-option:nth(1)").toggleClass('lang-option-offset-1');
@@ -44,51 +40,44 @@ function click_event(){
         $(this).removeClass("lang-option");
         $(this).addClass("lang-option-active");
 
-        if($(this).hasClass('lang-japanese'))
-        {
+        if ($(this).hasClass('lang-japanese')) {
 
         }
 
-        else if($(this).hasClass('lang-chinese'))
-        {
+        else if ($(this).hasClass('lang-chinese')) {
 
         }
 
-        else if($(this).hasClass('lang-english'))
-        {
+        else if ($(this).hasClass('lang-english')) {
 
         }
     });
 
     //24H開機分布回數圖表的click event
-    $(".detail-item").on('click','.button-north',function(){
-        if($(this).hasClass('button-pressed'))
-        {
+    $(".detail-item").on('click', '.button-north', function () {
+        if ($(this).hasClass('button-pressed')) {
 
         }
 
-        else
-        {   
+        else {
             $('.detail-item .button-region > div').removeClass('button-pressed');
             $('.detail-item .button-region > div').addClass('button-unpressed');
 
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
-            
+
             $('.detail-chart > svg').remove();
             callAPI(`/refrigerator/information?ID=0`, econavi_rate_chart);
-        }  
+        }
     });
 
-    $(".detail-item").on('click','.button-center',function(){
-        if($(this).hasClass('button-pressed'))
-        {
+    $(".detail-item").on('click', '.button-center', function () {
+        if ($(this).hasClass('button-pressed')) {
 
         }
 
-        else
-        {   
-            
+        else {
+
             $('.detail-item .button-region > div').removeClass('button-pressed');
             $('.detail-item .button-region > div').addClass('button-unpressed');
 
@@ -100,59 +89,53 @@ function click_event(){
         }
     });
 
-    $(".detail-item").on('click','.button-south',function(){
-        if($(this).hasClass('button-pressed'))
-        {
+    $(".detail-item").on('click', '.button-south', function () {
+        if ($(this).hasClass('button-pressed')) {
 
         }
 
-        else
-        {   
-            
+        else {
+
             $('.detail-item .button-region > div').removeClass('button-pressed');
             $('.detail-item .button-region > div').addClass('button-unpressed');
 
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
-            
+
             $('.detail-chart > svg').remove();
             callAPI(`/refrigerator/information?ID=2`, econavi_rate_chart);
         }
     });
 
-    $(".detail-item").on('click','.button-east',function(){
-        if($(this).hasClass('button-pressed'))
-        {
+    $(".detail-item").on('click', '.button-east', function () {
+        if ($(this).hasClass('button-pressed')) {
 
         }
 
-        else
-        {   
-            
+        else {
+
             $('.detail-item .button-region > div').removeClass('button-pressed');
             $('.detail-item .button-region > div').addClass('button-unpressed');
 
             $(this).addClass('button-pressed');
             $(this).removeClass('button-unpressed');
-            
+
             let month = $('.active-month').text();
-            month = month.substring(0,month.length-1);
-            
+            month = month.substring(0, month.length - 1);
+
             $('.detail-chart > svg').remove();
             callAPI(`/refrigerator/information?ID=3`, econavi_rate_chart);
         }
     });
 
     //設定模式比例圓餅圖的click event
-    $(".mode-rate-item").on('click','.button-north',function(){
-        if($(this).hasClass('button-pressed'))
-        {
+    $(".mode-rate-item").on('click', '.button-north', function () {
+        if ($(this).hasClass('button-pressed')) {
 
         }
 
-        else
-        {   
-            
+        else {
+
             $('.mode-rate-item .button-region > div').removeClass('button-pressed');
             $('.mode-rate-item .button-region > div').addClass('button-unpressed');
 
@@ -163,15 +146,13 @@ function click_event(){
         }
     });
 
-    $(".mode-rate-item").on('click','.button-center',function(){
-        if($(this).hasClass('button-pressed'))
-        {
+    $(".mode-rate-item").on('click', '.button-center', function () {
+        if ($(this).hasClass('button-pressed')) {
 
         }
 
-        else
-        {   
-            
+        else {
+
             $('.mode-rate-item .button-region > div').removeClass('button-pressed');
             $('.mode-rate-item .button-region > div').addClass('button-unpressed');
 
@@ -182,15 +163,13 @@ function click_event(){
         }
     });
 
-    $(".mode-rate-item").on('click','.button-south',function(){
-        if($(this).hasClass('button-pressed'))
-        {
+    $(".mode-rate-item").on('click', '.button-south', function () {
+        if ($(this).hasClass('button-pressed')) {
 
         }
 
-        else
-        {   
-            
+        else {
+
             $('.mode-rate-item .button-region > div').removeClass('button-pressed');
             $('.mode-rate-item .button-region > div').addClass('button-unpressed');
 
@@ -201,15 +180,13 @@ function click_event(){
         }
     });
 
-    $(".mode-rate-item").on('click','.button-east',function(){
-        if($(this).hasClass('button-pressed'))
-        {
+    $(".mode-rate-item").on('click', '.button-east', function () {
+        if ($(this).hasClass('button-pressed')) {
 
         }
 
-        else
-        {   
-            
+        else {
+
             $('.mode-rate-item .button-region > div').removeClass('button-pressed');
             $('.mode-rate-item .button-region > div').addClass('button-unpressed');
 
@@ -222,17 +199,16 @@ function click_event(){
 
 }
 
-function show_time(){
+function show_time() {
     let today = new Date();
     let year = today.getFullYear();
     let month = today.getMonth() + 1;
     let date = today.getDate();
     let hour = today.getHours();
     let min = today.getMinutes();
-    
+
     min = min.toString();
-    if(min.length == 1)
-    {
+    if (min.length == 1) {
         min = 0 + min;
     }
 
@@ -242,38 +218,38 @@ function show_time(){
 }
 
 //累積登錄台數畫圖
-function sum_login_chart(dataset){
+function sum_login_chart(dataset) {
 
-    let Xdata = dataset.map(function(d){
+    let Xdata = dataset.map(function (d) {
         return d.year;
     });
-    
+
     let svg = d3.select(".login-sum-item")
         .append("svg")
-        .attr("width",100+"%")
-        .attr("height",92+"%")
-        .style("margin-top",-5+"px");
+        .attr("width", 100 + "%")
+        .attr("height", 92 + "%")
+        .style("margin-top", -5 + "px");
 
     let svg_height = $(".login-sum-item > svg").height() - 35;
     let svg_width = $(".login-sum-item > svg").width() - 20;
 
     let yAxisScale = d3.scaleLinear()
-        .domain([0,100])
-        .range([svg_height, 5]); 
-    
+        .domain([0, 100])
+        .range([svg_height, 5]);
+
     let xAxisScale = d3.scaleBand()
-    .domain(Xdata)
-    .range([40,svg_width])
-    .paddingInner(0.5)
-    .paddingOuter(-0.25);
+        .domain(Xdata)
+        .range([40, svg_width])
+        .paddingInner(0.5)
+        .paddingOuter(-0.25);
 
     let xAxisScale_year = d3.scaleLinear()
-    .domain([0,100])
-    .range([40,svg_width]);
+        .domain([0, 100])
+        .range([40, svg_width]);
 
 
     svg.append('g') //y axis
-        .call(d3.axisLeft(yAxisScale).tickSize(0).ticks(10,".0f" ))
+        .call(d3.axisLeft(yAxisScale).tickSize(0).ticks(10, ".0f"))
         .attr('transform', `translate(40, 0)`)
         .select('path')
         .style('opacity', '0');
@@ -284,17 +260,17 @@ function sum_login_chart(dataset){
         .attr('font-size', 11)
         .select('path')
         .style('opacity', '0');
-       
+
 
     svg.append('g') //網狀格
         .call(d3.axisLeft(yAxisScale).tickSize(-svg_width + 40).tickFormat(' '))
         .attr('transform', `translate(40, 0)`)
-        .style('opacity','0.3');
+        .style('opacity', '0.3');
 
-    let offset = xAxisScale.bandwidth()/2;
+    let offset = xAxisScale.bandwidth() / 2;
 
     //畫出全般累積登錄台數面積圖
-    var area_generator= d3.area()
+    var area_generator = d3.area()
         .x(function (d) {
             return xAxisScale(d.year);
         })
@@ -308,12 +284,12 @@ function sum_login_chart(dataset){
 
     svg.append("path")
         .attr("class", "sum-login-area")
-        .attr("d",area_generator(dataset)) //d="M1,0L20,40.....  d-path data
-        .style("fill","#3FA9F5")
+        .attr("d", area_generator(dataset)) //d="M1,0L20,40.....  d-path data
+        .style("fill", "#3FA9F5")
         .attr('transform', `translate(${offset},0)`);
 
     // 畫出內建累積登錄台數面積圖
-    var area_generator= d3.area()
+    var area_generator = d3.area()
         .x(function (d) {
             return xAxisScale(d.year);
         })
@@ -325,56 +301,54 @@ function sum_login_chart(dataset){
 
     svg.append("path")
         .attr("class", "sum-login-area")
-        .attr("d",area_generator(dataset)) //d="M1,0L20,40.....  d-path data
-        .style("fill","#F7931E")
+        .attr("d", area_generator(dataset)) //d="M1,0L20,40.....  d-path data
+        .style("fill", "#F7931E")
         .attr('transform', `translate(${offset},0)`);
-    
-    
+
+
 
     let today = new Date();
     let year = today.getFullYear();
     let today_month = today.getMonth() + 1;
     today_month = today_month.toString();
-    if(today_month.length < 2)
-    {
-        today_month = '0' + today_month; 
+    if (today_month.length < 2) {
+        today_month = '0' + today_month;
     }
 
     let yearmonth = year + today_month;
     let title_str;
 
     //title顯示文字處理
-    dataset.forEach(function(element, i){   
-        if(element.year == yearmonth)
-        {
-            title_str = `當月全般累積登錄台數: ${element.all}    當月內藏累積登錄台數: ${element.builtIn}`; 
+    dataset.forEach(function (element, i) {
+        if (element.year == yearmonth) {
+            title_str = `當月全般累積登錄台數: ${element.all}    當月內藏累積登錄台數: ${element.builtIn}`;
         }
     })
 
     svg.selectAll('.sum-login-area') //display value when mouserover on bar
         .append('title')
-        .text(title_str); 
+        .text(title_str);
 
     //x軸標示 
-    svg.append('text') 
+    svg.append('text')
         .attr('x', xAxisScale_year(1))
         .attr('y', yAxisScale(0) + 14)
-        .text(`${year-2}年`)
+        .text(`${year - 2}年`)
         .style('font-size', '11px');
 
-    svg.append('text') 
+    svg.append('text')
         .attr('x', xAxisScale_year(45))
         .attr('y', yAxisScale(0) + 14)
-        .text(`${year-1}年`)
+        .text(`${year - 1}年`)
         .style('font-size', '11px');
 
-    svg.append('text') 
+    svg.append('text')
         .attr('x', xAxisScale_year(90))
         .attr('y', yAxisScale(0) + 14)
         .text(`${year}年`)
         .style('font-size', '11px');
-    
-    svg.append('text') 
+
+    svg.append('text')
         .attr('x', 0)
         .attr('y', yAxisScale(0) + 28)
         .text('單位:萬台')
@@ -389,9 +363,9 @@ function sum_login_chart(dataset){
         .attr('y1', 5)
         .attr('x2', line_length + 16)
         .attr('y2', 5)
-        .attr('stroke-width',2)
+        .attr('stroke-width', 2)
         .style('stroke', '#3FA9F5');
-    
+
     note
         .append('text')
         .attr('x', line_length + 18)
@@ -406,9 +380,9 @@ function sum_login_chart(dataset){
         .attr('y1', 5)
         .attr('x2', line_length + 64)
         .attr('y2', 5)
-        .attr('stroke-width',2)
+        .attr('stroke-width', 2)
         .style('stroke', '#F7931E');
-    
+
     note
         .append('text')
         .attr('x', line_length + 66)
@@ -421,39 +395,39 @@ function sum_login_chart(dataset){
 }
 
 //連線台數畫圖
-function connect_amount_chart(dataset){
+function connect_amount_chart(dataset) {
 
-    let Xdata = dataset.map(function(d){
+    let Xdata = dataset.map(function (d) {
         return d.year;
     });
-    
+
     let svg = d3.select(".connect-amount-item")
         .append("svg")
-        .attr("width",100+"%")
-        .attr("height",92+"%")
-        .style("margin-top",-5+"px");
+        .attr("width", 100 + "%")
+        .attr("height", 92 + "%")
+        .style("margin-top", -5 + "px");
 
     let svg_height = $(".connect-amount-item > svg").height() - 35;
     let svg_width = $(".connect-amount-item > svg").width() - 20;
 
     let yAxisScale = d3.scaleLinear()
-        .domain([0,100])
-        .range([svg_height, 5]); 
-    
+        .domain([0, 100])
+        .range([svg_height, 5]);
+
     let xAxisScale = d3.scaleBand()
-    .domain(Xdata)
-    .range([40,svg_width])
-    .paddingInner(0.5)
-    .paddingOuter(-0.25);
+        .domain(Xdata)
+        .range([40, svg_width])
+        .paddingInner(0.5)
+        .paddingOuter(-0.25);
 
     let xAxisScale_year = d3.scaleLinear()
-    .domain([0,100])
-    .range([40,svg_width]);
+        .domain([0, 100])
+        .range([40, svg_width]);
 
-    let offset = xAxisScale.bandwidth()/2;
+    let offset = xAxisScale.bandwidth() / 2;
 
     svg.append('g') //y axis
-        .call(d3.axisLeft(yAxisScale).tickSize(0).ticks(10,".0f" ))
+        .call(d3.axisLeft(yAxisScale).tickSize(0).ticks(10, ".0f"))
         .attr('transform', `translate(40, 0)`)
         .select('path')
         .style('opacity', '0');
@@ -464,16 +438,16 @@ function connect_amount_chart(dataset){
         .attr('font-size', 11)
         .select('path')
         .style('opacity', '0');
-       
+
 
     svg.append('g') //網狀格
         .call(d3.axisLeft(yAxisScale).tickSize(-svg_width + 40).tickFormat(' '))
         .attr('transform', `translate(40, 0)`)
-        .style('opacity','0.3');
+        .style('opacity', '0.3');
 
 
     //畫出全般連線台數面積圖
-    var area_generator= d3.area()
+    var area_generator = d3.area()
         .x(function (d) {
             return xAxisScale(d.year);
         })
@@ -487,12 +461,12 @@ function connect_amount_chart(dataset){
 
     svg.append("path")
         .attr('class', 'connect-amount-area')
-        .attr("d",area_generator(dataset)) //d="M1,0L20,40.....  d-path data
-        .style("fill","#3FA9F5")
+        .attr("d", area_generator(dataset)) //d="M1,0L20,40.....  d-path data
+        .style("fill", "#3FA9F5")
         .attr('transform', `translate(${offset},0)`);
 
     // 畫出內建連線台數面積圖
-    var area_generator= d3.area()
+    var area_generator = d3.area()
         .x(function (d) {
             return xAxisScale(d.year);
         })
@@ -504,54 +478,52 @@ function connect_amount_chart(dataset){
 
     svg.append("path")
         .attr('class', 'connect-amount-area')
-        .attr("d",area_generator(dataset)) //d="M1,0L20,40.....  d-path data
-        .style("fill","#F7931E")
+        .attr("d", area_generator(dataset)) //d="M1,0L20,40.....  d-path data
+        .style("fill", "#F7931E")
         .attr('transform', `translate(${offset},0)`);
 
     let today = new Date();
     let year = today.getFullYear();
     let today_month = today.getMonth() + 1;
     today_month = today_month.toString();
-    if(today_month.length < 2)
-    {
-        today_month = '0' + today_month; 
+    if (today_month.length < 2) {
+        today_month = '0' + today_month;
     }
 
     let yearmonth = year + today_month;
     let title_str;
 
     //title顯示文字處理
-    dataset.forEach(function(element, i){   
-        if(element.year == yearmonth)
-        {
-            title_str = `當月全般連線台數: ${element.all}    當月內藏連線台數: ${element.builtIn}`; 
+    dataset.forEach(function (element, i) {
+        if (element.year == yearmonth) {
+            title_str = `當月全般連線台數: ${element.all}    當月內藏連線台數: ${element.builtIn}`;
         }
     })
 
     svg.selectAll('.connect-amount-area') //display value when mouserover on bar
         .append('title')
-        .text(title_str); 
-    
+        .text(title_str);
+
     //x軸標示 
-    svg.append('text') 
+    svg.append('text')
         .attr('x', xAxisScale_year(1))
         .attr('y', yAxisScale(0) + 14)
-        .text(`${year-2}年`)
+        .text(`${year - 2}年`)
         .style('font-size', '11px');
 
-    svg.append('text') 
+    svg.append('text')
         .attr('x', xAxisScale_year(45))
         .attr('y', yAxisScale(0) + 14)
-        .text(`${year-1}年`)
+        .text(`${year - 1}年`)
         .style('font-size', '11px');
 
-    svg.append('text') 
+    svg.append('text')
         .attr('x', xAxisScale_year(90))
         .attr('y', yAxisScale(0) + 14)
         .text(`${year}年`)
         .style('font-size', '11px');
 
-    svg.append('text') 
+    svg.append('text')
         .attr('x', 0)
         .attr('y', yAxisScale(0) + 28)
         .text('單位:萬台')
@@ -566,9 +538,9 @@ function connect_amount_chart(dataset){
         .attr('y1', 5)
         .attr('x2', line_length + 16)
         .attr('y2', 5)
-        .attr('stroke-width',2)
+        .attr('stroke-width', 2)
         .style('stroke', '#3FA9F5');
-    
+
     note
         .append('text')
         .attr('x', line_length + 18)
@@ -583,9 +555,9 @@ function connect_amount_chart(dataset){
         .attr('y1', 5)
         .attr('x2', line_length + 64)
         .attr('y2', 5)
-        .attr('stroke-width',2)
+        .attr('stroke-width', 2)
         .style('stroke', '#F7931E');
-    
+
     note
         .append('text')
         .attr('x', line_length + 66)
@@ -598,7 +570,7 @@ function connect_amount_chart(dataset){
 }
 
 //48h連線數畫圖
-function connect_48h_chart(dataset){
+function connect_48h_chart(dataset) {
 
     // dataset = [
     //     {
@@ -645,7 +617,7 @@ function connect_48h_chart(dataset){
     //         'hour': '08',   
     //         'today_connect': 44,   
     //         'yesterday_connect': 34,  
-          
+
     //     },
     //     {
     //         'hour': '09',   
@@ -724,30 +696,30 @@ function connect_48h_chart(dataset){
     //     }
     // ];
 
-    let Xdata = dataset.map(function(d){
+    let Xdata = dataset.map(function (d) {
         return d.hour;
     });
-    
+
     let svg = d3.select(".connect-48h-item")
         .append("svg")
-        .attr("width",100+"%")
-        .attr("height",92+"%")
-        .style("margin-top",3+"px");
+        .attr("width", 100 + "%")
+        .attr("height", 92 + "%")
+        .style("margin-top", 3 + "px");
 
     let svg_height = $(".connect-48h-item > svg").height() - 35;
     let svg_width = $(".connect-48h-item > svg").width() - 10;
 
     let yAxisScale = d3.scaleLinear()
-        .domain([0,100])
-        .range([svg_height, 5]); 
-    
+        .domain([0, 100])
+        .range([svg_height, 5]);
+
     let xAxisScale = d3.scaleBand()
-    .domain(Xdata)
-    .range([20,svg_width])
-    .padding(0.5);
+        .domain(Xdata)
+        .range([20, svg_width])
+        .padding(0.5);
 
     svg.append('g') //y axis
-        .call(d3.axisLeft(yAxisScale).tickSize(0).ticks(10,".0f" ))
+        .call(d3.axisLeft(yAxisScale).tickSize(0).ticks(10, ".0f"))
         .attr('transform', `translate(23, 0)`)
         .select('path')
         .style('opacity', '0');
@@ -758,12 +730,12 @@ function connect_48h_chart(dataset){
         .attr('font-size', 11)
         .select('path')
         .style('opacity', '0');
-       
+
 
     svg.append('g') //網狀格
         .call(d3.axisLeft(yAxisScale).tickSize(-svg_width + 25).tickFormat(' '))
         .attr('transform', `translate(23, 0)`)
-        .style('opacity','0.3');
+        .style('opacity', '0.3');
 
     svg.selectAll('.rect_td_connect') //append today connect bar in bar chart
         .data(dataset)
@@ -773,7 +745,7 @@ function connect_48h_chart(dataset){
         .attr('x', (d) => xAxisScale(d.hour))
         .attr('y', (d) => yAxisScale(d.today_connect))
         .attr('width', xAxisScale.bandwidth())
-        .style('fill','#F7931E')
+        .style('fill', '#F7931E')
         .transition().duration(1000)
         .attr('height', (d) => svg_height - yAxisScale(d.today_connect));
 
@@ -785,24 +757,24 @@ function connect_48h_chart(dataset){
         .attr('x', (d) => xAxisScale(d.hour))
         .attr('y', (d) => yAxisScale(d.today_connect + d.yesterday_connect))
         .attr('width', xAxisScale.bandwidth())
-        .style('fill','#3FA9F5')
+        .style('fill', '#3FA9F5')
         .transition().duration(1000)
         .attr('height', (d) => svg_height - yAxisScale(d.yesterday_connect));
-    
+
     svg.selectAll('.rect_td_connect') //display value when mouserover on bar
         .data(dataset)
         .append('title')
         .text((d) => "當日連線數:" + d.today_connect +
-                       "  昨日連線數:" + d.yesterday_connect);
+            "  昨日連線數:" + d.yesterday_connect);
 
     svg.selectAll('.rect_yd_connect') //display value when mouserover on bar
         .data(dataset)
         .append('title')
         .text((d) => "當日連線數：" + d.today_connect +
-                       " 昨日連線數：" + d.yesterday_connect);
+            " 昨日連線數：" + d.yesterday_connect);
 
 
-    svg.append('text') 
+    svg.append('text')
         .attr('x', 0)
         .attr('y', yAxisScale(0) + 23)
         .text('單位:萬台')
@@ -817,8 +789,8 @@ function connect_48h_chart(dataset){
         .attr('y', -1)
         .attr('width', 10)
         .attr('height', 10)
-        .style('fill','#3FA9F5');
-    
+        .style('fill', '#3FA9F5');
+
     note
         .append('text')
         .attr('x', line_length + 15)
@@ -827,14 +799,14 @@ function connect_48h_chart(dataset){
         .style('font-size', '12px')
         .style('font-weight', 'bold');
 
-        note
+    note
         .append('rect')
         .attr('x', line_length + 84)
         .attr('y', -1)
         .attr('width', 10)
         .attr('height', 10)
-        .style('fill','#F7931E');
-    
+        .style('fill', '#F7931E');
+
     note
         .append('text')
         .attr('x', line_length + 99)
@@ -849,134 +821,134 @@ function connect_48h_chart(dataset){
 }
 
 //econavi比例畫圖
-function econavi_rate_chart(dataset){
+function econavi_rate_chart(dataset) {
     dataset = [
         {
             'hour': '00',   //時間為00時
             'econavi': 65   //當時econavi數量 單位為萬台
         },
         {
-            'hour': '01',   
-            'econavi': 65 
-        },
-        {
-            'hour': '02',   
-            'econavi': 65 
-        },
-        {
-            'hour': '03',   
-            'econavi': 65 
-        },
-        {
-            'hour': '04',   
-            'econavi': 65 
-        },
-        {
-            'hour': '05',   
-            'econavi': 65 
-        },
-        {
-            'hour': '06',   
-            'econavi': 65  
-        },
-        {
-            'hour': '07',   
-            'econavi': 65 
-        },
-        {
-            'hour': '08',   
+            'hour': '01',
             'econavi': 65
         },
         {
-            'hour': '09',   
-            'econavi': 65 
-        },
-        {
-            'hour': '10',   
+            'hour': '02',
             'econavi': 65
         },
         {
-            'hour': '11',   
+            'hour': '03',
             'econavi': 65
         },
         {
-            'hour': '12',   
-            'econavi': 65  
-        },
-        {
-            'hour': '13',   
-            'econavi': 65 
-        },
-        {
-            'hour': '14',   
-            'econavi': 65 
-        },
-        {
-            'hour': '15',   
+            'hour': '04',
             'econavi': 65
         },
         {
-            'hour': '16',   
-            'econavi': 65  
-        },
-        {
-            'hour': '17',   
-            'econavi': 65 
-        },
-        {
-            'hour': '18',   
+            'hour': '05',
             'econavi': 65
         },
         {
-            'hour': '19',   
+            'hour': '06',
             'econavi': 65
         },
         {
-            'hour': '20',   
-            'econavi': 65 
-        },
-        {
-            'hour': '21',   
+            'hour': '07',
             'econavi': 65
         },
         {
-            'hour': '22',   
-            'econavi': 65 
+            'hour': '08',
+            'econavi': 65
         },
         {
-            'hour': '23',   
+            'hour': '09',
+            'econavi': 65
+        },
+        {
+            'hour': '10',
+            'econavi': 65
+        },
+        {
+            'hour': '11',
+            'econavi': 65
+        },
+        {
+            'hour': '12',
+            'econavi': 65
+        },
+        {
+            'hour': '13',
+            'econavi': 65
+        },
+        {
+            'hour': '14',
+            'econavi': 65
+        },
+        {
+            'hour': '15',
+            'econavi': 65
+        },
+        {
+            'hour': '16',
+            'econavi': 65
+        },
+        {
+            'hour': '17',
+            'econavi': 65
+        },
+        {
+            'hour': '18',
+            'econavi': 65
+        },
+        {
+            'hour': '19',
+            'econavi': 65
+        },
+        {
+            'hour': '20',
+            'econavi': 65
+        },
+        {
+            'hour': '21',
+            'econavi': 65
+        },
+        {
+            'hour': '22',
+            'econavi': 65
+        },
+        {
+            'hour': '23',
             'econavi': 65
         }
     ];
 
-    let Xdata = dataset.map(function(d){
+    let Xdata = dataset.map(function (d) {
         return d.hour + ':00';
     });
 
     let xdata_show = ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'];
-    
+
     let svg = d3.select(".detail-chart")
         .append("svg")
-        .attr("width",100+"%")
-        .attr("height",100+"%")
-        .style("margin-top",1+"px");
+        .attr("width", 100 + "%")
+        .attr("height", 100 + "%")
+        .style("margin-top", 1 + "px");
 
     let svg_height = $(".detail-chart").height() - 40;
     let svg_width = $(".detail-chart").width() - 10;
 
     let yAxisScale = d3.scaleLinear()
-        .domain([0,100])
+        .domain([0, 100])
         .range([svg_height, 30]);
-    
-    let xAxisScale = d3.scaleBand()
-    .domain(Xdata)
-    .range([23,svg_width])
-    .paddingInner(0.35)
-    .paddingOuter(0.3);
 
-    
+    let xAxisScale = d3.scaleBand()
+        .domain(Xdata)
+        .range([23, svg_width])
+        .paddingInner(0.35)
+        .paddingOuter(0.3);
+
+
     svg.append('g') //y running axis
-        .call(d3.axisLeft(yAxisScale).tickSize(0).ticks(10,".0f" ))
+        .call(d3.axisLeft(yAxisScale).tickSize(0).ticks(10, ".0f"))
         .attr('transform', `translate(23, 0)`)
         .select('path')
         .style('opacity', '0');;
@@ -988,15 +960,15 @@ function econavi_rate_chart(dataset){
         .attr('font-size', 11)
         .select('path')
         .style('opacity', '0');
-       
+
 
     svg.append('g') //網狀格
         .call(d3.axisLeft(yAxisScale).tickSize(-svg_width + 23).tickFormat(' '))
         .attr('transform', `translate(23, 0)`)
-        .style('opacity','0.3');
+        .style('opacity', '0.3');
 
     //append "econavi比例"" bar in bar chart
-    svg.selectAll('.rect_econavi') 
+    svg.selectAll('.rect_econavi')
         .data(dataset)
         .enter()
         .append('rect')
@@ -1004,28 +976,28 @@ function econavi_rate_chart(dataset){
         .attr('x', (d) => xAxisScale(d.hour + ':00'))
         .attr('y', (d) => yAxisScale(d.econavi))
         .attr('width', xAxisScale.bandwidth())
-        .style('fill','#3FA9F5')
+        .style('fill', '#3FA9F5')
         .transition().duration(1000)
         .attr('height', (d) => svg_height - yAxisScale(d.econavi));
 
-    
+
     svg.selectAll('.rect_econavi') //display value when mouserover on bar
         .data(dataset)
         .append('title')
         .text((d) => "EcoNavi:" + d.econavi);
 
- 
+
     let offset = xAxisScale.bandwidth() / 2;
 
     //文字說明
-    svg.append('text') 
+    svg.append('text')
         .attr('x', 115)
         .attr('y', 22)
         .attr('fill', '#000000')
         .text('EcoNavi比例')
         .style('font-size', '22px');
 
-    svg.append('text') 
+    svg.append('text')
         .attr('x', 3)
         .attr('y', 185)
         .attr('fill', '#000000')
@@ -1037,7 +1009,7 @@ function econavi_rate_chart(dataset){
 
 //設定模式比例 畫圖
 
-function mode_chart(dataset){
+function mode_chart(dataset) {
     dataset_fridge = dataset.fridge;
 
     let data_fridge = [];
@@ -1047,82 +1019,81 @@ function mode_chart(dataset){
 
     let data_freeze = [];
     data_freeze.push(dataset_freeze.strong, dataset_freeze.medium, dataset_freeze.weak);
-    
+
     let svg = d3.select(".mode-chart")
         .append("svg")
-        .attr("width",100+"%")
-        .attr("height",100+"%");
+        .attr("width", 100 + "%")
+        .attr("height", 100 + "%");
 
     let svg_height = $(".mode-chart > svg").height();
     let svg_width = $(".mode-chart > svg").width();
 
     let g_fridge = svg.append("g")
-            .attr('transform', `translate(${svg_width/2 - 115}, ${svg_height/2 + 10} )`);
+        .attr('transform', `translate(${svg_width / 2 - 115}, ${svg_height / 2 + 10} )`);
 
-    let color = d3.scaleOrdinal(['#3FA9F5','#4DE262 ','#F7931E']);
+    let color = d3.scaleOrdinal(['#3FA9F5', '#4DE262 ', '#F7931E']);
 
     // Generate the pie
     let pie = d3.pie();
 
     // Generate the arcs
     let arc_path = d3.arc()
-                .innerRadius(0)
-                .outerRadius(60);
+        .innerRadius(0)
+        .outerRadius(60);
 
     let label_path = d3.arc()
-                .innerRadius(60)
-                .outerRadius(84);
+        .innerRadius(60)
+        .outerRadius(84);
 
     //Generate groups
     let arcs_fridge = g_fridge.selectAll(".arc-fridge")
-                .data(pie(data_fridge))
-                .enter()
-                .append("g")
-                .attr("class", "arc-fridge");
+        .data(pie(data_fridge))
+        .enter()
+        .append("g")
+        .attr("class", "arc-fridge");
 
     //Draw arc paths
     arcs_fridge.append("path")
-        .attr("fill", function(d, i) {
+        .attr("fill", function (d, i) {
             return color(i);
         })
         .attr("d", arc_path);
 
     arcs_fridge.append("text")
-        .attr("transform", function(d) { 
-            return "translate(" + label_path.centroid(d) + ")"; 
-         })
+        .attr("transform", function (d) {
+            return "translate(" + label_path.centroid(d) + ")";
+        })
         .style('font-size', '16px')
-        .attr('fill', function(d,i){
+        .attr('fill', function (d, i) {
             return color(i);
         })
-        .attr("text-anchor", function(d) {
+        .attr("text-anchor", function (d) {
             // are we past the center?
-            return (d.endAngle + d.startAngle)/2 > Math.PI ?
+            return (d.endAngle + d.startAngle) / 2 > Math.PI ?
                 "end" : "start";
         })
-        .text(function(d) { 
-            if(d.data!=0)
-            {  
-                return d.data+'%';
-            } 
+        .text(function (d) {
+            if (d.data != 0) {
+                return d.data + '%';
+            }
         });
-     
+
 
     //文字說明
-    svg.append('text') 
+    svg.append('text')
         .attr('x', 118)
         .attr('y', 22)
         .attr('fill', '#000000')
         .text('設定模式比例')
         .style('font-size', '22px');
 
-    svg.append('text') 
+    svg.append('text')
         .attr('x', 93)
         .attr('y', 190)
         .attr('fill', '#000000')
         .text('冷藏')
         .style('font-size', '16px');
-    
+
     let note = svg.append('g');
     let note_offset = 13;
 
@@ -1135,8 +1106,8 @@ function mode_chart(dataset){
         .attr('y', 32)
         .attr('width', 14)
         .attr('height', 14)
-        .style('fill','#3FA9F5');
-    
+        .style('fill', '#3FA9F5');
+
     note
         .append('text')
         .attr('x', 20)
@@ -1151,8 +1122,8 @@ function mode_chart(dataset){
         .attr('y', 65)
         .attr('width', 14)
         .attr('height', 14)
-        .style('fill','#4DE262');
-    
+        .style('fill', '#4DE262');
+
     note
         .append('text')
         .attr('x', 20)
@@ -1167,8 +1138,8 @@ function mode_chart(dataset){
         .attr('y', 98)
         .attr('width', 14)
         .attr('height', 14)
-        .style('fill','#F7931E');
-    
+        .style('fill', '#F7931E');
+
     note
         .append('text')
         .attr('x', 20)
@@ -1176,58 +1147,57 @@ function mode_chart(dataset){
         .text('弱')
         .style('font-size', '16px')
         .style('font-weight', 'bold');
-    
-        let g_freeze = svg.append("g")
-        .attr('transform', `translate(${svg_width/2 + 80}, ${svg_height/2 + 10} )`);
+
+    let g_freeze = svg.append("g")
+        .attr('transform', `translate(${svg_width / 2 + 80}, ${svg_height / 2 + 10} )`);
 
 
-        //Generate groups
-        let arcs_freeze = g_freeze.selectAll(".arc-freeze")
-                    .data(pie(data_freeze))
-                    .enter()
-                    .append("g")
-                    .attr("class", "arc-freeze");
+    //Generate groups
+    let arcs_freeze = g_freeze.selectAll(".arc-freeze")
+        .data(pie(data_freeze))
+        .enter()
+        .append("g")
+        .attr("class", "arc-freeze");
 
-        //Draw arc paths
-        arcs_freeze.append("path")
-            .attr("fill", function(d, i) {
-                return color(i);
-            })
-            .attr("d", arc_path);
+    //Draw arc paths
+    arcs_freeze.append("path")
+        .attr("fill", function (d, i) {
+            return color(i);
+        })
+        .attr("d", arc_path);
 
-        arcs_freeze.append("text")
-            .attr("transform", function(d) { 
-                return "translate(" + label_path.centroid(d) + ")"; 
-            })
-            .style('font-size', '16px')
-            .attr('fill', function(d,i){
-                return color(i);
-            })
-            .attr("text-anchor", function(d) {
-                // are we past the center?
-                return (d.endAngle + d.startAngle)/2 > Math.PI ?
-                    "end" : "start";
-            })
-            .text(function(d) { 
-                if(d.data!=0)
-                {  
-                    return d.data+'%';
-                } 
-            });
-        
+    arcs_freeze.append("text")
+        .attr("transform", function (d) {
+            return "translate(" + label_path.centroid(d) + ")";
+        })
+        .style('font-size', '16px')
+        .attr('fill', function (d, i) {
+            return color(i);
+        })
+        .attr("text-anchor", function (d) {
+            // are we past the center?
+            return (d.endAngle + d.startAngle) / 2 > Math.PI ?
+                "end" : "start";
+        })
+        .text(function (d) {
+            if (d.data != 0) {
+                return d.data + '%';
+            }
+        });
 
-        //文字說明
-        svg.append('text') 
-            .attr('x', 289)
-            .attr('y', 190)
-            .attr('fill', '#000000')
-            .text('冷凍')
-            .style('font-size', '16px');
+
+    //文字說明
+    svg.append('text')
+        .attr('x', 289)
+        .attr('y', 190)
+        .attr('fill', '#000000')
+        .text('冷凍')
+        .style('font-size', '16px');
 }
 
 
 //連線區域比例畫圖
-function region_connect_svg(data){
+function region_connect_svg(data) {
     // let data = {
     //     'north': 50,  //北部連線區域比例 單位為%
     //     'west': 33,   //西部連線區域比例 單位為%
@@ -1235,20 +1205,20 @@ function region_connect_svg(data){
     //     'south': 10,   //南部連線區域比例 單位為%
     //     'island': 2   //外島連線區域比例 單位為%
     // };
-    
+
     let svg = d3.select(".region-connect-item > svg");
 
     let svg_height = 841.9; //svg viewbox 不能直接用jquery獲得svg的height及width 這只是viewport 並不是viewbox 
     let svg_width = 750; //svg viewbox
-    
+
     let xScale = d3.scaleLinear()
-        .domain([0,100])
-        .range([0,svg_width]); 
+        .domain([0, 100])
+        .range([0, svg_width]);
 
     let yScale = d3.scaleLinear()
-        .domain([0,100])
-        .range([0,svg_height]);
-    
+        .domain([0, 100])
+        .range([0, svg_height]);
+
     // north circle
     svg
         .append('circle')
@@ -1265,7 +1235,7 @@ function region_connect_svg(data){
         .text(`${data.north}%`)
         .style('font-size', '48px')
         .style('fill', '#FF0040');
-    
+
     // west circle
     svg
         .append('circle')
@@ -1338,7 +1308,7 @@ function region_connect_svg(data){
 
 
 //各區域運轉台數比例畫圈
-function region_home_svg(data){
+function region_home_svg(data) {
     // let data = {
     //     'north': 50,  //北部連線區域比例 單位為%
     //     'west': 33,   //西部連線區域比例 單位為%
@@ -1346,19 +1316,19 @@ function region_home_svg(data){
     //     'south': 10,   //南部連線區域比例 單位為%
     //     'island': 2   //外島連線區域比例 單位為%
     // };
-    
+
     let svg = d3.select(".region-home-item > svg");
 
     let svg_height = 841.9; //svg viewbox 不能直接用jquery獲得svg的height及width 這只是viewport 並不是viewbox 
     let svg_width = 750; //svg viewbox
-    
+
     let xScale = d3.scaleLinear()
-        .domain([0,100])
-        .range([0,svg_width]); 
+        .domain([0, 100])
+        .range([0, svg_width]);
 
     let yScale = d3.scaleLinear()
-        .domain([0,100])
-        .range([0,svg_height]);
+        .domain([0, 100])
+        .range([0, svg_height]);
 
     // north circle
     svg
@@ -1376,7 +1346,7 @@ function region_home_svg(data){
         .text(`${data.north}%`)
         .style('font-size', '48px')
         .style('fill', '#FF0040');
-    
+
     // west circle
     svg
         .append('circle')
@@ -1449,20 +1419,20 @@ function region_home_svg(data){
 
 
 //左上角基本資料顯示
-function show_basic_information(data){
+function show_basic_information(data) {
     let queue = [];
     queue.push(data.total_login.amount + '萬台', data.out_login.amount + '萬台',
         data.in_login.amount + '萬台', data.total_login.rate + '%',
         data.out_login.rate + '%', data.in_login.rate + '%');
 
     let basic_information_item = $(".information");
-    basic_information_item.each(function(i,value){
+    basic_information_item.each(function (i, value) {
         $(this).text(queue[i]);
     });
 };
 
 //異常回報顯示
-function show_trouble_report(dataset){
+function show_trouble_report(dataset) {
     // dataset = {
     //     'today': 2,  //今日異常回報數量
     //     '30days': 5,   //30日內異常回報數量
@@ -1482,38 +1452,37 @@ function show_trouble_report(dataset){
     $('.today-trouble-count').text(dataset.today);
     $('.month-trouble-count').text(dataset['30days']);
 
-    if(dataset.trouble_list != null)
-    {
-        dataset.trouble_list.forEach(function(element, i){
-            $(".trouble-list ul").append(`<li>LIST ${i+1} - 時間：${element.time}, GWID：${element.GWID}, 異常</li>`);
+    if (dataset.trouble_list != null) {
+        dataset.trouble_list.forEach(function (element, i) {
+            $(".trouble-list ul").append(`<li>LIST ${i + 1} - 時間：${element.time}, GWID：${element.GWID}, 異常</li>`);
         });
     }
-    
+
 }
 
-async function callAPI(path, action){
-    let url = 'http://140.118.121.111:8354' + path;
+async function callAPI(path, action) {
+    let url = 'https://140.118.121.111:8354' + path;
 
     fetch(url)
-    .then(function(response) {
-        return(response.json());
-    })
-    .then(function(myJson) {
-        action(myJson);
-    });
+        .then(function (response) {
+            return (response.json());
+        })
+        .then(function (myJson) {
+            action(myJson);
+        });
 }
 
 //for test, to see what information returns.
-async function testAPI(path){
-    let url = 'http://140.118.121.111:8354' + path;
+async function testAPI(path) {
+    let url = 'https://140.118.121.111:8354' + path;
 
     fetch(url)
-    .then(function(response) {
-        return(response.json());
-    })
-    .then(function(myJson) {
-        console.log(myJson);
-    });
+        .then(function (response) {
+            return (response.json());
+        })
+        .then(function (myJson) {
+            console.log(myJson);
+        });
 }
 
 

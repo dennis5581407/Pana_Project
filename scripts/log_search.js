@@ -1,11 +1,11 @@
-function click_event(){
+function click_event() {
     //header click event
-    $(".lang").on('click','.lang-option-active',function(){
+    $(".lang").on('click', '.lang-option-active', function () {
         $(".lang .lang-option:nth(0)").toggleClass('lang-option-offset-0');
         $(".lang .lang-option:nth(1)").toggleClass('lang-option-offset-1');
     });
 
-    $('.lang').on('click','.lang-option-offset-0',function(){ 
+    $('.lang').on('click', '.lang-option-offset-0', function () {
 
         $(".lang .lang-option:nth(0)").toggleClass('lang-option-offset-0');
         $(".lang .lang-option:nth(1)").toggleClass('lang-option-offset-1');
@@ -14,28 +14,24 @@ function click_event(){
         $(this).removeClass("lang-option");
         $(this).addClass("lang-option-active");
 
-        if($(this).hasClass('lang-japanese'))
-        {
+        if ($(this).hasClass('lang-japanese')) {
 
         }
 
-        else if($(this).hasClass('lang-chinese'))
-        {
+        else if ($(this).hasClass('lang-chinese')) {
 
         }
 
-        else if($(this).hasClass('lang-english'))
-        {
+        else if ($(this).hasClass('lang-english')) {
 
         }
 
-        else
-        {
+        else {
             console("change language error")
         }
     });
 
-    $('.lang').on('click','.lang-option-offset-1',function(){
+    $('.lang').on('click', '.lang-option-offset-1', function () {
 
         $(".lang .lang-option:nth(0)").toggleClass('lang-option-offset-0');
         $(".lang .lang-option:nth(1)").toggleClass('lang-option-offset-1');
@@ -44,34 +40,30 @@ function click_event(){
         $(this).removeClass("lang-option");
         $(this).addClass("lang-option-active");
 
-        if($(this).hasClass('lang-japanese'))
-        {
+        if ($(this).hasClass('lang-japanese')) {
 
         }
 
-        else if($(this).hasClass('lang-chinese'))
-        {
+        else if ($(this).hasClass('lang-chinese')) {
 
         }
 
-        else if($(this).hasClass('lang-english'))
-        {
+        else if ($(this).hasClass('lang-english')) {
 
         }
     });
 }
 
-function show_time(){
+function show_time() {
     let today = new Date();
     let year = today.getFullYear();
     let month = today.getMonth() + 1;
     let date = today.getDate();
     let hour = today.getHours();
     let min = today.getMinutes();
-    
+
     min = min.toString();
-    if(min.length == 1)
-    {
+    if (min.length == 1) {
         min = 0 + min;
     }
 
@@ -87,7 +79,7 @@ new Vue({
     el: '#app',
     vuetify: new Vuetify(),
     data: {
-      date: new Date().toISOString().substr(0, 10),
-      menu: false
+        date: new Date().toISOString().substr(0, 10),
+        menu: false
     }
-  })
+})
