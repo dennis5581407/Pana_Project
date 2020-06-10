@@ -1,3 +1,5 @@
+var chartScale = 1000;
+
 function click_event() {
     //header click event
     $(".lang").on('click', '.lang-option-active', function () {
@@ -275,10 +277,10 @@ function sum_login_chart(dataset) {
             return xAxisScale(d.year);
         })
         .y0(function (d) {
-            return yAxisScale(d.builtIn);
+            return yAxisScale(d.builtIn / chartScale);
         })
         .y1(function (d) {
-            return yAxisScale(d.all);
+            return yAxisScale(d.all / chartScale);
         })
         .curve(d3.curveMonotoneX);
 
@@ -295,7 +297,7 @@ function sum_login_chart(dataset) {
         })
         .y0(yAxisScale(0))
         .y1(function (d) {
-            return yAxisScale(d.builtIn);
+            return yAxisScale(d.builtIn / chartScale);
         })
         .curve(d3.curveMonotoneX);
 
@@ -351,7 +353,7 @@ function sum_login_chart(dataset) {
     svg.append('text')
         .attr('x', 0)
         .attr('y', yAxisScale(0) + 28)
-        .text('單位:萬台')
+        .text('單位:千台')
         .style('font-size', '11px');
 
     let note = svg.append('g');
@@ -452,10 +454,10 @@ function connect_amount_chart(dataset) {
             return xAxisScale(d.year);
         })
         .y0(function (d) {
-            return yAxisScale(d.builtIn);
+            return yAxisScale(d.builtIn / chartScale);
         })
         .y1(function (d) {
-            return yAxisScale(d.all);
+            return yAxisScale(d.all / chartScale);
         })
         .curve(d3.curveMonotoneX);
 
@@ -472,7 +474,7 @@ function connect_amount_chart(dataset) {
         })
         .y0(yAxisScale(0))
         .y1(function (d) {
-            return yAxisScale(d.builtIn);
+            return yAxisScale(d.builtIn / chartScale);
         })
         .curve(d3.curveMonotoneX);
 
@@ -526,7 +528,7 @@ function connect_amount_chart(dataset) {
     svg.append('text')
         .attr('x', 0)
         .attr('y', yAxisScale(0) + 28)
-        .text('單位:萬台')
+        .text('單位:千台')
         .style('font-size', '11px');
 
     let note = svg.append('g');
@@ -790,11 +792,11 @@ function connect_48h_chart(dataset) {
         .append('rect')
         .attr('class', 'rect_td_connect')
         .attr('x', (d) => xAxisScale(d.hour))
-        .attr('y', (d) => yAxisScale(d.today_connect))
+        .attr('y', (d) => yAxisScale(d.today_connect / chartScale))
         .attr('width', xAxisScale.bandwidth())
         .style('fill', '#F7931E')
         .transition().duration(1000)
-        .attr('height', (d) => svg_height - yAxisScale(d.today_connect));
+        .attr('height', (d) => svg_height - yAxisScale(d.today_connect / chartScale));
 
     svg.selectAll('.rect_yd_connect') //append yesterday connect bar in bar chart
         .data(dataset)
@@ -802,11 +804,11 @@ function connect_48h_chart(dataset) {
         .append('rect')
         .attr('class', 'rect_yd_connect')
         .attr('x', (d) => xAxisScale(d.hour))
-        .attr('y', (d) => yAxisScale(d.today_connect + d.yesterday_connect))
+        .attr('y', (d) => yAxisScale(d.today_connect / chartScale + d.yesterday_connect / chartScale))
         .attr('width', xAxisScale.bandwidth())
         .style('fill', '#3FA9F5')
         .transition().duration(1000)
-        .attr('height', (d) => svg_height - yAxisScale(d.yesterday_connect));
+        .attr('height', (d) => svg_height - yAxisScale(d.yesterday_connect / chartScale));
 
     svg.selectAll('.rect_td_connect') //display value when mouserover on bar
         .data(dataset)
@@ -826,7 +828,7 @@ function connect_48h_chart(dataset) {
             return xAxisScale(d.hour);
         })
         .y(function (d) {
-            return yAxisScale(d.today_amount);
+            return yAxisScale(d.today_amount / chartScale);
         });
 
     let offset = xAxisScale.bandwidth() / 2;
@@ -845,7 +847,7 @@ function connect_48h_chart(dataset) {
             return xAxisScale(d.hour);
         })
         .y(function (d) {
-            return yAxisScale(d.yesterday_amount);
+            return yAxisScale(d.yesterday_amount / chartScale);
         });
 
     svg.append('path')
@@ -860,7 +862,7 @@ function connect_48h_chart(dataset) {
     svg.append('text')
         .attr('x', 0)
         .attr('y', yAxisScale(0) + 23)
-        .text('單位:萬台')
+        .text('單位:千台')
         .style('font-size', '11px');
 
     let note = svg.append('g');
@@ -1113,11 +1115,11 @@ function boot_24h_chart(dataset) {
         .append('rect')
         .attr('class', 'rect_wash')
         .attr('x', (d) => xAxisScale(d.hour + ':00'))
-        .attr('y', (d) => yAxisScale(d.wash + d.dry))
+        .attr('y', (d) => yAxisScale(d.wash / chartScale + d.dry / chartScale))
         .attr('width', xAxisScale.bandwidth())
         .style('fill', '#3FA9F5')
         .transition().duration(1000)
-        .attr('height', (d) => svg_height - yAxisScale(d.wash));
+        .attr('height', (d) => svg_height - yAxisScale(d.wash / chartScale));
 
     //append "乾燥台數" bar in bar chart
     svg.selectAll('.rect_dry')
@@ -1126,11 +1128,11 @@ function boot_24h_chart(dataset) {
         .append('rect')
         .attr('class', 'rect_dry')
         .attr('x', (d) => xAxisScale(d.hour + ':00'))
-        .attr('y', (d) => yAxisScale(d.dry))
+        .attr('y', (d) => yAxisScale(d.dry / chartScale))
         .attr('width', xAxisScale.bandwidth())
         .style('fill', '#F7931E')
         .transition().duration(1000)
-        .attr('height', (d) => svg_height - yAxisScale(d.dry));
+        .attr('height', (d) => svg_height - yAxisScale(d.dry / chartScale));
 
     svg.selectAll('.rect_wash') //display value when mouserover on bar
         .data(dataset)
@@ -1159,7 +1161,7 @@ function boot_24h_chart(dataset) {
         .attr('x', 3)
         .attr('y', 185)
         .attr('fill', '#000000')
-        .text('(單位:萬台)')
+        .text('(單位:千台)')
         .style('font-size', '11px');
 
     let note = svg.append('g');

@@ -1,3 +1,5 @@
+let chartScale = 1000;
+
 function click_event() {
     //header click event
     $(".lang").on('click', '.lang-option-active', function () {
@@ -275,10 +277,10 @@ function sum_login_chart(dataset) {
             return xAxisScale(d.year);
         })
         .y0(function (d) {
-            return yAxisScale(d.builtIn);
+            return yAxisScale(d.builtIn / chartScale);
         })
         .y1(function (d) {
-            return yAxisScale(d.all);
+            return yAxisScale(d.all / chartScale);
         })
         .curve(d3.curveMonotoneX);
 
@@ -295,7 +297,7 @@ function sum_login_chart(dataset) {
         })
         .y0(yAxisScale(0))
         .y1(function (d) {
-            return yAxisScale(d.builtIn);
+            return yAxisScale(d.builtIn / chartScale);
         })
         .curve(d3.curveMonotoneX);
 
@@ -351,7 +353,7 @@ function sum_login_chart(dataset) {
     svg.append('text')
         .attr('x', 0)
         .attr('y', yAxisScale(0) + 28)
-        .text('單位:萬台')
+        .text('單位:千台')
         .style('font-size', '11px');
 
     let note = svg.append('g');
@@ -452,10 +454,10 @@ function connect_amount_chart(dataset) {
             return xAxisScale(d.year);
         })
         .y0(function (d) {
-            return yAxisScale(d.builtIn);
+            return yAxisScale(d.builtIn / chartScale);
         })
         .y1(function (d) {
-            return yAxisScale(d.all);
+            return yAxisScale(d.all / chartScale);
         })
         .curve(d3.curveMonotoneX);
 
@@ -472,7 +474,7 @@ function connect_amount_chart(dataset) {
         })
         .y0(yAxisScale(0))
         .y1(function (d) {
-            return yAxisScale(d.builtIn);
+            return yAxisScale(d.builtIn / chartScale);
         })
         .curve(d3.curveMonotoneX);
 
@@ -526,7 +528,7 @@ function connect_amount_chart(dataset) {
     svg.append('text')
         .attr('x', 0)
         .attr('y', yAxisScale(0) + 28)
-        .text('單位:萬台')
+        .text('單位:千台')
         .style('font-size', '11px');
 
     let note = svg.append('g');
@@ -743,11 +745,11 @@ function connect_48h_chart(dataset) {
         .append('rect')
         .attr('class', 'rect_td_connect')
         .attr('x', (d) => xAxisScale(d.hour))
-        .attr('y', (d) => yAxisScale(d.today_connect))
+        .attr('y', (d) => yAxisScale(d.today_connect / chartScale))
         .attr('width', xAxisScale.bandwidth())
         .style('fill', '#F7931E')
         .transition().duration(1000)
-        .attr('height', (d) => svg_height - yAxisScale(d.today_connect));
+        .attr('height', (d) => svg_height - yAxisScale(d.today_connect / chartScale));
 
     svg.selectAll('.rect_yd_connect') //append yesterday connect bar in bar chart
         .data(dataset)
@@ -755,11 +757,11 @@ function connect_48h_chart(dataset) {
         .append('rect')
         .attr('class', 'rect_yd_connect')
         .attr('x', (d) => xAxisScale(d.hour))
-        .attr('y', (d) => yAxisScale(d.today_connect + d.yesterday_connect))
+        .attr('y', (d) => yAxisScale(d.today_connect / chartScale + d.yesterday_connect / chartScale))
         .attr('width', xAxisScale.bandwidth())
         .style('fill', '#3FA9F5')
         .transition().duration(1000)
-        .attr('height', (d) => svg_height - yAxisScale(d.yesterday_connect));
+        .attr('height', (d) => svg_height - yAxisScale(d.yesterday_connect / chartScale));
 
     svg.selectAll('.rect_td_connect') //display value when mouserover on bar
         .data(dataset)
@@ -777,7 +779,7 @@ function connect_48h_chart(dataset) {
     svg.append('text')
         .attr('x', 0)
         .attr('y', yAxisScale(0) + 23)
-        .text('單位:萬台')
+        .text('單位:千台')
         .style('font-size', '11px');
 
     let note = svg.append('g');
@@ -822,104 +824,104 @@ function connect_48h_chart(dataset) {
 
 //econavi比例畫圖
 function econavi_rate_chart(dataset) {
-    dataset = [
-        {
-            'hour': '00',   //時間為00時
-            'econavi': 65   //當時econavi數量 單位為萬台
-        },
-        {
-            'hour': '01',
-            'econavi': 65
-        },
-        {
-            'hour': '02',
-            'econavi': 65
-        },
-        {
-            'hour': '03',
-            'econavi': 65
-        },
-        {
-            'hour': '04',
-            'econavi': 65
-        },
-        {
-            'hour': '05',
-            'econavi': 65
-        },
-        {
-            'hour': '06',
-            'econavi': 65
-        },
-        {
-            'hour': '07',
-            'econavi': 65
-        },
-        {
-            'hour': '08',
-            'econavi': 65
-        },
-        {
-            'hour': '09',
-            'econavi': 65
-        },
-        {
-            'hour': '10',
-            'econavi': 65
-        },
-        {
-            'hour': '11',
-            'econavi': 65
-        },
-        {
-            'hour': '12',
-            'econavi': 65
-        },
-        {
-            'hour': '13',
-            'econavi': 65
-        },
-        {
-            'hour': '14',
-            'econavi': 65
-        },
-        {
-            'hour': '15',
-            'econavi': 65
-        },
-        {
-            'hour': '16',
-            'econavi': 65
-        },
-        {
-            'hour': '17',
-            'econavi': 65
-        },
-        {
-            'hour': '18',
-            'econavi': 65
-        },
-        {
-            'hour': '19',
-            'econavi': 65
-        },
-        {
-            'hour': '20',
-            'econavi': 65
-        },
-        {
-            'hour': '21',
-            'econavi': 65
-        },
-        {
-            'hour': '22',
-            'econavi': 65
-        },
-        {
-            'hour': '23',
-            'econavi': 65
-        }
-    ];
+    // dataset = [
+    //     {
+    //         'hour': '00',   //時間為00時
+    //         'econavi': 65   //當時econavi數量 單位為萬台
+    //     },
+    //     {
+    //         'hour': '01',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '02',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '03',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '04',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '05',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '06',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '07',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '08',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '09',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '10',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '11',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '12',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '13',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '14',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '15',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '16',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '17',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '18',
+    //         'econavi': 11111
+    //     },
+    //     {
+    //         'hour': '19',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '20',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '21',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '22',
+    //         'econavi': 65
+    //     },
+    //     {
+    //         'hour': '23',
+    //         'econavi': 65
+    //     }
+    // ];
 
     let Xdata = dataset.map(function (d) {
         return d.hour + ':00';
@@ -974,11 +976,11 @@ function econavi_rate_chart(dataset) {
         .append('rect')
         .attr('class', 'rect_econavi')
         .attr('x', (d) => xAxisScale(d.hour + ':00'))
-        .attr('y', (d) => yAxisScale(d.econavi))
+        .attr('y', (d) => yAxisScale(d.econavi / chartScale))
         .attr('width', xAxisScale.bandwidth())
         .style('fill', '#3FA9F5')
         .transition().duration(1000)
-        .attr('height', (d) => svg_height - yAxisScale(d.econavi));
+        .attr('height', (d) => svg_height - yAxisScale(d.econavi / chartScale));
 
 
     svg.selectAll('.rect_econavi') //display value when mouserover on bar
@@ -1001,7 +1003,7 @@ function econavi_rate_chart(dataset) {
         .attr('x', 3)
         .attr('y', 185)
         .attr('fill', '#000000')
-        .text('(單位:萬台)')
+        .text('(單位:千台)')
         .style('font-size', '11px');
 
 }

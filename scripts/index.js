@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    var chartScale = 1000;
 
     function chart_1(dataset_1) { //-------------------------chart_1---------------------------
 
@@ -61,11 +62,11 @@ $(document).ready(function () {
             .enter()
             .append('rect')
             .attr('x', (d) => xAxisScale(d.month))
-            .attr('y', (d) => yAxisScale_1(d.value))
+            .attr('y', (d) => yAxisScale_1(d.value / chartScale))
             .attr('width', xAxisScale.bandwidth())
             .style('fill', '#3FA9F5')
             .transition().duration(1000)
-            .attr('height', (d) => svg_height_1 - yAxisScale_1(d.value));
+            .attr('height', (d) => svg_height_1 - yAxisScale_1(d.value / chartScale));
 
         svg_1.selectAll('rect') //display value when mouserover on bar
             .data(dataset_1)
@@ -108,7 +109,7 @@ $(document).ready(function () {
         svg_1.append('text')
             .attr('x', 10)
             .attr('y', yAxisScale_1(0) + 23)
-            .text('單位:萬台')
+            .text('單位:千台')
             .style('font-size', '11px');
 
         let note_1 = svg_1.append('g');
@@ -209,11 +210,11 @@ $(document).ready(function () {
             .append('rect')
             .attr('class', 'rect_sell')
             .attr('x', (d) => xAxisScale(d.year))
-            .attr('y', (d) => yAxisScale(d.sell))
+            .attr('y', (d) => yAxisScale(d.sell / chartScale))
             .attr('width', xAxisScale.bandwidth())
             .style('fill', '#3FA9F5')
             .transition().duration(1000)
-            .attr('height', (d) => svg_height - (yAxisScale(d.sell - d.login)));
+            .attr('height', (d) => svg_height - (yAxisScale(d.sell / chartScale - d.login / chartScale)));
 
 
         svg.selectAll('.rect_login')
@@ -222,11 +223,11 @@ $(document).ready(function () {
             .append('rect')
             .attr('class', 'rect_login')
             .attr('x', (d) => xAxisScale(d.year))
-            .attr('y', (d) => yAxisScale(d.login))
+            .attr('y', (d) => yAxisScale(d.login / chartScale))
             .attr('width', xAxisScale.bandwidth())
             .style('fill', '#F7931E')
             .transition().duration(1000)
-            .attr('height', (d) => svg_height - yAxisScale(d.login));
+            .attr('height', (d) => svg_height - yAxisScale(d.login / chartScale));
 
         svg.selectAll('.rect_sell') //display value when mouserover on bar
             .data(dataset)
@@ -276,7 +277,7 @@ $(document).ready(function () {
         svg.append('text')
             .attr('x', 7)
             .attr('y', yAxisScale(0) + 28)
-            .text('單位:萬台')
+            .text('單位:千台')
             .style('font-size', '12px');
 
         //x軸座標標示
@@ -490,7 +491,7 @@ $(document).ready(function () {
                 return xAxisScale(d.hour);
             })
             .y(function (d) {
-                return yAxisScale(d.connect);
+                return yAxisScale(d.connect / chartScale);
             });
 
         let offset = xAxisScale.bandwidth() / 2;
@@ -506,7 +507,7 @@ $(document).ready(function () {
         svg.append('text')
             .attr('x', 0)
             .attr('y', yAxisScale(100) - 10)
-            .text('連線數(萬台)')
+            .text('連線數(千台)')
             .style('font-size', '11px');
 
         svg.append('text')
@@ -966,7 +967,7 @@ $(document).ready(function () {
 
     //for test, to see what information returns.
     async function testAPI(path) {
-        let url = 'http://140.118.121.111:8354' + path;
+        let url = 'https://140.118.121.111:8354/connectLog?GWID=00E04C870000&year=2020&month=0611&day=10';
 
         fetch(url)
             .then(function (response) {

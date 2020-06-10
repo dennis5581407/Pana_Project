@@ -72,14 +72,13 @@ function show_time() {
     $('.clock').html(date_string); //html的method也會把子元素一併取代掉
 }
 
-click_event();
+// click_event();
 setInterval(show_time, 1000);//show time per sec
 
 new Vue({
     el: '#app',
     vuetify: new Vuetify(),
     data: {
-        date: new Date().toISOString().substr(0, 10),
-        menu: false
+        date: new Date().toISOString().substr(0, 10)
     }
 })
